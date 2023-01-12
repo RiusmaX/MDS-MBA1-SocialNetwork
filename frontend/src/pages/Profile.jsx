@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client'
+import { Container, Typography } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import PostList from '../components/Posts/PostList'
 import Avatar from '../components/Profile/Avatar'
@@ -30,7 +31,7 @@ const Profile = () => {
     const profile = data?.usersPermissionsUser?.data?.attributes
     return (
       <>
-        <div className='profileContainer'>
+        <Container maxWidth='md'>
           <div className='row'>
             <Avatar avatar={profile.avatar.data.attributes} />
             <div>
@@ -38,13 +39,16 @@ const Profile = () => {
               <UserInfos email={profile.email} phone={profile.phone} />
             </div>
           </div>
-        </div>
-        <PostList posts={profile.posts.data} />
+        </Container>
+        <Container maxWidth='lg'>
+          <Typography variant='h3' marginY={5}>
+            Les articles de {profile.firstName}
+          </Typography>;
+          <PostList posts={profile.posts.data} />
+        </Container>
       </>
     )
   }
-
-
 }
 
 export default Profile

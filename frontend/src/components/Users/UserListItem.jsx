@@ -1,11 +1,27 @@
-import FullName from "../Profile/FullName"
-import '../../styles/Users.scss'
+import { Avatar, Button, Card, CardHeader } from '@mui/material'
+import { blueGrey } from '@mui/material/colors'
 
-const UserListItem = ({user, onClick}) => {
+import FullName from '../Profile/FullName'
+
+const UserListItem = ({ user, onClick }) => {
+  console.log(user.attributes.avatar.data.attributes.url)
+
   return (
-    <div className="card" onClick={onClick}>
-      <FullName {...user.attributes} />
-    </div>
+    <Card sx={{ maxWidth: 345 }}>
+      <CardHeader
+        avatar={
+          <Avatar
+            src={process.env.REACT_APP_IMAGES_URL + user.attributes.avatar.data.attributes.url}
+            sx={{ bgcolor: blueGrey[500] }}
+            aria-label='recipe'
+          >
+            T
+          </Avatar>
+        }
+        title={<FullName {...user.attributes} />}
+      />
+      <Button onClick={onClick}>Voir le profil</Button>
+    </Card>
   )
 }
 

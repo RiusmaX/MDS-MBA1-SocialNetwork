@@ -40,7 +40,16 @@ query {
             attributes {
               title,
               content
-            }
+              medias {
+                data {
+                  id,
+                  attributes {
+                    name,
+                    url
+                  }
+                }
+              }
+            },
           }
         },
         avatar {
