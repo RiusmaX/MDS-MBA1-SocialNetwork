@@ -1,0 +1,62 @@
+import { gql } from '@apollo/client'
+
+const GET_USERS = gql`
+query {
+  usersPermissionsUsers {
+    data {
+      id,
+      attributes {
+        username,
+        email,
+        firstName,
+        lastName,
+        avatar {
+          data {
+            attributes {
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+}
+`
+
+const GET_USER_WITH_POSTS = (id) => gql`
+query {
+  usersPermissionsUser (id: ${id}) {
+    data {
+      id,
+      attributes {
+        username,
+        email,
+        firstName,
+        lastName,
+        phone,
+        posts {
+          data {
+            id,
+            attributes {
+              title,
+              content
+            }
+          }
+        },
+        avatar {
+          data {
+            attributes {
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+}
+`
+
+export {
+  GET_USERS,
+  GET_USER_WITH_POSTS
+}
