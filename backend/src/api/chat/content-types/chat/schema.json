@@ -4,7 +4,8 @@
   "info": {
     "singularName": "chat",
     "pluralName": "chats",
-    "displayName": "Chat"
+    "displayName": "Chat",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -18,14 +19,21 @@
       "type": "datetime"
     },
     "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
+    },
+    "users_permissions_users": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "chats"
     }
   }
 }

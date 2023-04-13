@@ -93,6 +93,12 @@
       "relation": "oneToMany",
       "target": "api::post.post",
       "mappedBy": "user"
+    },
+    "chats": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::chat.chat",
+      "mappedBy": "users_permissions_users"
     }
   }
 }
