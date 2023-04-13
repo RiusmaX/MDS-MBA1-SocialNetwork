@@ -4,7 +4,7 @@ import PostList from '../components/Posts/PostList'
 import Avatar from '../components/Profile/Avatar'
 import FullName from '../components/Profile/FullName'
 import UserInfos from '../components/Profile/UserInfos'
-import { GET_USER_WITH_POSTS } from '../graphql/queries/usersQueries'
+import { GET_USER_WITH_POSTS_MYSELF } from '../graphql/queries/usersQueries'
 import Button from '../components/Layout/Button'
 
 import '../styles/Profile.scss'
@@ -12,7 +12,7 @@ import '../styles/Profile.scss'
 const Profile = () => {
   // On prépare l'état local qui stockera les données
   const { id } = useParams()
-  const { loading, error, data } = useQuery(GET_USER_WITH_POSTS(id))
+  const { loading, error, data } = useQuery(GET_USER_WITH_POSTS_MYSELF(id))
 
   if (loading) {
     return <h4>Chargement...</h4>
