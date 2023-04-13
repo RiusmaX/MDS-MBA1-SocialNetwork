@@ -6,6 +6,7 @@ import InputField from '../components/Global/Input/InputField'
 import userIcon from '../assets/icons/user.svg'
 import lockIcon from '../assets/icons/lock.svg'
 import Julo from '../assets/images/Julo.png'
+import SubmitButton from '../components/Global/Buttons/SubmitButton'
 
 const Auth = () => {
   const [credentials, setCredentials] = useState({
@@ -34,13 +35,13 @@ const Auth = () => {
   return (
 
     <div className='authForm'>
-      <img className='imgJulo' src={Julo} />
+      <img className='imgJulo' src={Julo} alt='Jules img' />
       <form method='POST' noValidate style={{ display: 'flex', flexDirection: 'column' }} onSubmit={handleSubmit}>
 
         <InputField type='text' handleChange={handleChange} placeholder='EMAIL' name='email' icon={userIcon} />
         <InputField type='password' handleChange={handleChange} placeholder='PASSWORD' name='password' icon={lockIcon} />
         {error && <div className='error'>bad credentials</div>}
-        {!loading && <input type='submit' />}
+        {!loading && <SubmitButton label='Connexion' />}
       </form>
       <pre>{JSON.stringify(data)}</pre>
     </div>
