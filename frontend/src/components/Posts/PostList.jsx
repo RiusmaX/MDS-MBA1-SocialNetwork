@@ -1,4 +1,3 @@
-import { Grid } from "@mui/material";
 import PostListItem from "./PostListItem";
 
 const PostList = ({ posts }) => {
@@ -7,15 +6,9 @@ const PostList = ({ posts }) => {
   }
 
   return (
-    <div style={{display: "flex", flexDirection: "column"}}>
+    <div style={{ display: "flex", flexDirection: "column" }}>
       {posts.map((post) => {
-        return (
-
-
-              <PostListItem post={post} />
-
-
-        );
+        return <PostListItem post={post} />;
       })}
     </div>
   );
