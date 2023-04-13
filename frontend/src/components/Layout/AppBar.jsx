@@ -87,10 +87,10 @@ function ResponsiveAppBar () {
 
   const handleCloseUserMenu = (setting) => {
     // Lors du clique sur le paramètre Profile
-    if (setting == "Profile") {
+    if (setting === 'Profile') {
       // Redirection sur la page profile de l'utilisateur connecter
       // Modifier lorsque la connexion sera fonctionelle
-      navigate("/users/1")
+      navigate('/users/1')
     }
     setAnchorElUser(null)
   }
