@@ -1,46 +1,35 @@
-import { Avatar, Button, Card, CardActions, CardContent, CardHeader, CardMedia, IconButton, Typography } from '@mui/material'
+import { Button, Card, CardActions, CardContent, CardHeader, CardMedia, IconButton, Typography } from '@mui/material'
 import { blueGrey } from '@mui/material/colors'
 import { getExtract } from '../../utils/strings'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShareIcon from '@mui/icons-material/Share'
+import Avatar from '../Profile/Avatar'
 
 const PostListItem = ({ post }) => {
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      <CardHeader
-        //   avatar={
-        //     <Avatar
-        //       src={process.env.REACT_APP_IMAGES_URL + user.attributes.avatar.data.attributes.url}
-        //       sx={{ bgcolor: blueGrey[500] }}
-        //       aria-label='recipe'
-        //     >
-        //       T
-        //     </Avatar>
-        // }
-        title={post.attributes.title}
-      />
-      <CardMedia
-        component='img'
-        height='200'
-        image={process.env.REACT_APP_IMAGES_URL + post.attributes?.medias?.data[0]?.attributes?.url}
-      />
-      <CardContent>
-        <Typography variant='body2' color='text.secondary'>
-          {getExtract(post.attributes.content)}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button>
-          Lire l'article
-        </Button>
-        <IconButton aria-label='add to favorites'>
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label='share'>
-          <ShareIcon />
-        </IconButton>
-      </CardActions>
-    </Card>
+    <div className='postItem'>
+      <div className='postItem-avatar'>
+        {/* {console.log(post?.attributes?.user?.data?.attributes?.avatar?.data?.attributes)}
+        <pre>{JSON.stringify(post.attributes?.user?.data?.attributes?.avatar?.data?.attributes)}</pre> */}
+        <Avatar avatar={post.attributes?.user?.data?.attributes?.avatar?.data?.attributes} />
+      </div>
+      <div className='postItem-content'>
+        <div className='postItem-content_pseudo'>
+          <h3>{post.attributes?.user?.data?.attributes?.username}</h3>
+          <h4>{post.attributes?.user?.data?.attributes?.firstName}</h4>
+        </div>
+        <div className='postItem-content_image'>
+          <img src={`${process.env.REACT_APP_IMAGES_URL}${post.attributes?.medias?.data[0]?.attributes?.url}`} alt={post.attributes?.image?.data?.attributes?.name} />
+        </div>
+        <div className='postItem-content_text'>
+          <p>{post.attributes?.content}</p>
+        </div>
+        <div className='postItem-content_infos'>
+          <p>{post.attributes?.likers?.data[0].id}</p>
+          <p>{post.attributes?.createdAt}</p>
+        </div>
+      </div>
+    </div>
   )
 }
 
