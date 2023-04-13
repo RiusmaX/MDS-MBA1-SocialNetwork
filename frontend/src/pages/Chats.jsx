@@ -1,10 +1,14 @@
 import { useQuery } from '@apollo/client'
 import { Container } from '@mui/material'
 import ChatList from '../components/Chat/ChatList'
-import { GET_CHATS } from '../graphql/queries/chatsQueries'
+import { GET_CHATS_WITH_USER } from '../graphql/queries/chatsQueries'
+import { useParams } from 'react-router-dom'
 
 const Chats = () => {
-    const { loading, error, data } = useQuery(GET_CHATS)
+    const { id } = useParams()
+    //const { loading, error, data } = useQuery(GET_CHATS)
+    const { loading, error, data } = useQuery(GET_CHATS_WITH_USER(id))
+    console.log(useQuery(GET_CHATS_WITH_USER(id)))
 
     if (loading) {
       return <h2>Chargement...</h2>
@@ -21,7 +25,7 @@ const Chats = () => {
   
     return (
       <Container maxWidth='md'>
-        <ChatList chats={data.chats.data} />
+        <ChatList chats={data.usersPermissionsUser.data.attributes.chats.data} />
       </Container>
     )
   }

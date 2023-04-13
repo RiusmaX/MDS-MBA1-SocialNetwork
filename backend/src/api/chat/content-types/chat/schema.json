@@ -15,9 +15,6 @@
     "name": {
       "type": "string"
     },
-    "lastMessageDate": {
-      "type": "datetime"
-    },
     "image": {
       "type": "media",
       "multiple": false,

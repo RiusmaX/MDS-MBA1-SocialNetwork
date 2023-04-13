@@ -2,8 +2,6 @@ import { Avatar, Card, CardHeader } from '@mui/material'
 import { blueGrey } from '@mui/material/colors'
 import Moment from 'moment';
 
-//import FullName from '../Profile/FullName'
-
 const ChatListItem = ({ chat, onClick }) => {
   console.log(chat)
 
@@ -24,7 +22,8 @@ const ChatListItem = ({ chat, onClick }) => {
           </Avatar>
         }
         title={chat.attributes.name}
-        subheader={Moment(dt).format('d MMM hh:mm')}
+        //todo take the date of the last message
+        //subheader={Moment(dt).format('d MMM hh:mm')}
       />
     </Card>
   )
