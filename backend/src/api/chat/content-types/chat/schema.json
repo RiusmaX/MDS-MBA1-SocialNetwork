@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "chats",
+  "info": {
+    "singularName": "chat",
+    "pluralName": "chats",
+    "displayName": "Chat"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "lastMessageDate": {
+      "type": "datetime"
+    },
+    "image": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}
