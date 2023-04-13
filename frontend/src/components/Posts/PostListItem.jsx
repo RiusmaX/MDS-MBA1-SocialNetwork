@@ -2,6 +2,7 @@ import Avatar from "../Profile/Avatar";
 import "../../styles/PostListItem.scss";
 import { AiOutlineHeart } from "react-icons/ai";
 import { BsCalendarDate } from "react-icons/bs";
+import { format } from "date-fns";
 
 const PostListItem = ({ post }) => {
   return (
@@ -39,7 +40,8 @@ const PostListItem = ({ post }) => {
           </p>
           <p>
             <BsCalendarDate />
-            {post.attributes?.createdAt}
+            {format(new Date(post.attributes?.createdAt), "dd/MM/yyyy")}
+            {/* {post.attributes?.createdAt} */}
           </p>
         </div>
       </div>
