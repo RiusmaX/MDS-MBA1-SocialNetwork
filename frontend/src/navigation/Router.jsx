@@ -13,10 +13,10 @@ const Router = () => {
       <Routes>
         <Route path='/' index element={<Home />} />
         <Route path='/auth' element={<Auth />} />
-        <Route path='/chats' element={<Chats />} />
         <Route path='users'>
           <Route index element={<Users />} />
           <Route path=':id' element={<Profile />} />
+          <Route path=':id/chats' element={<Chats />} />
         </Route>
       </Routes>
     </BrowserRouter>

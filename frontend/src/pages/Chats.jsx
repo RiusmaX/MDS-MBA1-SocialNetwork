@@ -5,8 +5,6 @@ import { GET_CHATS } from '../graphql/queries/chatsQueries'
 
 const Chats = () => {
     const { loading, error, data } = useQuery(GET_CHATS)
-    console.log("GET_CHATS = ")
-    console.log(useQuery(GET_CHATS))
 
     if (loading) {
       return <h2>Chargement...</h2>
