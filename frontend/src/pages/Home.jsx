@@ -1,12 +1,13 @@
-import { useQuery } from "@apollo/client"
-import { GET_POSTS } from "../graphql/queries/postsQueries"
-import PostList from "../components/Posts/PostList"
+import { useQuery } from "@apollo/client";
+import { GET_POSTS } from "../graphql/queries/postsQueries";
+import PostList from "../components/Posts/PostList";
 
 const Home = () => {
-  const { data, loading, error } = useQuery(GET_POSTS)
+  const { data, loading, error } = useQuery(GET_POSTS);
 
+  // Loading and error handling
   if (loading) {
-    return <h4>Chargement...</h4>
+    return <h4>Chargement...</h4>;
   }
 
   if (error) {
@@ -15,7 +16,7 @@ const Home = () => {
         <h1>ERROR</h1>
         <pre>{JSON.stringify(error, null, 2)}</pre>
       </>
-    )
+    );
   }
 
   if (data) {
@@ -24,8 +25,8 @@ const Home = () => {
         <h1>Home</h1>
         <PostList posts={data.posts.data} />
       </>
-    )
+    );
   }
-}
+};
 
-export default Home
+export default Home;

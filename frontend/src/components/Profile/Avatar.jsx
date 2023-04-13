@@ -1,12 +1,12 @@
-import '../../styles/Avatar.scss'
+import "../../styles/Avatar.scss";
 
 const Avatar = ({ avatar }) => {
   return (
     <img
-      className='avatar'
-      src={`${process.env.REACT_APP_IMAGES_URL}${avatar.url}`}
+      className="avatar"
+      src={`${process.env.REACT_APP_IMAGES_URL}${avatar?.url}`}
     />
-  )
-}
+  );
+};
 
-export default Avatar
+export default Avatar;
