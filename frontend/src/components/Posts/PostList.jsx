@@ -11,12 +11,7 @@ const PostList = ({ posts }) => {
       {
         posts.map(post => {
           return (
-            <Grid
-              key={post.id}
-              xs={6}
-            >
-              <PostListItem post={post} />
-            </Grid>
+            <PostListItem key={post.id} post={post} />
           )
         })
       }

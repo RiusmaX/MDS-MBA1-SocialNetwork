@@ -17,12 +17,41 @@
         animation: spinning 0.3s infinite linear;
       }
 
+      &.disco {
+        animation: disco 10s linear;
+      }
+
       @keyframes spinning {
         0% {
-          transform : rotate(0deg);
+          transform: rotate(0deg);
         }
         100% {
           transform : rotate(360deg);
+        }
+      }
+
+      @keyframes disco {
+        0% {
+          transform: translate(0px);
+        }
+        5% {
+          transform : translate(-300px);
+          position: fixed;
+        }
+        6% {
+          transform : translate(0px);
+          top: -150px;
+          left: 50%;
+        }
+        20% {
+          top: 150px;
+          
+        }
+        99% {
+          top: 150px;
+        }
+        100% {
+          position: relative;
         }
       }
       

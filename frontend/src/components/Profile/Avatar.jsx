@@ -1,22 +1,29 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import '../../styles/Avatar.scss'
 
 const Avatar = ({ avatar }) => {
-  const image = useRef(null)
   const [counter, setCounter] = useState(0)
+  const [className, setClassName] = useState('')
 
   // Gestion du clique
-  const handlePress = () => {
+  const onClick = () => {
     setCounter(counter + 1)
     // Si le nombre de clique atteint 5, surprise
-    if (counter >= 5) {
+    if (counter === 5 && !(className.includes('animation')) && !(className.includes('disco'))) {
       // l'image rotationne
-      image.current.classList.add('animation')
+      setClassName(' animation')
       setTimeout(() => {
-        if (image && image.current) {
-          image.current.classList.remove('animation')
-        }
+        const newClassName = className.replace(' animation', '')
+        setClassName(newClassName)
       }, 3000)
+    }
+    if (counter === 10 && !(className.includes('disco'))) {
+      // l'image fait le disco
+      setClassName(' disco')
+      setTimeout(() => {
+        const newClassName = className.replace(' disco', '')
+        setClassName(newClassName)
+      }, 10000)
     }
   }
 
@@ -30,10 +37,9 @@ const Avatar = ({ avatar }) => {
 
   return (
     <img
-      ref={image}
-      className='avatar'
+      className={`avatar ${className}`}
       src={`${process.env.REACT_APP_IMAGES_URL}${avatar.url}`}
-      onClick={handlePress}
+      onClick={onClick}
     />
   )
 }
