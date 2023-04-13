@@ -1,0 +1,16 @@
+.button {
+  display: flex;
+  padding: 0.6em 1em;
+  box-shadow: 0 0 10px rgba(#B0B0B0, 0.50);
+  width: fit-content;
+  border-radius: 3em;
+  cursor: pointer;
+
+  &.bold {
+      font-weight: bold;
+  }
+
+  &:hover {
+    box-shadow: 0 0 10px rgba(#B0B0B0, 0.50) inset;
+  }
+}

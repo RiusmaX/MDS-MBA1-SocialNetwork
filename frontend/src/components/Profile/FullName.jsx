@@ -1,7 +1,8 @@
 const FullName = ({ firstName, lastName, username }) => {
   return (
     <div className='fullName'>
-      <p>{`${firstName} ${lastName} (@${username})`}</p>
+      <p className='name'>{`${firstName} ${lastName}`}</p>
+      <p className='pseudo'>{`@${username}`}</p>
     </div>
   )
 }
