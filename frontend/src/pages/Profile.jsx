@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom'
 import PostList from '../components/Posts/PostList'
 import Avatar from '../components/Profile/Avatar'
 import FullName from '../components/Profile/FullName'
-import UserInfos from '../components/Profile/UserInfos'
 import { GET_USER_WITH_POSTS_MYSELF } from '../graphql/queries/usersQueries'
 import Button from '../components/Layout/Button'
 

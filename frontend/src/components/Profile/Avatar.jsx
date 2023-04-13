@@ -1,30 +1,32 @@
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import '../../styles/Avatar.scss'
 
 const Avatar = ({ avatar }) => {
   const image = useRef(null)
-  // Compteur de clique
-  let counter = 0
+  const [counter, setCounter] = useState(0)
 
   // Gestion du clique
   const handlePress = () => {
-    counter++
+    setCounter(counter + 1)
     // Si le nombre de clique atteint 5, surprise
     if (counter >= 5) {
       // l'image rotationne
-      console.log('wouwh tu cliques vite')
-
       image.current.classList.add('animation')
       setTimeout(() => {
         if (image && image.current) {
           image.current.classList.remove('animation')
         }
-      }, 5000)
+      }, 3000)
     }
-    setTimeout(() => {
-      counter = 0
-    }, 3000)
   }
+
+  useEffect(() => {
+    if (counter === 1) {
+      setTimeout(() => {
+        setCounter(0)
+      }, 3000)
+    }
+  }, [counter])
 
   return (
     <img
