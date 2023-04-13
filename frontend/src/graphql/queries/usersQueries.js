@@ -24,7 +24,7 @@ query {
 }
 `
 // Requêtes qui retourne les informations de l'utilisateur connecter ainsi que ses publication
-const GET_USER_WITH_POSTS_MYSELF = (id) => gql`
+const GET_ME_WITH_POSTS = (id) => gql`
 query {
   usersPermissionsUser (id: ${id}) {
     data {
@@ -68,7 +68,7 @@ query {
 
 // Requêtes qui retourne les informations de profil d'autre utilisateur
 // ainsi que ses publication
-const GET_USER_WITH_POSTS_OTHER = (id) => gql`
+const GET_USER_WITH_POSTS_BY_ID = (id) => gql`
 query {
   usersPermissionsUser (id: ${id}) {
     data {
@@ -108,6 +108,6 @@ query {
 
 export {
   GET_USERS,
-  GET_USER_WITH_POSTS_MYSELF,
-  GET_USER_WITH_POSTS_OTHER
+  GET_ME_WITH_POSTS,
+  GET_USER_WITH_POSTS_BY_ID
 }
