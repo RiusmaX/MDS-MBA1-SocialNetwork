@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client'
 
+// Requête qui retourne la liste des utilisateurs
 const GET_USERS = gql`
 query {
   usersPermissionsUsers {
@@ -22,7 +23,7 @@ query {
   }
 }
 `
-
+// Requêtes qui retourne les informations de l'utilisateur connecter ainsi que ses publication
 const GET_USER_WITH_POSTS_MYSELF = (id) => gql`
 query {
   usersPermissionsUser (id: ${id}) {
@@ -65,6 +66,8 @@ query {
 }
 `
 
+// Requêtes qui retourne les informations de profil d'autre utilisateur
+// ainsi que ses publication
 const GET_USER_WITH_POSTS_OTHER = (id) => gql`
 query {
   usersPermissionsUser (id: ${id}) {
