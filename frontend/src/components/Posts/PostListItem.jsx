@@ -18,15 +18,17 @@ const PostListItem = ({ post }) => {
           <h3>{post.attributes?.user?.data?.attributes?.username}</h3>
           <h4>{post.attributes?.user?.data?.attributes?.firstName}</h4>
         </div>
+        {post.attributes?.medias?.data?.[0]?.attributes?.url &&(
         <div className='postItem-content_image'>
-          <img src={`${process.env.REACT_APP_IMAGES_URL}${post.attributes?.medias?.data[0]?.attributes?.url}`} alt={post.attributes?.image?.data?.attributes?.name} />
+          <img style={{width: "300px"}} src={`${process.env.REACT_APP_IMAGES_URL}${post.attributes?.medias?.data?.[0]?.attributes?.url}`} alt={post.attributes?.image?.data?.attributes?.name} />
         </div>
+        )}
         <div className='postItem-content_text'>
           <p>{post.attributes?.content}</p>
         </div>
         <div className='postItem-content_infos'>
-          <p>{post.attributes?.likers?.data[0].id}</p>
-          <p>{post.attributes?.createdAt}</p>
+          <p>{post.attributes?.likers?.data?.[0]?.id}</p>
+          <p>{new Date(post.attributes?.createdAt).toLocaleDateString()}</p>
         </div>
       </div>
     </div>

@@ -1,31 +1,63 @@
-import { useQuery } from "@apollo/client"
-import { GET_POSTS } from "../graphql/queries/postsQueries"
-import PostList from "../components/Posts/PostList"
+import React, { useState, useEffect } from "react";
+import socket from "../services/socket";
+import { gql, useQuery } from "@apollo/client";
+import PostList from "../components/Posts/PostList";
+import { GET_POSTS } from "../graphql/queries/postsQueries";
 
-const Home = () => {
-  const { data, loading, error } = useQuery(GET_POSTS)
+function Home() {
+  const [posts, setPosts] = useState([]);
+  const getPosts = useQuery(GET_POSTS);
+  useEffect(() => {
+    if (getPosts.data) {
+      setPosts(getPosts.data.posts.data);
+    }
+  }, [getPosts]);
 
-  if (loading) {
-    return <h4>Chargement...</h4>
-  }
+  console.log(posts)
 
-  if (error) {
-    return (
-      <>
-        <h1>ERROR</h1>
-        <pre>{JSON.stringify(error, null, 2)}</pre>
-      </>
-    )
-  }
+  useEffect(() => {
+    // Écoute des événements de socket pour les nouveaux posts
+    socket.on("connect", () => {
+      console.log("Socket connected");
+    });
 
-  if (data) {
-    return (
-      <>
-        <h1>Home</h1>
-        <PostList posts={data.posts.data} />
-      </>
-    )
-  }
+    socket.on("disconnect", () => {
+      console.log("Socket disconnected");
+    });
+
+    socket.on("post:create", (data) => {
+      console.log("New post received", data);
+      setPosts((prevPosts) => [
+        ...prevPosts,
+        { id: String(data.id), attributes: data},
+      ]);
+    });
+
+    socket.on("post:update", (data) => {
+      console.log("Post updated", data);
+      setPosts((prevPosts) => {
+        const index = prevPosts.findIndex(
+          (post) => Number(post.id) === Number(data.id)
+        );
+        prevPosts[index] = { id: String(data.id), attributes: data };
+        return prevPosts;
+      });
+    });
+
+    return () => {
+      socket.off("connect");
+      socket.off("disconnect");
+      socket.off("post");
+      socket.off("post:create");
+      socket.off("post:update");
+    };
+  }, []);
+
+  return (
+    <div>
+      <PostList posts={posts} />
+    </div>
+  );
 }
 
-export default Home
+export default Home;
