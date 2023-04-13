@@ -7,15 +7,17 @@ const PostList = ({ posts }) => {
   }
 
   return (
-    <Grid container columns={16} spacing={1} marginTop={2}>
+    <div style={{display: "flex", flexDirection: "column"}}>
       {posts.map((post) => {
         return (
-          <div key={post.id}>
-            <PostListItem post={post} />
-          </div>
+
+
+              <PostListItem post={post} />
+
+
         );
       })}
-    </Grid>
+    </div>
   );
 };
 

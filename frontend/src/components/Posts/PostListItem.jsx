@@ -6,7 +6,7 @@ import { format } from "date-fns";
 
 const PostListItem = ({ post }) => {
   return (
-    <div className="postItem">
+    <div className="postItem" style={{ width: "100%" }}>
       <div className="postItem-avatar">
         {/* Here we pass the avatar object to the Avatar component */}
         <Avatar
@@ -21,13 +21,15 @@ const PostListItem = ({ post }) => {
           <h3>{post.attributes?.user?.data?.attributes?.username}</h3>
           <h4>{post.attributes?.user?.data?.attributes?.firstName}</h4>
         </div>
-        <div className="postItem-content_image">
-          {/* Display the image */}
-          <img
-            src={`${process.env.REACT_APP_IMAGES_URL}${post.attributes?.medias?.data[0]?.attributes?.url}`}
-            alt={post.attributes?.image?.data?.attributes?.name}
-          />
-        </div>
+        {post.attributes?.medias?.data?.[0]?.attributes?.url && (
+          <div className="postItem-content_image">
+            {/* Display the image */}
+            <img
+              src={`${process.env.REACT_APP_IMAGES_URL}${post.attributes?.medias?.data?.[0]?.attributes?.url}`}
+              alt={post.attributes?.image?.data?.attributes?.name}
+            />
+          </div>
+        )}
         <div className="postItem-content_text">
           {/* Display the content */}
           <p>{post.attributes?.content}</p>
@@ -36,7 +38,7 @@ const PostListItem = ({ post }) => {
           {/* Display the number of likes and the date of creation */}
           <p>
             <AiOutlineHeart />
-            {post.attributes?.likers?.data[0].id}
+            {post.attributes?.likers?.data?.[0]?.id}
           </p>
           <p>
             <BsCalendarDate />
