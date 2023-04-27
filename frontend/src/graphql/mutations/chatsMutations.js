@@ -20,9 +20,18 @@ const CREATE_CHAT = gql`
         }
       }
     }
-  }
-`
+  }`
+
+const ADD_CHAT_MESSAGE = gql`
+mutation createMessage($messageInput: MessageInput! ) {
+    createMessage(data: $messageInput) {
+			data{
+        id
+      }
+    }
+  }`
 
 export {
-  CREATE_CHAT
+  CREATE_CHAT,
+  ADD_CHAT_MESSAGE
 }
