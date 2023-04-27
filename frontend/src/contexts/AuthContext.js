@@ -1,62 +1,64 @@
-import React from 'react'
+import React, { createContext, useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useMutation } from '@apollo/client'
 import { LOGIN_MUTATION } from '../graphql/mutations/authMutations'
+import jwt_decode from 'jwt-decode'
 
-const AuthContext = React.createContext()
+export const AuthContext = createContext()
 
-const actionTypes = {
-  LOGIN: 'login',
-  SIGNUP: 'signup',
-  SIGNOUT: 'signout'
-}
+export function AuthProvider (props) {
+  const [user, setUser] = useState(null)
+  const navigate = useNavigate()
+  const loginGQL = useLoginMutation()
+  useEffect(() => {
+    const token = window.localStorage.getItem('token')
+    if (token) {
+      const decodedToken = jwt_decode(token)
+      if (decodedToken.exp * 1000 < Date.now()) {
+        setUser(null)
+        navigate('/auth')
+      }
+    }
+  }, [])
 
-const initialState = {
-  email: null,
-  username: null
-}
-
-const AuthReducer = (state, action) => {
-  const [login, { data, loading, error }] = useMutation(LOGIN_MUTATION)
-  switch (action.type) {
-    case actionTypes.LOGIN:
-      login({ variables: { identifier: action.data.email, password: action.data.password } }).then((response) => {
-        console.log(response)
-        return {
-          email: response.user.email,
-          username: response.user.username
-        }
-      })
-        .catch((error) => console.log(error))
-      break
-    default:
-      throw new Error(`Unhandled action type : ${action.type}`)
-  }
-}
-
-const AuthContextFactory = (dispatch) => ({
-  login: (value) => {
-    dispatch({
-      type: actionTypes.LOGIN,
-      data: value
+  function useLoginMutation () {
+    const [loginGQL] = useMutation(LOGIN_MUTATION, {
+      onError: (error) => {
+        console.log(error)
+      },
+      onCompleted: (data) => {
+        window.localStorage.setItem('token', data.login.jwt)
+        setUser(data.login.user)
+        navigate('/')
+      }
     })
+
+    return loginGQL
   }
-})
 
-const AuthProvider = ({ children }) => {
-  const [state, dispatch] = React.useReducer(AuthReducer, initialState)
+  function isValidToken () {
+    const token = window.localStorage.getItem('token')
+    return token && jwt_decode(token).exp * 1000 < Date.now()
+  }
+
+  function login (values) {
+    loginGQL({ variables: { identifier: values.email, password: values.password } })
+      .catch((error) => console.log(error))
+  }
+
+  function isLoggedIn () {
+    return isValidToken()
+  }
+
+  function logout () {
+    window.localStorage.removeItem('token')
+    setUser(null)
+    navigate('/auth')
+  }
+
   return (
-    <AuthContext value={{ state, ...AuthContextFactory(dispatch) }}>
-      {children}
-    </AuthContext>
+    <AuthContext.Provider value={{ user, login, logout, isLoggedIn }}>
+      {props.children}
+    </AuthContext.Provider>
   )
-}
-
-const useContext = () => {
-  const context = React.useContext(AuthContext)
-  if (!context) throw new Error('useCounter must be used inside a CounterProvider')
-  return context
-}
-
-export {
-  AuthProvider, useContext
 }

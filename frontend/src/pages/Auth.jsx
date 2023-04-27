@@ -1,65 +1,64 @@
-import { useMutation, useQuery, useLazyQuery } from '@apollo/client'
-import { useState } from 'react'
-import { LOGIN_MUTATION } from '../graphql/mutations/authMutations'
-import { GET_USER_BY_EMAIL } from '../graphql/queries/usersQueries'
+import { useState, useContext, useEffect } from 'react'
 import '../styles/Auth.scss'
 import '../styles/Global.scss'
 import InputField from '../components/Global/Input/InputField'
-import { FaUser } from 'react-icons/fa';
-import { FaLock } from 'react-icons/fa';
+import { FaUser, FaLock } from 'react-icons/fa'
 import Julo from '../assets/images/Julo.png'
-import Julo_error from '../assets/images/Julo_error.png'
 import SubmitButton from '../components/Global/Buttons/SubmitButton'
+import * as Yup from 'yup'
+import { Formik, Form } from 'formik'
+import { AuthContext } from '../contexts/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 const Auth = () => {
-  const [credentials, setCredentials] = useState({
-    email: '',
-    password: '',
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().email('invalid email adress').required('email is required'),
+    password: Yup.string().min(5, 'password must contains 5 characters').required('password is required')
   })
+  const navigate = useNavigate()
+
+  const authContext = useContext(AuthContext)
+
   const [errorLabel, setErrorLabel] = useState('')
 
-  const [login, { data, loading, error }] = useMutation(LOGIN_MUTATION)
-
-  const [getUserByEmail] = useLazyQuery(GET_USER_BY_EMAIL(credentials.email))
-
-  const handleChange = (e) => {
-    e.preventDefault()
-    setCredentials({
-      ...credentials,
-      [e.target.name]: e.target.value
-    })
+  const handleSubmit = (values) => {
+    authContext.login(values)
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    login({ variables: { identifier: credentials.email, password: credentials.password } }).then(() => {
-      console.log(error)
-    }).catch(err => {
-      console.log(err)
-      console.log(error)
-      getUserByEmail({ variables: { email: credentials.email } }).then((d) => {
-        if (d.data.usersPermissionsUsers.data.length > 0) {
-          setErrorLabel('wrong password')
-        }
-        else {
-          setErrorLabel('Email doesnt exist')
-        }
-      }).catch(err => {
-        console.log(err)
-      })
-    })
-  }
+  useEffect(() => {
+    if (authContext.isLoggedIn()) {
+      navigate('/')
+    }
+  })
 
   return (
     <div className='authForm'>
-      <img className='imgJulo' src={error ? Julo_error : Julo} alt='Jules img' />
-      <form method='POST' noValidate style={{ display: 'flex', flexDirection: 'column' }} onSubmit={handleSubmit}>
-
-        <InputField type='text' handleChange={handleChange} placeholder='EMAIL' name='email' icon={FaUser} />
-        <InputField type='password' handleChange={handleChange} placeholder='PASSWORD' name='password' icon={FaLock} />
-        {error && errorLabel && <div className='error'>{errorLabel}</div>}
-        {!loading && <SubmitButton label='Connexion' />}
-      </form>
+      <img className='imgJulo' src={Julo} alt='Jules img' />
+      <Formik
+        initialValues={{
+          email: '',
+          password: ''
+        }}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        <Form>
+          <InputField
+            type='email'
+            placeholder='EMAIL'
+            name='email'
+            icon={FaUser}
+          />
+          <InputField
+            type='password'
+            placeholder='PASSWORD'
+            name='password'
+            icon={FaLock}
+          />
+          {errorLabel && <div className='error'>{errorLabel}</div>}
+          <SubmitButton label='Connexion' />
+        </Form>
+      </Formik>
     </div>
   )
 }
