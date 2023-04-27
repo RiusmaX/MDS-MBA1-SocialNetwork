@@ -1,6 +1,7 @@
-import { useMutation } from '@apollo/client'
+import { useMutation, useQuery, useLazyQuery } from '@apollo/client'
 import { useState } from 'react'
 import { LOGIN_MUTATION } from '../graphql/mutations/authMutations'
+import { GET_USER_BY_EMAIL } from '../graphql/queries/usersQueries'
 import '../styles/Auth.scss'
 import InputField from '../components/Global/Input/InputField'
 import userIcon from '../assets/icons/user.svg'
@@ -12,10 +13,13 @@ import SubmitButton from '../components/Global/Buttons/SubmitButton'
 const Auth = () => {
   const [credentials, setCredentials] = useState({
     email: '',
-    password: ''
+    password: '',
   })
+  const  [errorLabel, setErrorLabel] = useState('')
 
   const [login, { data, loading, error }] = useMutation(LOGIN_MUTATION)
+
+  const [getUserByEmail] = useLazyQuery(GET_USER_BY_EMAIL(credentials.email))
 
   const handleChange = (e) => {
     e.preventDefault()
@@ -27,10 +31,22 @@ const Auth = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(credentials)
     login({ variables: { identifier: credentials.email, password: credentials.password } }).then(() => {
       console.log(error)
-    }).catch(err => { console.log(err); console.log(error) })
+    }).catch(err => {
+      console.log(err)
+      console.log(error)
+      getUserByEmail({ variables: { email: credentials.email } }).then((d) => {
+        if(d.data.usersPermissionsUsers.data.length > 0){
+          setErrorLabel('wrong password')
+        }
+        else{
+          setErrorLabel('Email doesnt exist')
+        }
+      }).catch(err => {
+        console.log(err)
+      })
+    })
   }
 
   return (
@@ -40,10 +56,9 @@ const Auth = () => {
 
         <InputField type='text' handleChange={handleChange} placeholder='EMAIL' name='email' icon={userIcon} />
         <InputField type='password' handleChange={handleChange} placeholder='PASSWORD' name='password' icon={lockIcon} />
-        {error && <div className='error'>bad credentials</div>}
+        {error && errorLabel && <div className='error'>{errorLabel}</div>}
         {!loading && <SubmitButton label='Connexion' />}
       </form>
-      <pre>{JSON.stringify(data)}</pre>
     </div>
   )
 }
