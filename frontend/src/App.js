@@ -1,8 +1,5 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
-import { Container } from '@mui/material'
-
 import './App.css'
-import ResponsiveAppBar from './components/Layout/AppBar'
 import Router from './navigation/Router'
 
 const client = new ApolloClient({
