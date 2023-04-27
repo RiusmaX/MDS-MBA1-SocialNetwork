@@ -1,46 +1,55 @@
-import { Avatar, Button, Card, CardActions, CardContent, CardHeader, CardMedia, IconButton, Typography } from '@mui/material'
-import { blueGrey } from '@mui/material/colors'
-import { getExtract } from '../../utils/strings'
-import FavoriteIcon from '@mui/icons-material/Favorite'
-import ShareIcon from '@mui/icons-material/Share'
+import Avatar from '../Profile/Avatar'
+import '../../styles/PostListItem.scss'
+import { AiOutlineHeart } from 'react-icons/ai'
+import { BsCalendarDate } from 'react-icons/bs'
+import { format } from 'date-fns'
+import { useEffect } from 'react'
 
 const PostListItem = ({ post }) => {
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      <CardHeader
-        //   avatar={
-        //     <Avatar
-        //       src={process.env.REACT_APP_IMAGES_URL + user.attributes.avatar.data.attributes.url}
-        //       sx={{ bgcolor: blueGrey[500] }}
-        //       aria-label='recipe'
-        //     >
-        //       T
-        //     </Avatar>
-        // }
-        title={post.attributes.title}
-      />
-      <CardMedia
-        component='img'
-        height='200'
-        image={process.env.REACT_APP_IMAGES_URL + post.attributes?.medias?.data[0]?.attributes?.url}
-      />
-      <CardContent>
-        <Typography variant='body2' color='text.secondary'>
-          {getExtract(post.attributes.content)}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button>
-          Lire l'article
-        </Button>
-        <IconButton aria-label='add to favorites'>
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label='share'>
-          <ShareIcon />
-        </IconButton>
-      </CardActions>
-    </Card>
+    <div className='postItem' style={{ width: '100%' }}>
+      <div className='postItem-avatar'>
+        {/* Here we pass the avatar object to the Avatar component */}
+        <Avatar
+          avatar={
+            post.attributes?.user?.data?.attributes?.avatar?.data?.attributes
+          }
+        />
+      </div>
+      <div className='postItem-content'>
+        <div className='postItem-content_pseudo'>
+          {/* Display the username and firstname */}
+          <h3>{post.attributes?.user?.data?.attributes?.username}</h3>
+          <h4>{post.attributes?.user?.data?.attributes?.firstName}</h4>
+        </div>
+        {post.attributes?.medias?.data?.[0]?.attributes?.url && (
+          <div className='postItem-content_image'>
+            {/* Display the image */}
+            <img
+              src={`${process.env.REACT_APP_IMAGES_URL}${post.attributes?.medias?.data?.[0]?.attributes?.url}`}
+              alt={post.attributes?.image?.data?.attributes?.name}
+            />
+          </div>
+        )}
+        <div className='postItem-content_text'>
+          {/* Display the content */}
+          <p>{post.attributes?.content}</p>
+        </div>
+        <div className='postItem-content_infos'>
+          {/* Display the number of likes and the date of creation */}
+          <p>
+            <AiOutlineHeart />
+            {/* calculate the number of likes */}
+            {post.attributes?.likers?.data?.length}
+          </p>
+          <p>
+            <BsCalendarDate />
+            {format(new Date(post.attributes?.createdAt), 'dd/MM/yyyy')}
+            {/* {post.attributes?.createdAt} */}
+          </p>
+        </div>
+      </div>
+    </div>
   )
 }
 

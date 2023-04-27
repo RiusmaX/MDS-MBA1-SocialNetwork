@@ -1,4 +1,3 @@
-import { Grid } from '@mui/material'
 import PostListItem from './PostListItem'
 
 const PostList = ({ posts }) => {
@@ -7,20 +6,11 @@ const PostList = ({ posts }) => {
   }
 
   return (
-    <Grid container columns={16} spacing={1} marginTop={2}>
-      {
-        posts.map(post => {
-          return (
-            <Grid
-              key={post.id}
-              xs={6}
-            >
-              <PostListItem post={post} />
-            </Grid>
-          )
-        })
-      }
-    </Grid>
+    <div className='postListContainer'>
+      {posts.map((post) => {
+        return <PostListItem key={post} post={post} />
+      })}
+    </div>
   )
 }
 
