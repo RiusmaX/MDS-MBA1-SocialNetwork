@@ -37,16 +37,13 @@ const ChatListItem = ({ chat, onClick }) => {
       <CardHeader
         avatar={
           <Avatar
-            src={process.env.REACT_APP_IMAGES_URL + chat.attributes.image.data.attributes.url}
+            src={process.env.REACT_APP_IMAGES_URL + chat?.attributes?.image?.data?.attributes?.url}
             sx={{ bgcolor: blueGrey[500] }}
             aria-label='recipe'
           >
           </Avatar>
         }
         title={chat.attributes.name}
-        //todo take the date of the last message
-        //subheader={Moment(dt).format('d MMM hh:mm')}
-        //subheader={dt.format('d MMM hh:mm')}
         subheader={dt.format('D MMMM YYYY HH[h]mm')}
       />
     </Card>
