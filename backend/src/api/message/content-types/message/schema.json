@@ -32,14 +32,12 @@
     "users_permissions_user": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "plugin::users-permissions.user",
-      "inversedBy": "message"
+      "target": "plugin::users-permissions.user"
     },
     "chat": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::chat.chat",
-      "inversedBy": "message"
+      "target": "api::chat.chat"
     }
   }
 }

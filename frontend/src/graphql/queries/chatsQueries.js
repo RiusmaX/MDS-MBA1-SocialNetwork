@@ -81,7 +81,37 @@ query {
 
 const GET_CHAT_MESSAGE = (id) => gql`
 query{
-  messages(filters: {chat: {id: {eq: 1}}}){
+  messages(filters: {chat: {id: {eq: ${id}}}}, pagination: { limit: 1 }){
+    data {
+      id,
+      attributes{
+        messageText,
+        sendDate,
+        media {
+          data{
+            id,
+            attributes{
+              url
+            }
+          }
+        },
+        users_permissions_user{
+          data{
+            id,
+            attributes{
+              username
+            }
+          }
+        }
+      }
+    }
+  }
+}
+`
+
+const GET_LAST_CHAT_MESSAGE = (id) => gql`
+query{
+  messages(sort: "sendDate:desc", filters: {chat: {id: {eq: ${id}}}}){
     data {
       id,
       attributes{
@@ -111,5 +141,7 @@ query{
 
 export {
     GET_CHATS,
-    GET_CHATS_WITH_USER
+    GET_CHATS_WITH_USER,
+    GET_CHAT_MESSAGE,
+    GET_LAST_CHAT_MESSAGE,
 }
