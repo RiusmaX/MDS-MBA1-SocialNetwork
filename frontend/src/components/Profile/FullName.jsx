@@ -1,3 +1,4 @@
+// Affichage du nom et du pseudo
 const FullName = ({ firstName, lastName, username }) => {
   return (
     <div className='fullName'>
