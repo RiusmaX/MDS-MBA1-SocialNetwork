@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import '../../styles/Avatar.scss'
 
 const Avatar = ({ avatar }) => {
-  const image = useRef(null)
   const [counter, setCounter] = useState(0)
+  const [classname, setClassname] = useState('')
 
   // Gestion du clique
   const handlePress = () => {
@@ -11,15 +11,14 @@ const Avatar = ({ avatar }) => {
     // Si le nombre de clique atteint 5, surprise
     if (counter >= 5) {
       // l'image rotationne
-      image.current.classList.add('animation')
+      setClassname('animation')
       setTimeout(() => {
-        if (image && image.current) {
-          image.current.classList.remove('animation')
-        }
+          setClassname('')
       }, 3000)
     }
   }
 
+  // Reset du compteur
   useEffect(() => {
     if (counter === 1) {
       setTimeout(() => {
@@ -30,8 +29,7 @@ const Avatar = ({ avatar }) => {
 
   return (
     <img
-      ref={image}
-      className='avatar'
+      className={`avatar ${classname}`}
       src={`${process.env.REACT_APP_IMAGES_URL}${avatar.url}`}
       onClick={handlePress}
     />

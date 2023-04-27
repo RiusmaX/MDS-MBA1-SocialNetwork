@@ -1,5 +1,4 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
-
 import './App.css'
 import Router from './navigation/Router'
 
