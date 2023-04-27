@@ -2,7 +2,7 @@ import '../../styles/ChatEntryField.scss'
 
 const ChatEntryField = () => {
   return (
-    <textarea rows='5' class='ChatEntryField' />
+    <textarea rows='5' className='ChatEntryField' />
   )
 }
 
