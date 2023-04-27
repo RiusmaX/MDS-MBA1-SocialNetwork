@@ -5,7 +5,7 @@ import ChatSendButton from './ChatSendButton'
 
 const ChatSendingForm = () => {
   return (
-    <form class='ChatSendingForm'>
+    <form className='ChatSendingForm'>
       <ChatEntryField />
       <ChatSendButton />
     </form>
