@@ -5,11 +5,9 @@ const SubmitButton = ({ label }) => {
   *    - renders an input with a className of 'input' and a value of the prop 'label' or an empty string
   */
   return (
-    <>
-      <div className='input-container'>
-        <input type='submit' className='input' value={label || ''} />
-      </div>
-    </>
+    <div className='input-container'>
+      <input type='submit' className='input' value={label || ''} />
+    </div>
   )
 }
 

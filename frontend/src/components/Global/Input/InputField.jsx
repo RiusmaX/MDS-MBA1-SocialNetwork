@@ -14,12 +14,10 @@ const InputField = ({ type, handleChange, icon, placeholder, name, value }) => {
     * The code also returns an empty HTML element. The empty element is used to make sure that the code is valid JSX.
     * The empty element is not rendered to the DOM.
     */
-    <>
-      <div className='input-container'>
-        {icon && <img src={icon} alt='icon' className='icon' />}
-        <input type={type} placeholder={placeholder} className='input' name={name} onChange={handleChange} value={value} />
-      </div>
-    </>
+    <div className='input-container'>
+      {icon && <img src={icon} alt='icon' className='icon' />}
+      <input type={type} placeholder={placeholder} className='input' name={name} onChange={handleChange} value={value} />
+    </div>
   )
 }
 
