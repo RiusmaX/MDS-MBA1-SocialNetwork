@@ -37,9 +37,9 @@
     },
     "chat": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "manyToOne",
       "target": "api::chat.chat",
-      "inversedBy": "message"
+      "inversedBy": "messages"
     }
   }
 }
