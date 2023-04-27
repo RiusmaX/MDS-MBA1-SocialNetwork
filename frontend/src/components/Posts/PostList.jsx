@@ -1,27 +1,18 @@
-import { Grid } from '@mui/material'
-import PostListItem from './PostListItem'
+import PostListItem from "./PostListItem";
 
 const PostList = ({ posts }) => {
   if (!posts || posts.length < 1) {
-    return <h4>No data...</h4>
+    return <h4>No data...</h4>;
   }
 
   return (
-    <Grid container columns={16} spacing={1} marginTop={2}>
-      {
-        posts.map(post => {
-          return (
-            <Grid
-              key={post.id}
-              xs={6}
-            >
-              <PostListItem post={post} />
-            </Grid>
-          )
-        })
-      }
-    </Grid>
-  )
-}
+    <div className="postListContainer">
+      {posts.map((post) => {
+        // list of posts
+        return <PostListItem key={post.id} post={post} />;
+      })}
+    </div>
+  );
+};
 
-export default PostList
+export default PostList;

@@ -33,7 +33,7 @@ const Avatar = ({ avatar }) => {
       src={`${process.env.REACT_APP_IMAGES_URL}${avatar.url}`}
       onClick={handleClick}
     />
-  )
-}
+  );
+};
 
-export default Avatar
+export default Avatar;

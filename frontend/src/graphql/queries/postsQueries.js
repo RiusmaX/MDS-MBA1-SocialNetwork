@@ -7,13 +7,37 @@ query {
       id,
       attributes {
         title, 
-        content, 
+        content,
+        likers {
+          data {
+            id
+          }
+        },
+        createdAt, 
         medias {
           data {
             id,
             attributes {
               name,
               url
+            }
+          }
+        },
+        user {
+          data {
+            id,
+            attributes{
+              username,
+              firstName,
+              avatar {
+                data {
+                  id,
+                  attributes {
+                    name,
+                    url
+                  }
+                }
+              }
             }
           }
         }
