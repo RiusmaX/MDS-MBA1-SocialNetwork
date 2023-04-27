@@ -79,6 +79,36 @@ query {
 // }
 // `
 
+const GET_CHAT_MESSAGE = (id) => gql`
+query{
+  messages(filters: {chat: {id: {eq: 1}}}){
+    data {
+      id,
+      attributes{
+        messageText,
+        sendDate,
+        media {
+          data{
+            id,
+            attributes{
+              url
+            }
+          }
+        },
+        users_permissions_user{
+          data{
+            id,
+            attributes{
+              username
+            }
+          }
+        }
+      }
+    }
+  }
+}
+`
+
 export {
     GET_CHATS,
     GET_CHATS_WITH_USER
