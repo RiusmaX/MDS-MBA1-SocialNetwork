@@ -8,7 +8,7 @@ const PostList = ({ posts }) => {
   return (
     <div className='postListContainer'>
       {posts.map((post) => {
-        return <PostListItem key={post} post={post} />
+        return <PostListItem key={post} post={post} seeDetails={true} />
       })}
     </div>
   )

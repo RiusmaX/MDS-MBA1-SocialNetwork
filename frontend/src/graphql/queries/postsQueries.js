@@ -45,6 +45,95 @@ query {
     }
   }
 }
+
+`
+const GET_POST_BY_ID = (id) => gql`
+query GetPostById($id: ID!) {
+  post(id: $id) {
+    data {
+      id
+      attributes {
+        title
+        content,
+        likers {
+          data {
+            id
+          }
+        },
+        createdAt, 
+        medias {
+          data {
+            id,
+            attributes {
+              name,
+              url
+            }
+          }
+        },
+        user {
+          data {
+            id,
+            attributes{
+              username,
+              firstName,
+              avatar {
+                data {
+                  id,
+                  attributes {
+                    name,
+                    url
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  comments: posts(filters: {relativeTo: { id: { eq : $id } }}) {
+    data {
+      id
+      attributes {
+        title
+        content,
+        likers {
+          data {
+            id
+          }
+        },
+        createdAt, 
+        medias {
+          data {
+            id,
+            attributes {
+              name,
+              url
+            }
+          }
+        },
+        user {
+          data {
+            id,
+            attributes{
+              username,
+              firstName,
+              avatar {
+                data {
+                  id,
+                  attributes {
+                    name,
+                    url
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
 `
 
 const GET_POST_COMMENTS = (id) => gql`
@@ -75,6 +164,4 @@ query {
 }
 `
 
-export {
-  GET_POSTS
-}
+export { GET_POSTS, GET_POST_BY_ID, GET_POST_COMMENTS }

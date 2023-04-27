@@ -3,11 +3,18 @@ import '../../styles/PostListItem.scss'
 import { AiOutlineHeart } from 'react-icons/ai'
 import { BsCalendarDate } from 'react-icons/bs'
 import { format } from 'date-fns'
-import { useEffect } from 'react'
+import { useNavigate } from "react-router-dom";
 
-const PostListItem = ({ post }) => {
+const PostListItem = ({ post, seeDetails }) => {
+
+  const navigate = useNavigate();
+
+  const openDetail = () => {
+    if (seeDetails) navigate(`/post/${post.id}`)
+  }
+
   return (
-    <div className='postItem' style={{ width: '100%' }}>
+    <div onClick={openDetail} className={`postItem ${seeDetails ? `pointerCursor` : `` }`} style={{ width: '100%' }}>
       <div className='postItem-avatar'>
         {/* Here we pass the avatar object to the Avatar component */}
         <Avatar
