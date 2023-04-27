@@ -6,6 +6,7 @@ import InputField from '../components/Global/Input/InputField'
 import userIcon from '../assets/icons/user.svg'
 import lockIcon from '../assets/icons/lock.svg'
 import Julo from '../assets/images/Julo.png'
+import Julo_error from '../assets/images/Julo_error.png'
 import SubmitButton from '../components/Global/Buttons/SubmitButton'
 
 const Auth = () => {
@@ -33,9 +34,8 @@ const Auth = () => {
   }
 
   return (
-
     <div className='authForm'>
-      <img className='imgJulo' src={Julo} alt='Jules img' />
+      <img className='imgJulo' src={error ? Julo_error : Julo} alt='Jules img' />
       <form method='POST' noValidate style={{ display: 'flex', flexDirection: 'column' }} onSubmit={handleSubmit}>
 
         <InputField type='text' handleChange={handleChange} placeholder='EMAIL' name='email' icon={userIcon} />
