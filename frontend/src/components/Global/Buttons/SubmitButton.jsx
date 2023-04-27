@@ -1,9 +1,8 @@
 const SubmitButton = ({ label }) => {
-  /*
-  * InputContainer
-  *    - renders a div with a className of 'input-container'
-  *    - renders an input with a className of 'input' and a value of the prop 'label' or an empty string
-  */
+  /**
+   * @param {string} label - The label of the button
+   * @returns {JSX.Element} - The button
+   */
   return (
     <div className='input-container'>
       <input type='submit' className='input' value={label || ''} />
