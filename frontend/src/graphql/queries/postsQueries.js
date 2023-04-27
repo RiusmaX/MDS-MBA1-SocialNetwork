@@ -2,7 +2,7 @@ import { gql } from '@apollo/client'
 
 const GET_POSTS = gql`
 query {
-  posts {
+  posts(filters: {relativeTo: { id: {eq: null}}}) {
     data {
       id,
       attributes {
