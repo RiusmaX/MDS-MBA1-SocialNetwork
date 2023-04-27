@@ -75,5 +75,6 @@ query{
 
 export {
     GET_CHATS,
-    GET_CHATS_WITH_USER
+    GET_CHATS_WITH_USER,
+    GET_CHAT_MESSAGE
 }
