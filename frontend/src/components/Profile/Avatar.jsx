@@ -6,7 +6,7 @@ const Avatar = ({ avatar }) => {
   const [classname, setClassname] = useState('')
 
   // Gestion du clique
-  const handlePress = () => {
+  const handleClick = () => {
     setCounter(counter + 1)
     // Si le nombre de clique atteint 5, surprise
     if (counter >= 5) {
@@ -31,7 +31,7 @@ const Avatar = ({ avatar }) => {
     <img
       className={`avatar ${classname}`}
       src={`${process.env.REACT_APP_IMAGES_URL}${avatar.url}`}
-      onClick={handlePress}
+      onClick={handleClick}
     />
   )
 }
