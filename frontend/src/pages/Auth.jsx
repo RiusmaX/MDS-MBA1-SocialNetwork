@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { LOGIN_MUTATION } from '../graphql/mutations/authMutations'
 import { GET_USER_BY_EMAIL } from '../graphql/queries/usersQueries'
 import '../styles/Auth.scss'
+import '../styles/Global.scss'
 import InputField from '../components/Global/Input/InputField'
 import userIcon from '../assets/icons/user.svg'
 import lockIcon from '../assets/icons/lock.svg'
@@ -15,7 +16,7 @@ const Auth = () => {
     email: '',
     password: '',
   })
-  const  [errorLabel, setErrorLabel] = useState('')
+  const [errorLabel, setErrorLabel] = useState('')
 
   const [login, { data, loading, error }] = useMutation(LOGIN_MUTATION)
 
@@ -37,10 +38,10 @@ const Auth = () => {
       console.log(err)
       console.log(error)
       getUserByEmail({ variables: { email: credentials.email } }).then((d) => {
-        if(d.data.usersPermissionsUsers.data.length > 0){
+        if (d.data.usersPermissionsUsers.data.length > 0) {
           setErrorLabel('wrong password')
         }
-        else{
+        else {
           setErrorLabel('Email doesnt exist')
         }
       }).catch(err => {
