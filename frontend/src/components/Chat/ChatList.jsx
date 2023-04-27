@@ -21,7 +21,7 @@ const ChatList = ({ chats }) => {
 
                   <ChatListItem
                     chat={chat}
-                    onClick={() => navigate(`/users/:id/chat/${chat.id}`)}
+                    onClick={() => navigate(`/users/${chat.id}/chat`)}
                   />
 
                 </Grid>
