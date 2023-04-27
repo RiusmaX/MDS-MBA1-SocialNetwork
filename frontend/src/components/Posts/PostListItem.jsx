@@ -1,10 +1,13 @@
 import Avatar from "../Profile/Avatar";
 import "../../styles/PostListItem.scss";
-import { AiOutlineHeart } from "react-icons/ai";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { BsCalendarDate } from "react-icons/bs";
 import { format } from "date-fns";
+import useLikePost from "../../services/Likers";
 
 const PostListItem = ({ post }) => {
+  const { isLike, setIsLike, handleLikePost } = useLikePost(Number(post.id), 1);
+
   return (
     <div className="postItem" style={{ width: "100%" }}>
       <div className="postItem-avatar">
@@ -37,7 +40,12 @@ const PostListItem = ({ post }) => {
         <div className="postItem-content_infos">
           {/* Display the number of likes and the date of creation */}
           <p>
-            <AiOutlineHeart />
+            {isLike ? (
+              <AiFillHeart onClick={handleLikePost} />
+            ) : (
+              <AiOutlineHeart onClick={handleLikePost} />
+            )}
+
             {/* calculate the number of likes */}
             {post.attributes?.likers?.data?.length}
           </p>
