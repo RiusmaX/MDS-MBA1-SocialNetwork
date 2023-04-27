@@ -3,7 +3,7 @@ import io from "socket.io-client";
 const socket = io("http://localhost:1337");
 
 export const subscribeToPosts = (setPosts) => {
-  // Écoute des événements de socket pour les nouveaux posts
+  // Listening to socket events for new posts
   socket.on("connect", () => {
     console.log("Socket connected");
   });
@@ -20,6 +20,7 @@ export const subscribeToPosts = (setPosts) => {
     ]);
   });
 
+  // receive new posts sent by the server
   socket.on("post:update", (data) => {
     console.log("Post updated", data);
     setPosts((prevPosts) => {

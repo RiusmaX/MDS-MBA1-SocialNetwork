@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import socket, { subscribeToPosts } from "../services/socket";
-import { gql, useQuery } from "@apollo/client";
+import { subscribeToPosts } from "../services/socket";
+import { useQuery } from "@apollo/client";
 import PostList from "../components/Posts/PostList";
 import { GET_POSTS } from "../graphql/queries/postsQueries";
 import { CounterProvider, useCounter } from "../contexts/CounterContext";
@@ -8,6 +8,8 @@ import { CounterProvider, useCounter } from "../contexts/CounterContext";
 function Home() {
   const [posts, setPosts] = useState([]);
   const getPosts = useQuery(GET_POSTS);
+
+  // uses the useEffect hook to update the local posts state whenever the data in the getPosts request changes
   useEffect(() => {
     if (getPosts.data) {
       setPosts(getPosts.data.posts.data);
