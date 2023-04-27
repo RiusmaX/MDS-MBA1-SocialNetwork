@@ -7,14 +7,14 @@ const ChatListItem = ({ chat, onClick }) => {
 
   //display the date properly
   Moment.locale('fr');
-  var dt = chat.attributes.lastMessageDate;
+  var dt = chat?.attributes?.lastMessageDate;
 
   return (
     <Card sx={{ maxWidth: 345 }} onClick={onClick}>
       <CardHeader
         avatar={
           <Avatar
-            src={process.env.REACT_APP_IMAGES_URL + chat.attributes.image.data.attributes.url}
+            src={process.env.REACT_APP_IMAGES_URL + chat?.attributes?.image?.data?.attributes?.url}
             sx={{ bgcolor: blueGrey[500] }}
             aria-label='recipe'
           >

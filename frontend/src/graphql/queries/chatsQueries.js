@@ -43,42 +43,6 @@ query {
 }
 `
 
-// const GET_CHATS_WITH_USER = (id) => gql`
-// query {
-//   usersPermissionsUser(id: ${id}){
-//     data{
-//       id,
-//       attributes{
-//         username,
-//         chats{
-//           data{
-//             id,
-//             attributes{
-//               name,
-//               users_permissions_users{
-//                 data{
-//                   id,
-//                   attributes{username}
-//                 }
-//               }
-//              image {
-//                 data {
-//                     id,
-//                     attributes {
-//                     name,
-//                     url
-//                     }
-//                 }
-//              }
-//             }
-//           }
-//         }
-//       }
-//     }
-//   }
-// }
-// `
-
 const GET_CHAT_MESSAGE = (id) => gql`
 query{
   messages(filters: {chat: {id: {eq: 1}}}){
