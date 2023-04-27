@@ -15,11 +15,11 @@ const Router = () => {
         <Route path='/' index element={<Home />} />
 
         <Route path='/auth' element={<Auth />} />
+        <Route path='/chats' element={<Chats />} />
+        <Route path='/chats/:id' element={<Chat />} />
         <Route path='users'>
           <Route index element={<Users />} />
           <Route path=':id' element={<Profile />} />
-          <Route path=':id/chats' element={<Chats />} />
-          <Route path=':id/chat' element={<Chat />} />
         </Route>
       </Routes>
     </BrowserRouter>

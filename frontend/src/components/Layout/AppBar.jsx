@@ -23,6 +23,9 @@ import { Link, useNavigate } from 'react-router-dom'
 const pages = [{
   name: 'Users',
   link: '/users'
+}, {
+  name: 'Conversations',
+  link: '/chats'
 }]
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
 
