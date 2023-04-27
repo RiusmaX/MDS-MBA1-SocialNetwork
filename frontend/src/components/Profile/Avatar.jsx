@@ -1,13 +1,37 @@
-import "../../styles/Avatar.scss";
+import { useEffect, useRef, useState } from 'react'
+import '../../styles/Avatar.scss'
 
 const Avatar = ({ avatar }) => {
-  if (!avatar?.url) return null;
+  const [counter, setCounter] = useState(0)
+  const [classname, setClassname] = useState('')
+
+  // Gestion du clique
+  const handleClick = () => {
+    setCounter(counter + 1)
+    // Si le nombre de clique atteint 5, surprise
+    if (counter >= 5) {
+      // l'image rotationne
+      setClassname('animation')
+      setTimeout(() => {
+          setClassname('')
+      }, 3000)
+    }
+  }
+
+  // Reset du compteur
+  useEffect(() => {
+    if (counter === 1) {
+      setTimeout(() => {
+        setCounter(0)
+      }, 3000)
+    }
+  }, [counter])
 
   return (
     <img
-      className="avatar"
-      src={`${process.env.REACT_APP_IMAGES_URL}${avatar?.url}`}
-      alt="avatar"
+      className={`avatar ${classname}`}
+      src={`${process.env.REACT_APP_IMAGES_URL}${avatar.url}`}
+      onClick={handleClick}
     />
   );
 };
