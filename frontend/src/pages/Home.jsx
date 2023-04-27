@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { CounterProvider, useCounter } from '../contexts/CounterContext'
 
 const Home = () => {
@@ -20,18 +21,23 @@ const CounterView = () => {
 }
 
 const CounterActions = () => {
+  const [value, setValue] = useState()
   const { increment, decrement } = useCounter()
   return (
     <>
       <button onClick={decrement}>-</button>
-      <button onClick={increment}>+</button>
+      <button onClick={() => increment()}>+</button>
       <br />
       <label>
         Nombre :
-        <input type='number' />
+        <input
+          type='number'
+          value={value}
+          onChange={(event) => setValue(event.target.value)}
+        />
       </label>
       <br />
-      <button>Ajouter au compteur</button>
+      <button onClick={() => increment(Number(value))}>Ajouter au compteur</button>
     </>
   )
 }

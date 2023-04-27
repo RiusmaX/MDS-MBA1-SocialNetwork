@@ -17,8 +17,9 @@ const CounterReducer = (state, action) => {
   switch (action.type) {
     case actionTypes.INCREMENT:
       // Jamais de traitement, jamais de déclaration ou d'affectation de variables
+      console.log(action)
       return {
-        counter: state.counter + 1
+        counter: state.counter + (action.data || 1)
       }
     case actionTypes.DECREMENT:
       return {
@@ -30,10 +31,10 @@ const CounterReducer = (state, action) => {
 }
 
 const CounterContextFactory = (dispatch) => ({
-  increment: () => {
+  increment: (value) => {
     dispatch({
       type: actionTypes.INCREMENT,
-      data: null
+      data: value
     })
   },
   decrement: () => {
