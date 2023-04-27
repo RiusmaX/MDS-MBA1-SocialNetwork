@@ -85,7 +85,13 @@ function ResponsiveAppBar () {
     navigate(link)
   }
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (setting) => {
+    // Lors du clique sur le paramètre Profile
+    if (setting === 'Profile') {
+      // Redirection sur la page profile de l'utilisateur connecter
+      // Modifier lorsque la connexion sera fonctionelle
+      navigate('/users/1')
+    }
     setAnchorElUser(null)
   }
 
@@ -181,7 +187,7 @@ function ResponsiveAppBar () {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>
                   <Typography textAlign='center'>{setting}</Typography>
                 </MenuItem>
               ))}
