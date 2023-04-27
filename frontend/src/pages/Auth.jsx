@@ -5,8 +5,8 @@ import { GET_USER_BY_EMAIL } from '../graphql/queries/usersQueries'
 import '../styles/Auth.scss'
 import '../styles/Global.scss'
 import InputField from '../components/Global/Input/InputField'
-import userIcon from '../assets/icons/user.svg'
-import lockIcon from '../assets/icons/lock.svg'
+import { FaUser } from 'react-icons/fa';
+import { FaLock } from 'react-icons/fa';
 import Julo from '../assets/images/Julo.png'
 import Julo_error from '../assets/images/Julo_error.png'
 import SubmitButton from '../components/Global/Buttons/SubmitButton'
@@ -55,8 +55,8 @@ const Auth = () => {
       <img className='imgJulo' src={error ? Julo_error : Julo} alt='Jules img' />
       <form method='POST' noValidate style={{ display: 'flex', flexDirection: 'column' }} onSubmit={handleSubmit}>
 
-        <InputField type='text' handleChange={handleChange} placeholder='EMAIL' name='email' icon={userIcon} />
-        <InputField type='password' handleChange={handleChange} placeholder='PASSWORD' name='password' icon={lockIcon} />
+        <InputField type='text' handleChange={handleChange} placeholder='EMAIL' name='email' icon={FaUser} />
+        <InputField type='password' handleChange={handleChange} placeholder='PASSWORD' name='password' icon={FaLock} />
         {error && errorLabel && <div className='error'>{errorLabel}</div>}
         {!loading && <SubmitButton label='Connexion' />}
       </form>

@@ -1,4 +1,5 @@
 const InputField = ({ type, handleChange, icon, placeholder, name, value }) => {
+  const Icon = icon;
   return (
     /**
      * @param {string} type - The type of the input
@@ -10,7 +11,7 @@ const InputField = ({ type, handleChange, icon, placeholder, name, value }) => {
      * @returns {JSX.Element} - The input
      */
     <div className='input-container'>
-      {icon && <img src={icon} alt='icon' className='icon' />}
+      {icon && <Icon className='icon' color='white' />}
       <input type={type} placeholder={placeholder} className='input' name={name} onChange={handleChange} value={value} />
     </div>
   )
