@@ -75,7 +75,7 @@ query{
 
 const GET_LAST_CHAT_MESSAGE = (id) => gql`
 query{
-  messages(sort: "sendDate:desc", filters: {chat: {id: {eq: ${id}}}}, pagination: { limit: 1 }){
+  messages(sort: "sendDate:asc", filters: {chat: {id: {eq: ${id}}}}, pagination: { limit: 1 }){
     data {
       id,
       attributes{
