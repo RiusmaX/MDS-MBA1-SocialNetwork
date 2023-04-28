@@ -1,13 +1,10 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { Button, Container, Typography } from '@mui/material'
+import { Button } from '@mui/material'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useQuery } from '@apollo/client'
-import { useParams } from 'react-router-dom'
 import PostList from '../components/Posts/PostList'
 import Avatar from '../components/Profile/Avatar'
 import FullName from '../components/Profile/FullName'
 import { GET_ME_WITH_POSTS } from '../graphql/queries/usersQueries'
-import Button from '../components/Layout/Button'
 import { subscribeToPosts } from '../services/socket'
 import { GET_POSTS } from '../graphql/queries/postsQueries'
 
@@ -18,7 +15,7 @@ import { useEffect, useState } from 'react'
 const Profile = () => {
   // On prépare l'état local qui stockera les données
   const { id } = useParams()
-  const { loading, error, data } = useQuery(GET_USER_WITH_POSTS(id))
+  const { loading, error, data } = useQuery(GET_ME_WITH_POSTS(id))
   const [createChat] = useMutation(CREATE_CHAT)
   const navigate = useNavigate()
   const [posts, setPosts] = useState([])
@@ -53,12 +50,12 @@ const Profile = () => {
   const createNewChat = () => {
     // remplacer 1 par l'utilisateur courant
     const res = createChat(
-      { 
-        variables: { 
+      {
+        variables: {
           name: profile.firstName,
           users: [1, id],
           date: new Date().toISOString()
-        } 
+        }
       }
     )
     res.then((data) => {
@@ -69,7 +66,7 @@ const Profile = () => {
   if (data) {
     return (
       <>
-        <Button variant="text" onClick={createNewChat}>+ Conversation</Button>
+        <Button variant='text' onClick={createNewChat}>+ Conversation</Button>
         <div className='profilPageContent'>
           <div className='profil'>
             {profile?.avatar?.data && <Avatar avatar={profile.avatar.data.attributes} />}
