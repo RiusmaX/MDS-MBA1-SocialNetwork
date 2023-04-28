@@ -53,7 +53,7 @@ const Profile = () => {
     const res = createChat(
       {
         variables: {
-          name: profile.firstName,
+          name: `${user.username} - ${profile.username}`,
           users: [user.id, id],
           date: new Date().toISOString()
         }
