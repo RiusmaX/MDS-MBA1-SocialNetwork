@@ -2,10 +2,11 @@ import { useQuery } from '@apollo/client'
 import { Container } from '@mui/material'
 import ChatList from '../components/Chat/ChatList'
 import { GET_CHATS_WITH_USER } from '../graphql/queries/chatsQueries'
+import { useAuth } from '../contexts/AuthContext'
 
 const Chats = () => {
-  // utilisateur courant encore inconnu : on va chercher le 1 par défaut
-  const { loading, error, data } = useQuery(GET_CHATS_WITH_USER(1))
+  const { state: { user } } = useAuth()
+  const { loading, error, data } = useQuery(GET_CHATS_WITH_USER(user.id))
 
   if (loading) {
     return <h2>Chargement...</h2>

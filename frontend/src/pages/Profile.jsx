@@ -11,6 +11,7 @@ import { GET_POSTS } from '../graphql/queries/postsQueries'
 import '../styles/Profile.scss'
 import { CREATE_CHAT } from '../graphql/mutations/chatsMutations'
 import { useEffect, useState } from 'react'
+import { useAuth } from '../contexts/AuthContext'
 
 const Profile = () => {
   // On prépare l'état local qui stockera les données
@@ -20,6 +21,7 @@ const Profile = () => {
   const navigate = useNavigate()
   const [posts, setPosts] = useState([])
   const getPosts = useQuery(GET_POSTS)
+  const { state: { user } } = useAuth()
 
   // uses the useEffect hook to update the local posts state whenever the data in the getPosts request changes
   useEffect(() => {
@@ -48,12 +50,11 @@ const Profile = () => {
   const profile = data?.usersPermissionsUser?.data?.attributes
 
   const createNewChat = () => {
-    // remplacer 1 par l'utilisateur courant
     const res = createChat(
       {
         variables: {
           name: profile.firstName,
-          users: [1, id],
+          users: [user.id, id],
           date: new Date().toISOString()
         }
       }
