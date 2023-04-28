@@ -1,21 +1,36 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { Button, Container, Typography } from '@mui/material'
+import { Button } from '@mui/material'
 import { useNavigate, useParams } from 'react-router-dom'
 import PostList from '../components/Posts/PostList'
 import Avatar from '../components/Profile/Avatar'
 import FullName from '../components/Profile/FullName'
-import UserInfos from '../components/Profile/UserInfos'
-import { GET_USER_WITH_POSTS } from '../graphql/queries/usersQueries'
+import { GET_ME_WITH_POSTS } from '../graphql/queries/usersQueries'
+import { subscribeToPosts } from '../services/socket'
+import { GET_POSTS } from '../graphql/queries/postsQueries'
 
 import '../styles/Profile.scss'
 import { CREATE_CHAT } from '../graphql/mutations/chatsMutations'
+import { useEffect, useState } from 'react'
 
 const Profile = () => {
   // On prépare l'état local qui stockera les données
   const { id } = useParams()
-  const { loading, error, data } = useQuery(GET_USER_WITH_POSTS(id))
+  const { loading, error, data } = useQuery(GET_ME_WITH_POSTS(id))
   const [createChat] = useMutation(CREATE_CHAT)
   const navigate = useNavigate()
+  const [posts, setPosts] = useState([])
+  const getPosts = useQuery(GET_POSTS)
+
+  // uses the useEffect hook to update the local posts state whenever the data in the getPosts request changes
+  useEffect(() => {
+    if (getPosts.data) {
+      setPosts(getPosts.data.posts.data)
+    }
+  }, [getPosts])
+
+  useEffect(() => {
+    subscribeToPosts(setPosts)
+  }, [])
 
   if (loading) {
     return <h4>Chargement...</h4>
@@ -35,12 +50,12 @@ const Profile = () => {
   const createNewChat = () => {
     // remplacer 1 par l'utilisateur courant
     const res = createChat(
-      { 
-        variables: { 
+      {
+        variables: {
           name: profile.firstName,
           users: [1, id],
           date: new Date().toISOString()
-        } 
+        }
       }
     )
     res.then((data) => {
@@ -51,22 +66,17 @@ const Profile = () => {
   if (data) {
     return (
       <>
-        <Button variant="text" onClick={createNewChat}>+ Conversation</Button>
-        <Container maxWidth='md'>
-          <div className='row'>
-            <Avatar avatar={profile.avatar.data.attributes} />
-            <div>
+        <Button variant='text' onClick={createNewChat}>+ Conversation</Button>
+        <div className='profilPageContent'>
+          <div className='profil'>
+            {profile?.avatar?.data && <Avatar avatar={profile.avatar.data.attributes} />}
+            <div className='userInfos'>
               <FullName firstName={profile.firstName} lastName={profile.lastName} username={profile.username} />
-              <UserInfos email={profile.email} phone={profile.phone} />
+              <Button value='Suivre' className='bold' />
             </div>
           </div>
-        </Container>
-        <Container maxWidth='lg'>
-          <Typography variant='h3' marginY={5}>
-            Les articles de {profile.firstName}
-          </Typography>;
-          <PostList posts={profile.posts.data} />
-        </Container>
+          <PostList posts={posts} />
+        </div>
       </>
     )
   }

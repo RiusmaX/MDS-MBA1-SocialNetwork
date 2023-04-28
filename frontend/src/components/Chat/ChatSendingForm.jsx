@@ -2,13 +2,11 @@ import '../../styles/ChatSendingForm.scss'
 import { ADD_CHAT_MESSAGE } from '../../graphql/mutations/chatsMutations'
 import { Formik, Form, Field } from 'formik';
 import { useMutation } from '@apollo/client'
-import { ReactComponent as Logo } from '../../assets/icons/send.svg'
+import { AiOutlineSend } from "react-icons/ai";
 import React, { useState } from "react";
 import * as Yup from 'yup';
-
-
-
-
+import { createMessage } from '../../services/Api';
+import { Box } from '@mui/material'
 
 const ChatSendingForm = (chatId) => {
 
@@ -39,7 +37,14 @@ const ChatSendingForm = (chatId) => {
       onSubmit={async (values, actions) => {
         const isoString = date.toISOString();
         //TODO  remplacer users_permissions_user: 1 par l'utilisateur courant
-        addMessage({ variables: { messageInput: {messageText: values.messageText, sendDate: isoString, users_permissions_user: 1, chat: parseInt(chatId.chatId), publishedAt: isoString} } })
+        createMessage({
+          data: {
+            messageText: values.messageText,
+            sendDate: isoString,
+            users_permissions_user: 1,
+            chat: parseInt(chatId.chatId)
+          }
+        })
         actions.resetForm();
       }}
     >
@@ -48,10 +53,18 @@ const ChatSendingForm = (chatId) => {
           {errors.messageText && touched.messageText ? (
              <div style={{color: "red"}}>{errors.messageText}</div>
            ) : null}
+           <Box sx={{
+              display: 'flex',
+              alignItems: 'center',
+              alignContent: 'center',
+              justifyContent: 'center',
+              margin: 2
+            }}>
            <Field name="messageText"className='ChatEntryField' />
            <button className='ChatSendButton' type="submit">
-            <Logo stroke='white' />
+            <AiOutlineSend color='white' />
           </button>
+           </Box>
          </Form>
        )}
 

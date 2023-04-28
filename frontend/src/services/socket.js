@@ -46,7 +46,7 @@ export const subscribeToPosts = (setPosts) => {
 };
 
 export const subscribeToMessages = (setMessages) => {
-  // Listening to socket events for new posts
+  // Listening to socket events for new messages
   socket.on("connect", () => {
     console.log("Socket connected");
   });
@@ -57,35 +57,22 @@ export const subscribeToMessages = (setMessages) => {
 
   socket.on("message:create", (data) => {
     console.log("New message received", data);
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      {
-        id: String(data.id),
-        attributes: {
-          ...data,
-          users_permissions_user: {
-            id : data.updatedBy.id,
-            data : data.updatedBy
-          }
-        }
-      },
-    ]);
-  });
-
-  // receive new messages sent by the server
-  socket.on("message:update", (data) => {
-    console.log("Message updated", data);
+    data = data.data
     setMessages((prevMessages) => {
-      const index = prevMessages.findIndex(
-        (message) => Number(message.id) === Number(data.id)
-      );
-      prevMessages.splice(index, 1);
-      return prevMessages;
+      const find = prevMessages.findIndex((_data) => parseInt(_data.id) === parseInt(data.id))
+      if(find === -1){
+        return [
+          ...prevMessages,
+          {
+            id: String(data.id),
+            attributes: data.attributes
+          },
+        ]
+      }
+      return [
+        ...prevMessages,
+      ]
     });
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      { id: String(data.id), attributes: data },
-    ]);
   });
 
   return () => {
@@ -93,7 +80,6 @@ export const subscribeToMessages = (setMessages) => {
     socket.off("disconnect");
     socket.off("message");
     socket.off("message:create");
-    socket.off("message:update");
   };
 };
 
