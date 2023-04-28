@@ -9,8 +9,6 @@ import Post from '../pages/Post'
 
 const Router = () => {
   const { state: { isLoggedIn } } = useAuth()
-  // const authContext = useContext(AuthContext)
-  // console.log(authContext)
   if (isLoggedIn) {
     return (
       <BrowserRouter>

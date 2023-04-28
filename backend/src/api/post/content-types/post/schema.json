@@ -18,12 +18,6 @@
     "content": {
       "type": "richtext"
     },
-    "likers": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "plugin::users-permissions.user",
-      "inversedBy": "postsLiked"
-    },
     "medias": {
       "type": "media",
       "multiple": true,
@@ -40,6 +34,12 @@
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "posts"
+    },
+    "likers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::liker.liker",
+      "mappedBy": "post"
     },
     "relativeTo": {
       "type": "relation",

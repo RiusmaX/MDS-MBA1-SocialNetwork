@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import '../styles/Auth.scss'
 import '../styles/Global.scss'
 import InputField from '../components/Global/Input/InputField'
@@ -7,7 +7,6 @@ import Julo from '../assets/images/Julo.png'
 import SubmitButton from '../components/Global/Buttons/SubmitButton'
 import * as Yup from 'yup'
 import { Form, Formik } from 'formik'
-import { AuthContext } from '../contexts/AuthContext_old'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 
@@ -28,7 +27,6 @@ const Auth = () => {
   const [errorLabel, setErrorLabel] = useState('')
 
   const handleSubmit = (values) => {
-    // authContext.login(values)
     login(values)
   }
 

@@ -82,16 +82,16 @@
       "type": "media",
       "multiple": false
     },
-    "postsLiked": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::post.post",
-      "mappedBy": "likers"
-    },
     "posts": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::post.post",
+      "mappedBy": "user"
+    },
+    "likers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::liker.liker",
       "mappedBy": "user"
     }
   }
