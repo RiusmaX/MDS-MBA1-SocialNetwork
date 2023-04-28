@@ -4,7 +4,7 @@ import Auth from '../pages/Auth'
 import Home from '../pages/Home'
 import Profile from '../pages/Profile'
 import Users from '../pages/Users'
-import { AuthContext, AuthProvider } from '../contexts/AuthContext'
+import { AuthContext } from '../contexts/AuthContext'
 import { useContext } from 'react'
 import Post from '../pages/Post'
 
