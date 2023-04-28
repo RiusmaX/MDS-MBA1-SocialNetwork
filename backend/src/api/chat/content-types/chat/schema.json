@@ -31,15 +31,12 @@
       "relation": "manyToMany",
       "target": "plugin::users-permissions.user",
       "inversedBy": "chats"
-<<<<<<< HEAD
-=======
     },
     "messages": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::message.message",
       "mappedBy": "chat"
->>>>>>> 3d58b26e8a22df70780681addb474ef50d95542b
     }
   }
 }
