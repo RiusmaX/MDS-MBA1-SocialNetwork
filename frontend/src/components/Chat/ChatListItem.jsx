@@ -18,7 +18,7 @@ const ChatListItem = ({ chat, onClick }) => {
             sx={{ bgcolor: blueGrey[500] }}
             aria-label='recipe'
           >
-            T
+            {chat.attributes.name.slice(0,1)}
           </Avatar>
         }
         title={chat.attributes.name}
