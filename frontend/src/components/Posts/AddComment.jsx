@@ -3,15 +3,18 @@ import { useMutation } from '@apollo/client'
 import { ADD_COMMENT } from '../../graphql/mutations/commentMutations'
 import '../../styles/AddComment.scss'
 import Button from '../Layout/Button'
+import { useAuth } from '../contexts/AuthContext'
 
-const AddComment = ({ relativeToId, userData, addComment }) => {
+const AddComment = ({ relativeToId, addComment }) => {
+  const { state: { user } } = useAuth()
+
   const [content, setContent] = useState('')
-  
+
   const [addCommentMutation] = useMutation(ADD_COMMENT, {
     onCompleted: (data) => {
-      const newComment = data.createPost.data;
+      const newComment = data.createPost.data
       setContent('')
-      addComment(newComment);
+      addComment(newComment)
     }
   })
 
@@ -20,7 +23,7 @@ const AddComment = ({ relativeToId, userData, addComment }) => {
     if (content.trim() === '') return
 
     addCommentMutation({
-      variables: { content, userId: userData.id, relativeToId }
+      variables: { content, userId: user.id, relativeToId }
     })
   }
 

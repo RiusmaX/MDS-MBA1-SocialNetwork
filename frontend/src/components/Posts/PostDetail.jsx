@@ -18,7 +18,7 @@ const PostDetail = ({ post, comments: initialComments }) => {
     <div className='postListContainer'>
       <PostListItem key={post} post={post} seeDetails={false} />
       <div className='line' />
-      <AddComment relativeToId={post.id} userData={post.attributes.user.data} addComment={addComment} />
+      <AddComment relativeToId={post.id} addComment={addComment} />
       <div className='line' />
       {comments.map((comment) => {
         return <PostListItem key={comment} post={comment} seeDetails={false} />
