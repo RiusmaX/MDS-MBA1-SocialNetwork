@@ -21,7 +21,7 @@ const Chat = () => {
           isMySelf={message?.attributes?.users_permissions_user?.data?.id === 1}
         />
       ))}
-      <ChatSendingForm />
+      <ChatSendingForm chatId={id}/>
     </>
   )
 }
