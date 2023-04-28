@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Redirect, Route, Routes } from 'react-router-dom'
 import ResponsiveAppBar from '../components/Layout/AppBar'
 import Auth from '../pages/Auth'
 import Home from '../pages/Home'
