@@ -7,9 +7,10 @@ import { GET_ME_WITH_POSTS } from '../graphql/queries/usersQueries'
 import Button from '../components/Layout/Button'
 import { subscribeToPosts } from '../services/socket'
 import { GET_POSTS } from '../graphql/queries/postsQueries'
+import { AuthContext } from '../contexts/AuthContext_old'
 
 import '../styles/Profile.scss'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 const Profile = () => {
   // On prépare l'état local qui stockera les données
@@ -17,6 +18,8 @@ const Profile = () => {
   const { loading, error, data } = useQuery(GET_ME_WITH_POSTS(id))
   const [posts, setPosts] = useState([])
   const getPosts = useQuery(GET_POSTS)
+
+  const authContext = useContext(AuthContext)
 
   // uses the useEffect hook to update the local posts state whenever the data in the getPosts request changes
   useEffect(() => {
@@ -41,6 +44,8 @@ const Profile = () => {
       </>
     )
   }
+
+  console.log(authContext.user)
 
   if (data) {
     const profile = data?.usersPermissionsUser?.data?.attributes
