@@ -1,0 +1,20 @@
+.authForm {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+body{
+    background: url(../../public/BG.png) no-repeat;
+    background-size: cover;
+}
+
+.imgJulo{
+    height: 240px;
+}
+
+.error{
+    color: red;
+}

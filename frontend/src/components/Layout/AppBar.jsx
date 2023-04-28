@@ -2,7 +2,8 @@ import * as React from 'react'
 import MenuIcon from '@mui/icons-material/Menu'
 import SearchIcon from '@mui/icons-material/Search'
 import { styled, alpha } from '@mui/material/styles'
-
+import { AuthContext } from '../../contexts/AuthContext'
+import { useContext } from 'react'
 import {
   MenuItem,
   InputBase,
@@ -68,8 +69,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   }
 }))
 
-function ResponsiveAppBar () {
+function ResponsiveAppBar() {
   const navigate = useNavigate()
+  const authContext = useContext(AuthContext)
   const [anchorElNav, setAnchorElNav] = React.useState(null)
   const [anchorElUser, setAnchorElUser] = React.useState(null)
 
@@ -85,12 +87,18 @@ function ResponsiveAppBar () {
     navigate(link)
   }
 
+  const handleLogout = () => {
+    authContext.logout()
+  }
+
   const handleCloseUserMenu = (setting) => {
     // Lors du clique sur le paramètre Profile
     if (setting === 'Profile') {
       // Redirection sur la page profile de l'utilisateur connecter
       // Modifier lorsque la connexion sera fonctionelle
       navigate('/users/1')
+    } else if (setting === 'Logout') {
+      handleLogout()
     }
     setAnchorElUser(null)
   }
