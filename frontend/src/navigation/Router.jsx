@@ -1,10 +1,10 @@
-import { BrowserRouter, Navigate, Redirect, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import ResponsiveAppBar from '../components/Layout/AppBar'
 import Auth from '../pages/Auth'
 import Home from '../pages/Home'
 import Profile from '../pages/Profile'
 import Users from '../pages/Users'
-import { AuthContext, AuthProvider } from '../contexts/AuthContext_old'
+import { AuthContext } from '../contexts/AuthContext'
 import { useContext } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 
@@ -30,8 +30,7 @@ const Router = () => {
     return (
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Navigate to='/auth' />} />
-          <Route path='/auth' element={<Auth />} />
+          <Route path='*' element={<Auth />} />
         </Routes>
       </BrowserRouter>
     )
