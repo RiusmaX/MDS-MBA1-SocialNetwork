@@ -75,6 +75,31 @@ query {
       id,
       attributes {
         username,
+        posts {
+          data {
+            id,
+            attributes {
+              title,
+              content
+              medias {
+                data {
+                  id,
+                  attributes {
+                    name,
+                    url
+                  }
+                }
+              }
+            },
+          }
+        },
+        avatar {
+          data {
+            attributes {
+              url
+            }
+          }
+        },
         email,
         firstName,
         lastName,
