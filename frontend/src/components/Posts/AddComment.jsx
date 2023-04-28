@@ -2,36 +2,39 @@ import React, { useState } from 'react'
 import { useMutation } from '@apollo/client'
 import { ADD_COMMENT } from '../../graphql/mutations/commentMutations'
 import '../../styles/AddComment.scss'
+import Button from '../Layout/Button'
 
-const AddComment = ({ relativeToId, userData }) => {
+const AddComment = ({ relativeToId, userData, addComment }) => {
   const [content, setContent] = useState('')
-  const [addComment] = useMutation(ADD_COMMENT, {
-    onCompleted: () => {
+  
+  const [addCommentMutation] = useMutation(ADD_COMMENT, {
+    onCompleted: (data) => {
+      const newComment = data.createPost.data;
       setContent('')
+      addComment(newComment);
     }
   })
 
   // Ajoute le commentaire à la base de donnée si le contenu n'est pas vide
-  const handleSubmitComment = (e) => {
-    e.preventDefault()
+  const handleSubmitComment = () => {
     if (content.trim() === '') return
 
-    addComment({
+    addCommentMutation({
       variables: { content, userId: userData.id, relativeToId }
     })
   }
 
   return (
-    <form onSubmit={handleSubmitComment} className='addCommentContainer'>
+    <div className='addCommentContainer'>
       <input
         type='text'
         value={content}
         onChange={(e) => setContent(e.target.value)}
         placeholder='Ajouter un commentaire'
-        className='addComment'
+        className='addCommentInput'
       />
-      <button type='submit'>Envoyer</button>
-    </form>
+      <Button onClick={handleSubmitComment} value='Envoyer' className='bold' />
+    </div>
   )
 }
 

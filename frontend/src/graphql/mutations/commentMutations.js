@@ -5,7 +5,46 @@ const ADD_COMMENT = gql`mutation CreatePost($content: String!, $userId: ID!, $re
     content: $content
     user: $userId
     relativeTo: $relativeToId
-  }) {data {id}}
+  }) {data {
+      id,
+      attributes {
+        title, 
+        content,
+        likers {
+          data {
+            id
+          }
+        },
+        createdAt, 
+        medias {
+          data {
+            id,
+            attributes {
+              name,
+              url
+            }
+          }
+        },
+        user {
+          data {
+            id,
+            attributes{
+              username,
+              firstName,
+              avatar {
+                data {
+                  id,
+                  attributes {
+                    name,
+                    url
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }}
 }
 `
 
