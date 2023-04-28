@@ -6,58 +6,61 @@ import { FaUser, FaLock } from 'react-icons/fa'
 import Julo from '../assets/images/Julo.png'
 import SubmitButton from '../components/Global/Buttons/SubmitButton'
 import * as Yup from 'yup'
-import { Formik, Form } from 'formik'
-import { AuthContext } from '../contexts/AuthContext'
+import { Form, Formik } from 'formik'
+import { AuthContext } from '../contexts/AuthContext_old'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../contexts/AuthContext'
 
 const Auth = () => {
   const validationSchema = Yup.object().shape({
-    email: Yup.string().email('invalid email adress').required('email is required'),
+    identifier: Yup.string().email('invalid email adress').required('email is required'),
     password: Yup.string().min(5, 'password must contains 5 characters').required('password is required')
   })
+  const { login, state: { isLoggedIn } } = useAuth()
   const navigate = useNavigate()
 
-  const authContext = useContext(AuthContext)
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/')
+    }
+  }, [isLoggedIn])
 
   const [errorLabel, setErrorLabel] = useState('')
 
   const handleSubmit = (values) => {
-    authContext.login(values)
+    // authContext.login(values)
+    login(values)
   }
-
-  useEffect(() => {
-    if (authContext.isLoggedIn()) {
-      navigate('/')
-    }
-  })
 
   return (
     <div className='authForm'>
       <img className='imgJulo' src={Julo} alt='Jules img' />
       <Formik
         initialValues={{
-          email: '',
-          password: ''
+          identifier: 'toto@tata.fr',
+          password: 'secret'
         }}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        <Form>
-          <InputField
-            type='email'
-            placeholder='EMAIL'
-            name='email'
-            icon={FaUser}
-          />
-          <InputField
-            type='password'
-            placeholder='PASSWORD'
-            name='password'
-            icon={FaLock}
-          />
-          {errorLabel && <div className='error'>{errorLabel}</div>}
-          <SubmitButton label='Connexion' />
-        </Form>
+        {props => (
+          <Form onSubmit={props.handleSubmit}>
+            <InputField
+              type='email'
+              placeholder='EMAIL'
+              name='identifier'
+              icon={FaUser}
+            />
+            <InputField
+              type='password'
+              placeholder='PASSWORD'
+              name='password'
+              icon={FaLock}
+            />
+            {errorLabel && <div className='error'>{errorLabel}</div>}
+            <SubmitButton label='Connexion' />
+          </Form>
+        )}
       </Formik>
     </div>
   )
