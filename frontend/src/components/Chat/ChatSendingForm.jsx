@@ -1,14 +1,21 @@
 import '../../styles/ChatSendingForm.scss'
 import { ADD_CHAT_MESSAGE } from '../../graphql/mutations/chatsMutations'
-import { Formik, Field, Form } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import { useMutation } from '@apollo/client'
 import { ReactComponent as Logo } from '../../assets/icons/send.svg'
+import React, { useState } from "react";
+import * as Yup from 'yup';
 
 
 
-const ChatSendingForm = () => {
+
+
+const ChatSendingForm = (chatId) => {
 
   const [addMessage, { data, loading, error }] = useMutation(ADD_CHAT_MESSAGE)
+  const [date, setDate] = useState(new Date());
+
+
 
   if (error) {
     return (
@@ -24,24 +31,19 @@ const ChatSendingForm = () => {
       initialValues={{
         messageText: '',
       }}
-      onSubmit={async (values) => {
-        addMessage({ variables: { messageInput: {messageText: values.messageText, sendDate: "2023-04-12T22:04:00.000Z", users_permissions_user: 1, chat: 1, publishedAt: "2023-04-12T22:04:00.000Z"} } })
-        //const messageInput = {  messageText: values.messageText, sendDate: Date.now(), users_permissions_user: 1, chat: 1}
-        //const { data, loading, error } = useMutation(ADD_CHAT_MESSAGE(messageInput))
-
-        alert(JSON.stringify(values, null, 2));
+      onSubmit={async (values, actions) => {
+        const isoString = date.toISOString();
+        //TODO  remplacer users_permissions_user: 1 par l'utilisateur courant
+        addMessage({ variables: { messageInput: {messageText: values.messageText, sendDate: isoString, users_permissions_user: 1, chat: parseInt(chatId.chatId), publishedAt: isoString} } })
+        actions.resetForm();
       }}
     >
-      {({ isSubmitting }) => (
-        <Form className='ChatSendingForm'>
+    <Form className='ChatSendingForm'>
           <Field rows='5' name="messageText" className='ChatEntryField'/>
-
-
           <button className='ChatSendButton' type="submit">
             <Logo stroke='white' />
           </button>
         </Form>
-      )}
     </Formik>
   )
 }
