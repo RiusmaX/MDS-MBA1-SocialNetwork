@@ -4,12 +4,15 @@ import Auth from '../pages/Auth'
 import Home from '../pages/Home'
 import Profile from '../pages/Profile'
 import Users from '../pages/Users'
-import { AuthProvider } from '../contexts/AuthContext'
+import { AuthContext, AuthProvider } from '../contexts/AuthContext'
+import { useContext } from 'react'
 
 const Router = () => {
-  return (
-    <BrowserRouter>
-      <AuthProvider>
+  const authContext = useContext(AuthContext)
+  console.log(authContext)
+  if (authContext.isLoggedIn()) {
+    return (
+      <BrowserRouter>
         <ResponsiveAppBar />
         <Routes>
           <Route path='/' index element={<Home />} />
@@ -19,9 +22,17 @@ const Router = () => {
             <Route path=':id' element={<Profile />} />
           </Route>
         </Routes>
-      </AuthProvider>
-    </BrowserRouter>
-  )
+      </BrowserRouter>
+    )
+  } else {
+    return (
+      <BrowserRouter>
+        <Routes>
+          <Route path='/auth' index element={<Auth />} />
+        </Routes>
+      </BrowserRouter>
+    )
+  }
 }
 
 export default Router
