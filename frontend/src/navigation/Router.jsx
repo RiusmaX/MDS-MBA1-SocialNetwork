@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Redirect, Route, Routes } from 'react-router-dom'
 import ResponsiveAppBar from '../components/Layout/AppBar'
 import Auth from '../pages/Auth'
 import Home from '../pages/Home'
@@ -30,7 +30,8 @@ const Router = () => {
     return (
       <BrowserRouter>
         <Routes>
-          <Route path='/auth' index element={<Auth />} />
+          <Route path='/' element={<Navigate to='/auth' />} />
+          <Route path='/auth' element={<Auth />} />
         </Routes>
       </BrowserRouter>
     )
