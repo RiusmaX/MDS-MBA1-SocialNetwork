@@ -1,5 +1,4 @@
 import React, { createContext, useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useMutation } from '@apollo/client'
 import { LOGIN_MUTATION } from '../graphql/mutations/authMutations'
 import jwt_decode from 'jwt-decode'
@@ -8,7 +7,6 @@ export const AuthContext = createContext()
 
 export function AuthProvider (props) {
   const [user, setUser] = useState(null)
-  const navigate = useNavigate()
   const loginGQL = useLoginMutation()
   useEffect(() => {
     const token = window.localStorage.getItem('token')
@@ -16,7 +14,7 @@ export function AuthProvider (props) {
       const decodedToken = jwt_decode(token)
       if (decodedToken.exp * 1000 < Date.now()) {
         setUser(null)
-        navigate('/auth')
+        window.location.href = '/auth'
       }
     }
   }, [])
@@ -29,7 +27,7 @@ export function AuthProvider (props) {
       onCompleted: (data) => {
         window.localStorage.setItem('token', data.login.jwt)
         setUser(data.login.user)
-        navigate('/')
+        window.location.href = '/'
       }
     })
 
@@ -38,7 +36,7 @@ export function AuthProvider (props) {
 
   function isValidToken () {
     const token = window.localStorage.getItem('token')
-    return token && jwt_decode(token).exp * 1000 < Date.now()
+    return token && jwt_decode(token).exp * 1000 > Date.now()
   }
 
   function login (values) {
@@ -53,7 +51,7 @@ export function AuthProvider (props) {
   function logout () {
     window.localStorage.removeItem('token')
     setUser(null)
-    navigate('/auth')
+    window.location.href = '/auth'
   }
 
   return (

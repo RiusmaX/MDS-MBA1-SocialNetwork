@@ -31,14 +31,14 @@ const Profile = () => {
     return (
       <div className='profilPageContent'>
         <div className='profil'>
-          <Avatar avatar={profile.avatar.data.attributes} />
+          {profile?.avatar?.data && <Avatar avatar={profile.avatar.data.attributes} />}
           <div className='userInfos'>
             <FullName firstName={profile.firstName} lastName={profile.lastName} username={profile.username} />
             <Button value='Suivre' className='bold' />
           </div>
         </div>
         <div className='postsList'>
-          <PostList posts={profile.posts.data} />
+          {/* <PostList posts={profile.posts.data} /> */}
         </div>
       </div>
     )

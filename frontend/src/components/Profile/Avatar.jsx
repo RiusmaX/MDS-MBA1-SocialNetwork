@@ -13,7 +13,7 @@ const Avatar = ({ avatar }) => {
       // l'image rotationne
       setClassname('animation')
       setTimeout(() => {
-          setClassname('')
+        setClassname('')
       }, 3000)
     }
   }
@@ -33,7 +33,7 @@ const Avatar = ({ avatar }) => {
       src={`${process.env.REACT_APP_IMAGES_URL}${avatar.url}`}
       onClick={handleClick}
     />
-  );
-};
+  )
+}
 
-export default Avatar;
+export default Avatar
