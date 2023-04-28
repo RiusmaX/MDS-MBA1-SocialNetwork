@@ -4,11 +4,10 @@ import '../../styles/PostDetail.scss'
 import AddComment from './AddComment'
 
 const PostDetail = ({ post, comments: initialComments }) => {
-  const [comments, setComments] = useState(initialComments);
+  const [comments, setComments] = useState(initialComments)
 
   const addComment = (newComment) => {
-    setComments([...comments, newComment]);
-    console.log(comments);
+    setComments([...comments, newComment])
   }
 
   if (!post) {
@@ -17,12 +16,12 @@ const PostDetail = ({ post, comments: initialComments }) => {
 
   return (
     <div className='postListContainer'>
-      <PostListItem key={post} post={post} seeDetails={false}/>
-      <div className='line'></div>
-      <AddComment relativeToId={post.id} userData={post.attributes.user.data} addComment={addComment}></AddComment>
-      <div className='line'></div>
+      <PostListItem key={post} post={post} seeDetails={false} />
+      <div className='line' />
+      <AddComment relativeToId={post.id} userData={post.attributes.user.data} addComment={addComment} />
+      <div className='line' />
       {comments.map((comment) => {
-        return <PostListItem key={comment} post={comment} seeDetails={false}/>
+        return <PostListItem key={comment} post={comment} seeDetails={false} />
       })}
     </div>
   )

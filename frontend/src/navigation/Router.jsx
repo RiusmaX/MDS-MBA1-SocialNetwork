@@ -10,7 +10,6 @@ import Post from '../pages/Post'
 
 const Router = () => {
   const authContext = useContext(AuthContext)
-  console.log(authContext)
   if (authContext.isLoggedIn()) {
     return (
       <BrowserRouter>
