@@ -30,7 +30,7 @@ export const ChatBubble = ({
         </Typography>
       </Box>
       <Box display='flex' gap={2} style={{ flexDirection: reverse ? 'row-reverse' : '' }}>
-        <Avatar alt={author?.username} src={author?.avatar} />
+        <Avatar alt={author?.username} src={`${process.env.REACT_APP_IMAGES_URL}${author?.avatar?.data?.attributes?.url}`} />
         {isMySelf
           ? (
             <MyBubble>

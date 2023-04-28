@@ -7,11 +7,14 @@ import React, { useState } from "react";
 import * as Yup from 'yup';
 import { createMessage } from '../../services/Api';
 import { Box } from '@mui/material'
+import { useAuth } from '../../contexts/AuthContext';
 
 const ChatSendingForm = (chatId) => {
 
-  const [addMessage, { data, loading, error }] = useMutation(ADD_CHAT_MESSAGE)
+  const [{ error }] = useMutation(ADD_CHAT_MESSAGE)
   const [date, setDate] = useState(new Date());
+
+  const { state: { user } } = useAuth()
 
   const messageSchema = Yup.object().shape({
     messageText: Yup.string()
@@ -36,12 +39,11 @@ const ChatSendingForm = (chatId) => {
       validationSchema={messageSchema}
       onSubmit={async (values, actions) => {
         const isoString = date.toISOString();
-        //TODO  remplacer users_permissions_user: 1 par l'utilisateur courant
         createMessage({
           data: {
             messageText: values.messageText,
             sendDate: isoString,
-            users_permissions_user: 1,
+            users_permissions_user: user.id,
             chat: parseInt(chatId.chatId)
           }
         })

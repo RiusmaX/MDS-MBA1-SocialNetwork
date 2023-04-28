@@ -63,7 +63,14 @@ query{
           data{
             id,
             attributes{
-              username
+              username,
+              avatar {
+                data {
+                  attributes {
+                    url
+                  }
+                }
+              }
             }
           }
         }
@@ -104,8 +111,8 @@ query{
 `
 
 export {
-    GET_CHATS,
-    GET_CHATS_WITH_USER,
-    GET_CHAT_MESSAGE,
-    GET_LAST_CHAT_MESSAGE,
+  GET_CHATS,
+  GET_CHATS_WITH_USER,
+  GET_CHAT_MESSAGE,
+  GET_LAST_CHAT_MESSAGE
 }

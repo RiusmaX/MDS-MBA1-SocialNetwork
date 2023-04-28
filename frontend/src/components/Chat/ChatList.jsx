@@ -17,6 +17,7 @@ const ChatList = ({ chats }) => {
                 <Grid
                   key={chat.id}
                   xs={8}
+                  sx={{ p: 1 }}
                 >
 
                   <ChatListItem

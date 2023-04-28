@@ -1,0 +1,22 @@
+.addCommentContainer{
+    display: flex;
+    max-width: 700px;
+    width: 100%;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    justify-content: space-between;
+}
+
+.addCommentInput {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: #000;
+    font-size: 16px;
+    font-family: sans-serif;
+    padding: 0;
+  }
+
+  input::placeholder {
+    color: #728497;
+  }
