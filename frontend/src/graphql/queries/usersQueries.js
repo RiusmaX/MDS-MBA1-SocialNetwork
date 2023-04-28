@@ -99,7 +99,28 @@ query {
               url
             }
           }
-        }
+        },
+        email,
+        firstName,
+        lastName,
+        phone,
+      }
+    }
+  }
+}
+`
+
+const GET_USER_BY_EMAIL = (email) => gql`
+query {
+  usersPermissionsUsers (filters: {email: {eq: "${email}" }}){ 
+    data {
+      id,
+      attributes {
+        username,
+        email,
+        firstName,
+        lastName,
+        phone,
       }
     }
   }
@@ -109,5 +130,6 @@ query {
 export {
   GET_USERS,
   GET_ME_WITH_POSTS,
-  GET_USER_WITH_POSTS_BY_ID
+  GET_USER_WITH_POSTS_BY_ID,
+  GET_USER_BY_EMAIL
 }
