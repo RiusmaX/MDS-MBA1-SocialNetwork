@@ -16,10 +16,11 @@ function useLikePost(postId, userId) {
   useEffect(() => {
     if (getLikerId.data?.likers?.data[0]?.id) {
       setLikerId(getLikerId.data?.likers?.data[0]?.id);
+      setIsLike(true);
     } else {
       setLikerId(null);
     }
-  }, [getLikerId.data?.likers?.data[0]?.id]);
+  }, [getLikerId.data?.likers?.data?.[0], getLikerId.loading]);
 
   const [likePost] = useMutation(LIKE_POST, {
     variables: { postId, userId },
@@ -32,23 +33,16 @@ function useLikePost(postId, userId) {
   const handleLikePost = async () => {
     await getLikerId.refetch();
 
-    if (likerId) {
+    if (isLike) {
       unlikePost();
       setIsLike(false);
-    } else {
+    } else if (!isLike) {
       likePost();
       setIsLike(true);
     }
   };
 
   const [isLike, setIsLike] = useState(false);
-  useEffect(() => {
-    if (getLikerId.data?.likers?.data[0]?.id) {
-      setIsLike(true);
-    } else {
-      setIsLike(false);
-    }
-  }, [getLikerId.data?.likers?.data[0]?.id]);
 
   return { handleLikePost, isLike, setIsLike };
 }

@@ -4,12 +4,44 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { BsCalendarDate } from "react-icons/bs";
 import { format } from "date-fns";
 import useLikePost from "../../services/Likers";
+import Lottie from "lottie-react";
+import partyAnimation from "../../assets/animations/party.json";
+import sound from "../../assets/sounds/sound.mp3";
+import { useEffect, useState } from "react";
 
 const PostListItem = ({ post }) => {
   const { isLike, setIsLike, handleLikePost } = useLikePost(Number(post.id), 1);
+  const [isAnimated, setIsAnimated] = useState(true);
+
+  useEffect(() => {
+    if (isLike) {
+      setIsAnimated(true);
+      const audio = new Audio(sound);
+      audio.play();
+
+      return () => {
+        audio.pause();
+      };
+    }
+  }, [isLike]);
 
   return (
-    <div className="postItem" style={{ width: "100%" }}>
+    <div className="postItem" style={{ position: "relative", width: "100%" }}>
+      {isLike && isAnimated && (
+        <Lottie
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+          }}
+          animationData={partyAnimation}
+          autoplay
+          loop={false}
+          onComplete={() => setIsAnimated(false)}
+        />
+      )}
       <div className="postItem-avatar">
         {/* Here we pass the avatar object to the Avatar component */}
         <Avatar
