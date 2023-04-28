@@ -45,7 +45,7 @@ query {
 
 const GET_CHAT_MESSAGE = (id) => gql`
 query{
-  messages(filters: {chat: {id: {eq: 1}}}){
+  messages(filters: {chat: {id: {eq: ${id}}}}){
     data {
       id,
       attributes{
