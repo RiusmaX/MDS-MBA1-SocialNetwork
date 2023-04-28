@@ -4,13 +4,15 @@ import Auth from '../pages/Auth'
 import Home from '../pages/Home'
 import Profile from '../pages/Profile'
 import Users from '../pages/Users'
-import { AuthContext, AuthProvider } from '../contexts/AuthContext'
+import { AuthContext, AuthProvider } from '../contexts/AuthContext_old'
 import { useContext } from 'react'
+import { useAuth } from '../contexts/AuthContext'
 
 const Router = () => {
-  const authContext = useContext(AuthContext)
-  console.log(authContext)
-  if (authContext.isLoggedIn()) {
+  const { state: { isLoggedIn } } = useAuth()
+  // const authContext = useContext(AuthContext)
+  // console.log(authContext)
+  if (isLoggedIn) {
     return (
       <BrowserRouter>
         <ResponsiveAppBar />
