@@ -23,7 +23,6 @@ function App () {
     <ApolloProvider client={client}>
       <div className='App'>
         <AuthProvider>
-
           <Router />
         </AuthProvider>
       </div>
