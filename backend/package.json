@@ -18,6 +18,7 @@
     "@strapi/strapi": "4.8.1",
     "better-sqlite3": "7.4.6",
     "mysql": "^2.18.1",
+    "strapi-plugin-config-sync": "^1.1.1",
     "strapi-plugin-io": "^1.1.4"
   },
   "author": {

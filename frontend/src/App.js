@@ -1,11 +1,10 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
-import { Container } from '@mui/material'
-
 import './App.css'
-import ResponsiveAppBar from './components/Layout/AppBar'
 import Router from './navigation/Router'
+import { AuthProvider } from './contexts/AuthContext'
+// import { AuthProvider } from './contexts/AuthContext_old'
 
-const client = new ApolloClient({
+export const client = new ApolloClient({
   uri: process.env.REACT_APP_GRAPHQL_URL,
   cache: new InMemoryCache(),
   defaultOptions: {
@@ -24,7 +23,9 @@ function App () {
   return (
     <ApolloProvider client={client}>
       <div className='App'>
-        <Router />
+        <AuthProvider>
+          <Router />
+        </AuthProvider>
       </div>
     </ApolloProvider>
   )

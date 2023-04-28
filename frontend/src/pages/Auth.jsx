@@ -1,44 +1,68 @@
-import { useMutation } from '@apollo/client'
-import { useState } from 'react'
-import { LOGIN_MUTATION } from '../graphql/mutations/authMutations'
+import { useState, useContext, useEffect } from 'react'
+import '../styles/Auth.scss'
+import '../styles/Global.scss'
+import InputField from '../components/Global/Input/InputField'
+import { FaUser, FaLock } from 'react-icons/fa'
+import Julo from '../assets/images/Julo.png'
+import SubmitButton from '../components/Global/Buttons/SubmitButton'
+import * as Yup from 'yup'
+import { Form, Formik } from 'formik'
+import { AuthContext } from '../contexts/AuthContext_old'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../contexts/AuthContext'
 
 const Auth = () => {
-  const [credentials, setCredentials] = useState({
-    email: '',
-    password: ''
+  const validationSchema = Yup.object().shape({
+    identifier: Yup.string().email('invalid email adress').required('email is required'),
+    password: Yup.string().min(5, 'password must contains 5 characters').required('password is required')
   })
+  const { login, state: { isLoggedIn } } = useAuth()
+  const navigate = useNavigate()
 
-  const [login, { data, loading, error }] = useMutation(LOGIN_MUTATION)
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/')
+    }
+  }, [isLoggedIn])
 
-  const handleChange = (e) => {
-    e.preventDefault()
-    setCredentials({
-      ...credentials,
-      [e.target.name]: e.target.value
-    })
-  }
+  const [errorLabel, setErrorLabel] = useState('')
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    login({ variables: { identifier: credentials.email, password: credentials.password } })
+  const handleSubmit = (values) => {
+    // authContext.login(values)
+    login(values)
   }
 
   return (
-    <>
-      <h2>LOGIN</h2>
-      <form method='POST' noValidate style={{ display: 'flex', flexDirection: 'column' }} onSubmit={handleSubmit}>
-        <label for='email'>
-          Email:
-          <input type='email' name='email' onChange={handleChange} value={credentials.email} />
-        </label>
-        <label for='password'>
-          Mot de passe:
-          <input type='password' name='password' onChange={handleChange} value={credentials.password} />
-        </label>
-        {!loading && <input type='submit' />}
-      </form>
-      <pre>{JSON.stringify(data)}</pre>
-    </>
+    <div className='authForm'>
+      <img className='imgJulo' src={Julo} alt='Jules img' />
+      <Formik
+        initialValues={{
+          identifier: 'toto@tata.fr',
+          password: 'secret'
+        }}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {props => (
+          <Form onSubmit={props.handleSubmit}>
+            <InputField
+              type='email'
+              placeholder='EMAIL'
+              name='identifier'
+              icon={FaUser}
+            />
+            <InputField
+              type='password'
+              placeholder='PASSWORD'
+              name='password'
+              icon={FaLock}
+            />
+            {errorLabel && <div className='error'>{errorLabel}</div>}
+            <SubmitButton label='Connexion' />
+          </Form>
+        )}
+      </Formik>
+    </div>
   )
 }
 
