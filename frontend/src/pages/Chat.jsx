@@ -3,7 +3,7 @@ import ChatSendingForm from '../components/Chat/ChatSendingForm'
 import { GET_CHAT_MESSAGE } from '../graphql/queries/chatsQueries'
 import { useParams } from 'react-router-dom'
 import {ChatBubble} from '../components/Chat/ChatBubble'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { subscribeToMessages } from '../services/socket'
 import { useAuth } from '../contexts/AuthContext'
 
@@ -24,6 +24,11 @@ const Chat = () => {
     subscribeToMessages(setMessages);
   }, []);
 
+  const lastMessage = useRef(null);
+    useEffect(() => {
+      lastMessage.current.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   return (
     <>
       <h1>Chat</h1>
@@ -37,6 +42,7 @@ const Chat = () => {
           isMySelf={message?.attributes?.users_permissions_user?.data?.id === user.id}
         />
       ))}
+      <div ref={lastMessage} />
       <ChatSendingForm chatId={id}/>
     </>
   )
