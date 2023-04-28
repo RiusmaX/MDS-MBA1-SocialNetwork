@@ -40,6 +40,11 @@
       "relation": "oneToMany",
       "target": "api::liker.liker",
       "mappedBy": "post"
+    },
+    "relativeTo": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::post.post"
     }
   }
 }

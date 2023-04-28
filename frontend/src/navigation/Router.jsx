@@ -8,6 +8,7 @@ import Profile from '../pages/Profile'
 import Users from '../pages/Users'
 import { AuthContext, useAuth } from '../contexts/AuthContext'
 import { useContext } from 'react'
+import Post from '../pages/Post'
 
 const Router = () => {
   const { state: { isLoggedIn } } = useAuth()
@@ -25,6 +26,7 @@ const Router = () => {
             <Route index element={<Users />} />
             <Route path=':id' element={<Profile />} />
           </Route>
+          <Route path='/post/:id' element={<Post />} />
         </Routes>
       </BrowserRouter>
     )
