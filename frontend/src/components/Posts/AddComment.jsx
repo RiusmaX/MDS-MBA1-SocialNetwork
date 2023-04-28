@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/client'
 import { ADD_COMMENT } from '../../graphql/mutations/commentMutations'
 import '../../styles/AddComment.scss'
 import Button from '../Layout/Button'
-import { useAuth } from '../contexts/AuthContext'
+import { useAuth } from '../../contexts/AuthContext'
 
 const AddComment = ({ relativeToId, addComment }) => {
   const { state: { user } } = useAuth()
