@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, Red } from 'react-router-dom'
 import ResponsiveAppBar from '../components/Layout/AppBar'
 import Auth from '../pages/Auth'
 import Home from '../pages/Home'
