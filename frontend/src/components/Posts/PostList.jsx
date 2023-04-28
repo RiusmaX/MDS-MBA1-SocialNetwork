@@ -9,7 +9,7 @@ const PostList = ({ posts }) => {
     <>
       {posts.map((post) => {
         // list of posts
-        return <PostListItem key={post.id} post={post} />
+        return <PostListItem key={post.id} post={post} seeDetails />
       })}
     </>
   )
