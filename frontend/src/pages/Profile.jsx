@@ -5,13 +5,29 @@ import Avatar from '../components/Profile/Avatar'
 import FullName from '../components/Profile/FullName'
 import { GET_ME_WITH_POSTS } from '../graphql/queries/usersQueries'
 import Button from '../components/Layout/Button'
+import { subscribeToPosts } from '../services/socket'
+import { GET_POSTS } from '../graphql/queries/postsQueries'
 
 import '../styles/Profile.scss'
+import { useEffect, useState } from 'react'
 
 const Profile = () => {
   // On prépare l'état local qui stockera les données
   const { id } = useParams()
   const { loading, error, data } = useQuery(GET_ME_WITH_POSTS(id))
+  const [posts, setPosts] = useState([])
+  const getPosts = useQuery(GET_POSTS)
+
+  // uses the useEffect hook to update the local posts state whenever the data in the getPosts request changes
+  useEffect(() => {
+    if (getPosts.data) {
+      setPosts(getPosts.data.posts.data)
+    }
+  }, [getPosts])
+
+  useEffect(() => {
+    subscribeToPosts(setPosts)
+  }, [])
 
   if (loading) {
     return <h4>Chargement...</h4>
@@ -37,9 +53,7 @@ const Profile = () => {
             <Button value='Suivre' className='bold' />
           </div>
         </div>
-        <div className='postsList'>
-          <PostList posts={profile.posts.data} />
-        </div>
+        <PostList posts={posts} />
       </div>
     )
   }
