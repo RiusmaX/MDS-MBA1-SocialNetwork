@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client'
 import ChatSendingForm from '../components/Chat/ChatSendingForm'
 import { GET_CHAT_MESSAGE } from '../graphql/queries/chatsQueries'
 import { useParams } from 'react-router-dom'
-import {ChatBubble} from '../components/Chat/ChatBubble'
+import { ChatBubble } from '../components/Chat/ChatBubble'
 import { useEffect, useRef, useState } from 'react'
 import { subscribeToMessages } from '../services/socket'
 import { useAuth } from '../contexts/AuthContext'
@@ -10,24 +10,24 @@ import { useAuth } from '../contexts/AuthContext'
 const Chat = () => {
   const { id } = useParams()
   const getMessages = useQuery(GET_CHAT_MESSAGE(id))
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([])
 
   const { state: { user } } = useAuth()
 
   useEffect(() => {
     if (getMessages.data) {
-      setMessages(getMessages.data.messages.data);
+      setMessages(getMessages.data.messages.data)
     }
-  }, [getMessages]);
+  }, [getMessages])
 
   useEffect(() => {
-    subscribeToMessages(setMessages);
-  }, []);
+    subscribeToMessages(setMessages)
+  }, [])
 
-  const lastMessage = useRef(null);
-    useEffect(() => {
-      lastMessage.current.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  const lastMessage = useRef(null)
+  useEffect(() => {
+    lastMessage.current.scrollIntoView({ behavior: 'smooth' })
+  }, [messages])
 
   return (
     <>
@@ -43,7 +43,7 @@ const Chat = () => {
         />
       ))}
       <div ref={lastMessage} />
-      <ChatSendingForm chatId={id}/>
+      <ChatSendingForm chatId={id} />
     </>
   )
 }
