@@ -5,10 +5,14 @@ import PostList from '../components/Posts/PostList'
 import { GET_POSTS } from '../graphql/queries/postsQueries'
 import { CounterProvider, useCounter } from '../contexts/CounterContext'
 import AddPost from '../components/Posts/AddPost'
+import { useAuth } from '../contexts/AuthContext'
 
 function Home () {
   const [posts, setPosts] = useState([])
   const getPosts = useQuery(GET_POSTS)
+
+  const { state: { user } } = useAuth()
+  console.log(user)
 
   // uses the useEffect hook to update the local posts state whenever the data in the getPosts request changes
   useEffect(() => {
@@ -28,7 +32,7 @@ function Home () {
         <CounterActions />
       </CounterProvider>
       <div className='container'>
-        <AddPost userData='1' />
+        <AddPost userData={user} />
         <PostList posts={posts} />
       </div>
     </div>
