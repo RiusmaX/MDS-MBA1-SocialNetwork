@@ -100,9 +100,9 @@
       "target": "api::chat.chat",
       "mappedBy": "users_permissions_users"
     },
-    "message": {
+    "messages": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "oneToMany",
       "target": "api::message.message",
       "mappedBy": "users_permissions_user"
     }

@@ -15,7 +15,11 @@ const ChatSendingForm = (chatId) => {
   const [addMessage, { data, loading, error }] = useMutation(ADD_CHAT_MESSAGE)
   const [date, setDate] = useState(new Date());
 
-
+  const messageSchema = Yup.object().shape({
+    messageText: Yup.string()
+      .min(1, 'Le message est trop court!')
+      .required('Un message est requis!'),
+  });
 
   if (error) {
     return (
@@ -31,6 +35,7 @@ const ChatSendingForm = (chatId) => {
       initialValues={{
         messageText: '',
       }}
+      validationSchema={messageSchema}
       onSubmit={async (values, actions) => {
         const isoString = date.toISOString();
         //TODO  remplacer users_permissions_user: 1 par l'utilisateur courant
@@ -38,12 +43,18 @@ const ChatSendingForm = (chatId) => {
         actions.resetForm();
       }}
     >
-    <Form className='ChatSendingForm'>
-          <Field rows='5' name="messageText" className='ChatEntryField'/>
-          <button className='ChatSendButton' type="submit">
+      {({ errors, touched }) => (
+         <Form className='ChatSendingForm'>
+          {errors.messageText && touched.messageText ? (
+             <div style={{color: "red"}}>{errors.messageText}</div>
+           ) : null}
+           <Field name="messageText"className='ChatEntryField' />
+           <button className='ChatSendButton' type="submit">
             <Logo stroke='white' />
           </button>
-        </Form>
+         </Form>
+       )}
+
     </Formik>
   )
 }

@@ -50,7 +50,6 @@ const CREATE_CHAT = gql`
       }
     }
   }
-}
 `
 const ADD_USER_TO_CHAT = (id) => gql`
 mutation{
