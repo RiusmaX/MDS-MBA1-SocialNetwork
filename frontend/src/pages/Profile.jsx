@@ -7,7 +7,6 @@ import FullName from '../components/Profile/FullName'
 import { GET_ME_WITH_POSTS } from '../graphql/queries/usersQueries'
 import { subscribeToPosts } from '../services/socket'
 import { GET_POSTS } from '../graphql/queries/postsQueries'
-import { AuthContext } from '../contexts/AuthContext_old'
 
 import '../styles/Profile.scss'
 import { CREATE_CHAT } from '../graphql/mutations/chatsMutations'
@@ -23,8 +22,6 @@ const Profile = () => {
   const [posts, setPosts] = useState([])
   const getPosts = useQuery(GET_POSTS)
   const { state: { user } } = useAuth()
-
-  const authContext = useContext(AuthContext)
 
   // uses the useEffect hook to update the local posts state whenever the data in the getPosts request changes
   useEffect(() => {
