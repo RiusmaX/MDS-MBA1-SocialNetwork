@@ -19,6 +19,7 @@ import {
 import { ReactComponent as Logo } from '../../assets/images/logo.svg'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
+import jwt_decode from 'jwt-decode'
 
 const pages = [{
   name: 'Users',
