@@ -31,36 +31,38 @@ const Auth = () => {
   }
 
   return (
-    <div className='authForm'>
-      <img className='imgJulo' src={Julo} alt='Jules img' />
-      <Formik
-        initialValues={{
-          identifier: 'toto@tata.fr',
-          password: 'secret'
-        }}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
-        {props => (
-          <Form onSubmit={props.handleSubmit}>
-            <InputField
-              type='email'
-              placeholder='EMAIL'
-              name='identifier'
-              icon={FaUser}
-            />
-            <InputField
-              type='password'
-              placeholder='PASSWORD'
-              name='password'
-              icon={FaLock}
-            />
-            {errorLabel && <div className='error'>{errorLabel}</div>}
-            <SubmitButton label='Connexion' />
-          </Form>
-        )}
-      </Formik>
-    </div>
+    <>
+      <div className='authForm'>
+        <img className='imgJulo' src={Julo} alt='Jules img' />
+        <Formik
+          initialValues={{
+            identifier: 'toto@tata.fr',
+            password: 'secret'
+          }}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
+        >
+          {props => (
+            <Form onSubmit={props.handleSubmit}>
+              <InputField
+                type='email'
+                placeholder='EMAIL'
+                name='identifier'
+                icon={FaUser}
+              />
+              <InputField
+                type='password'
+                placeholder='PASSWORD'
+                name='password'
+                icon={FaLock}
+              />
+              {errorLabel && <div className='error'>{errorLabel}</div>}
+              <SubmitButton label='Connexion' />
+            </Form>
+          )}
+        </Formik>
+      </div>
+    </>
   )
 }
 
