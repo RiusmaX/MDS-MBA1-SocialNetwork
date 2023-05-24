@@ -1,0 +1,8 @@
+#pinnedchat{
+    position: fixed;
+    width: min-content;
+    height: 15%;
+    right: -204px;
+    transform: translateY(-50%);
+    transition: right 0.5s ease-out;
+}
