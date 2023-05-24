@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { subscribeToPosts } from '../services/socket';
-import { useQuery } from '@apollo/client';
-import PostList from '../components/Posts/PostList';
-import { GET_POSTS } from '../graphql/queries/postsQueries';
-import { CounterProvider, useCounter } from '../contexts/CounterContext';
+import React, { useState, useEffect } from 'react'
+import { subscribeToPosts } from '../services/socket'
+import { useQuery } from '@apollo/client'
+import PostList from '../components/Posts/PostList'
+import { GET_POSTS } from '../graphql/queries/postsQueries'
+import { CounterProvider, useCounter } from '../contexts/CounterContext'
+import PinnedChat from '../components/Chat/PinnedChat'
 
 function Home () {
   const [posts, setPosts] = useState([])
@@ -22,6 +23,7 @@ function Home () {
 
   return (
     <div>
+      <PinnedChat />
       <CounterProvider>
         <CounterView />
         <CounterActions />
@@ -34,7 +36,7 @@ function Home () {
 const CounterView = () => {
   const { state } = useCounter()
   return <h3>Counter: {state.counter}</h3>
-};
+}
 
 const CounterActions = () => {
   const [value, setValue] = useState()
@@ -58,6 +60,6 @@ const CounterActions = () => {
       </button>
     </>
   )
-};
+}
 
 export default Home
