@@ -46,7 +46,7 @@ export const subscribeToPosts = (setPosts) => {
   }
 }
 
-export const subscribeToMessages = (setMessages) => {
+export const subscribeToMessages = (idConv, setMessages) => {
   // Listening to socket events for new messages
   socket.on('connect', () => {
     console.log('Socket connected')
@@ -59,32 +59,34 @@ export const subscribeToMessages = (setMessages) => {
   socket.on('message:create', async (data) => {
     console.log('New message received', data)
     data = data.data
-    const user = await getProfile(data.attributes.users_permissions_user.data.id)
-    setMessages((prevMessages) => {
-      const find = prevMessages.findIndex((_data) => parseInt(_data.id) === parseInt(data.id))
-      if (find === -1) {
-        return [
-          ...prevMessages,
-          {
-            id: String(data.id),
-            attributes: {
-              ...data.attributes,
-              users_permissions_user: {
-                data: {
-                  ...data.attributes.users_permissions_user.data,
-                  attributes: {
-                    ...user
+    if (parseInt(idConv) === parseInt(data.attributes.chat.data.id)) {
+      const user = await getProfile(data.attributes.users_permissions_user.data.id)
+      setMessages((prevMessages) => {
+        const find = prevMessages.findIndex((_data) => parseInt(_data.id) === parseInt(data.id))
+        if (find === -1) {
+          return [
+            ...prevMessages,
+            {
+              id: String(data.id),
+              attributes: {
+                ...data.attributes,
+                users_permissions_user: {
+                  data: {
+                    ...data.attributes.users_permissions_user.data,
+                    attributes: {
+                      ...user
+                    }
                   }
                 }
               }
             }
-          }
+          ]
+        }
+        return [
+          ...prevMessages
         ]
-      }
-      return [
-        ...prevMessages
-      ]
-    })
+      })
+    }
   })
 
   return () => {

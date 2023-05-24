@@ -21,8 +21,8 @@ const Chat = () => {
   }, [getMessages])
 
   useEffect(() => {
-    subscribeToMessages(setMessages)
-  }, [])
+    subscribeToMessages(id, setMessages)
+  }, [id])
 
   const lastMessage = useRef(null)
   useEffect(() => {
