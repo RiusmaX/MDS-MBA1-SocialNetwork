@@ -20,6 +20,7 @@ import {
 } from '@mui/material'
 import { ReactComponent as Logo } from '../../assets/images/logo.svg'
 import { Link, useNavigate } from 'react-router-dom'
+import jwt_decode from 'jwt-decode'
 
 const pages = [{
   name: 'Users',
@@ -94,9 +95,12 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = (setting) => {
     // Lors du clique sur le paramètre Profile
     if (setting === 'Profile') {
+      const token = window.localStorage.getItem('token')
+      const decodedToken = jwt_decode(token)
+      const userId = decodedToken.id
       // Redirection sur la page profile de l'utilisateur connecter
       // Modifier lorsque la connexion sera fonctionelle
-      navigate('/users/1')
+      navigate('/users/' + userId)
     } else if (setting === 'Logout') {
       handleLogout()
     }
