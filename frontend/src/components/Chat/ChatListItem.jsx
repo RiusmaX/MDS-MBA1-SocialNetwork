@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/client'
 import { GET_LAST_CHAT_MESSAGE } from '../../graphql/queries/chatsQueries'
 import 'moment/locale/fr'
 
-const ChatListItem = ({ chat, onClick }) => {
+const ChatListItem = ({ chat, onClick, active }) => {
   const { loading, error, data } = useQuery(GET_LAST_CHAT_MESSAGE(chat.id))
 
   if (loading) {
@@ -28,7 +28,15 @@ const ChatListItem = ({ chat, onClick }) => {
   }
 
   return (
-    <Card sx={{ minWidth: 250, maxWidth: 345, cursor: 'pointer' }} onClick={onClick}>
+    <Card
+      sx={{
+        minWidth: 250,
+        maxWidth: 345,
+        cursor: 'pointer',
+        backgroundColor: active ? '#C8C8C8' : ''
+      }}
+      onClick={onClick}
+    >
       <CardHeader
         avatar={
           <Avatar
