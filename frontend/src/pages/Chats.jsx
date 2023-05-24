@@ -23,7 +23,7 @@ const Chats = () => {
 
   return (
     <Container maxWidth='md'>
-      <ChatList chats={data.chats.data} />
+      <ChatList chats={data.chats ? data.chats.data : []} />
     </Container>
   )
 }
