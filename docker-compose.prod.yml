@@ -4,8 +4,8 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile.prod
-    ports:
-      - 8080:80
+    # ports:
+    #   - 8080:80
     container_name: socialNetwork-frontend
     stdin_open: true
     volumes:
@@ -25,8 +25,8 @@ services:
       MARIADB_DATABASE: socialNetwork
       MARIADB_USER: strapi
       MARIADB_PASSWORD: strapi
-    ports:
-      - 3306:3306
+    # ports:
+    #   - 3306:3306
     volumes: 
       - socialNetwork-mariadb:/var/lib/mysql
     restart: unless-stopped
@@ -47,8 +47,8 @@ services:
       DATABASE_USERNAME: strapi
       DATABASE_PASSWORD: strapi
       DATABASE_SSL: 'false'
-    ports:
-      - '1337:1337'
+    # ports:
+      # - '1337:1337'
     volumes:
       - ./backend/config:/opt/app/config
       - ./backend/src:/opt/app/src
