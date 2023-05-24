@@ -51,17 +51,10 @@ const Chat = () => {
     } else {
       removePin(id)
     }
-    console.log(pinnedIds)
   }
 
   return (
     <>
-      <h2>IDs épinglés :</h2>
-      <ul>
-        {pinnedIds.map((id) => (
-          <li key={id}>{id}</li>
-        ))}
-      </ul>
       <br />
       <Button onClick={handleClickPin} variant='outlined'>
         {togglePin ? 'Pin chat 📌' : 'Pinned chat 📍'}
