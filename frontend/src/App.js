@@ -5,6 +5,7 @@ import Router from './navigation/Router'
 import { AuthProvider } from './contexts/AuthContext'
 import SwitchButtonTheme from './components/Global/Buttons/SwitchButtonTheme'
 import './styles/SwitchButtonTheme.scss'
+import { PinProvider } from './contexts/PinMessagesContext'
 
 export const client = new ApolloClient({
   uri: process.env.REACT_APP_GRAPHQL_URL,
@@ -37,16 +38,15 @@ function App () {
     document.body.className = theme
   }, [theme])
   return (
-    <>
-      <SwitchButtonTheme handleOnClick={toggleTheme} />
-      <ApolloProvider client={client}>
-        <div className='App'>
-          <AuthProvider>
+    <ApolloProvider client={client}>
+      <div className='App'>
+        <AuthProvider>
+          <PinProvider>
             <Router />
-          </AuthProvider>
-        </div>
-      </ApolloProvider>
-    </>
+          </PinProvider>
+        </AuthProvider>
+      </div>
+    </ApolloProvider>
   )
 }
 

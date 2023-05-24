@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/client'
+import { from, useQuery } from '@apollo/client'
 import ChatSendingForm from '../components/Chat/ChatSendingForm'
 import { GET_CHAT_MESSAGE } from '../graphql/queries/chatsQueries'
 import { useParams } from 'react-router-dom'
@@ -7,12 +7,16 @@ import { useEffect, useRef, useState } from 'react'
 import { subscribeToMessages } from '../services/socket'
 import { useAuth } from '../contexts/AuthContext'
 import { Button } from '@mui/material'
+import { usePin } from '../contexts/PinMessagesContext'
 
 const Chat = () => {
   const { id } = useParams()
   const getMessages = useQuery(GET_CHAT_MESSAGE(id))
   const [messages, setMessages] = useState([])
   const [togglePin, setTogglePin] = useState([])
+
+  const { state, addPin, removePin } = usePin()
+  const { pinnedMessages } = state
 
   // setTogglePin(false)
   // this.state = {isToggleOn: false};
@@ -35,7 +39,14 @@ const Chat = () => {
   }, [messages])
 
   const handleClickPin = () => {
+    console.log('handleClickPin')
     setTogglePin(!togglePin)
+    if (togglePin) {
+      addPin(id)
+    } else {
+      removePin(id)
+    }
+    console.log(pinnedMessages)
   }
 
   return (
