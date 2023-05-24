@@ -16,7 +16,7 @@ const Chat = () => {
   const [togglePin, setTogglePin] = useState([])
 
   const { state, addPin, removePin } = usePin()
-  const { pinnedMessages } = state
+  const { pinnedIds } = state
 
   // setTogglePin(false)
   // this.state = {isToggleOn: false};
@@ -33,24 +33,35 @@ const Chat = () => {
     subscribeToMessages(id, setMessages)
   }, [id])
 
+  useEffect(() => {
+    if (pinnedIds.length > 0 && pinnedIds.includes(id)) {
+      setTogglePin(false)
+    }
+  }, [pinnedIds])
+
   const lastMessage = useRef(null)
   useEffect(() => {
     lastMessage.current.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
   const handleClickPin = () => {
-    console.log('handleClickPin')
     setTogglePin(!togglePin)
     if (togglePin) {
       addPin(id)
     } else {
       removePin(id)
     }
-    console.log(pinnedMessages)
+    console.log(pinnedIds)
   }
 
   return (
     <>
+      <h2>IDs épinglés :</h2>
+      <ul>
+        {pinnedIds.map((id) => (
+          <li key={id}>{id}</li>
+        ))}
+      </ul>
       <br />
       <Button onClick={handleClickPin} variant='outlined'>
         {togglePin ? 'Pin chat 📌' : 'Pinned chat 📍'}
