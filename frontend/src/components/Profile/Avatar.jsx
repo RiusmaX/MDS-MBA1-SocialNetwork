@@ -30,7 +30,7 @@ const Avatar = ({ avatar }) => {
   return (
     <img
       className={`avatar ${classname}`}
-      src={`${process.env.REACT_APP_IMAGES_URL}${avatar.url}`}
+      src={`${process.env.REACT_APP_IMAGES_URL}${avatar?.url}`}
       onClick={handleClick}
     />
   )

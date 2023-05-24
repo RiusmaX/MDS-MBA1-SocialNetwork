@@ -16,7 +16,7 @@ const Chat = () => {
 
   useEffect(() => {
     if (getMessages.data) {
-      setMessages(getMessages.data.messages.data)
+      setMessages(getMessages.data?.messages?.data)
     }
   }, [getMessages])
 
@@ -32,7 +32,7 @@ const Chat = () => {
   return (
     <>
       <h1>Chat</h1>
-      {messages.map((message) => (
+      {messages?.map((message) => (
         <ChatBubble
           key={message.id}
           content={message?.attributes?.messageText}
