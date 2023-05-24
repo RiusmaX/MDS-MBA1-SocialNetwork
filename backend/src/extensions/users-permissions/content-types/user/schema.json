@@ -107,17 +107,17 @@
       "target": "api::liker.liker",
       "mappedBy": "user"
     },
-    "followers": {
+    "follows": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "plugin::users-permissions.user",
-      "inversedBy": "usersFollowed"
+      "inversedBy": "followedBy"
     },
-    "usersFollowed": {
+    "followedBy": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "plugin::users-permissions.user",
-      "inversedBy": "followers"
+      "inversedBy": "follows"
     }
   }
 }

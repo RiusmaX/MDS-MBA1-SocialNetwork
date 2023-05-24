@@ -112,7 +112,7 @@ query {
 
 const GET_USER_BY_EMAIL = (email) => gql`
 query {
-  usersPermissionsUsers (filters: {email: {eq: "${email}" }}){ 
+  usersPermissionsUsers (filters: {email: {eq: "${email}" }}){
     data {
       id,
       attributes {
@@ -127,9 +127,27 @@ query {
 }
 `
 
+const GET_FOLLOWERS = (id) => gql`
+query getFollower{
+  usersPermissionsUser (id: ${id}){
+    data {
+      id
+      attributes {
+        follows {
+          data {
+            id
+          }
+        }
+      }
+    }
+  }
+}
+`
+
 export {
   GET_USERS,
   GET_ME_WITH_POSTS,
   GET_USER_WITH_POSTS_BY_ID,
-  GET_USER_BY_EMAIL
+  GET_USER_BY_EMAIL,
+  GET_FOLLOWERS
 }

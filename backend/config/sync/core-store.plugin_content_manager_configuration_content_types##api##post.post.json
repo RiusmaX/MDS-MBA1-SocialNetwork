@@ -48,21 +48,6 @@
           "sortable": false
         }
       },
-      "likers": {
-        "edit": {
-          "label": "likers",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true,
-          "mainField": "username"
-        },
-        "list": {
-          "label": "likers",
-          "searchable": false,
-          "sortable": false
-        }
-      },
       "medias": {
         "edit": {
           "label": "medias",
@@ -88,6 +73,36 @@
         },
         "list": {
           "label": "user",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "likers": {
+        "edit": {
+          "label": "likers",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "id"
+        },
+        "list": {
+          "label": "likers",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "relativeTo": {
+        "edit": {
+          "label": "relativeTo",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "title"
+        },
+        "list": {
+          "label": "relativeTo",
           "searchable": true,
           "sortable": true
         }
@@ -154,6 +169,10 @@
         [
           {
             "name": "user",
+            "size": 6
+          },
+          {
+            "name": "relativeTo",
             "size": 6
           }
         ]
