@@ -38,8 +38,8 @@ const Chat = () => {
           content={message?.attributes?.messageText}
           date={message?.attributes?.sendDate}
           author={message?.attributes?.users_permissions_user?.data?.attributes}
-          reverse={message?.attributes?.users_permissions_user?.data?.id === user.id}
-          isMySelf={message?.attributes?.users_permissions_user?.data?.id === user.id}
+          reverse={parseInt(message?.attributes?.users_permissions_user?.data?.id) === parseInt(user.id)}
+          isMySelf={parseInt(message?.attributes?.users_permissions_user?.data?.id) === parseInt(user.id)}
         />
       ))}
       <div ref={lastMessage} />
