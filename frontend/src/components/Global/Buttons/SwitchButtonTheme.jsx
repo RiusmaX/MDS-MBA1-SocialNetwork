@@ -6,21 +6,21 @@ const SwitchButtonTheme = (props) => {
      */
   return (
     <div className='container'>
-      <div class='switch'>
+      <div className='switch'>
         <input type='checkbox' name='toggle' onClick={props.handleOnClick} />
         <label for='toggle'>
-          <i class='bulb'>
-            <span class='bulb-center' />
-            <span class='filament-1' />
-            <span class='filament-2' />
-            <span class='reflections'>
+          <i className='bulb'>
+            <span className='bulb-center' />
+            <span className='filament-1' />
+            <span className='filament-2' />
+            <span className='reflections'>
               <span />
             </span>
-            <span class='sparks'>
-              <i class='spark1' />
-              <i class='spark2' />
-              <i class='spark3' />
-              <i class='spark4' />
+            <span className='sparks'>
+              <i className='spark1' />
+              <i className='spark2' />
+              <i className='spark3' />
+              <i className='spark4' />
             </span>
           </i>
         </label>
