@@ -9,9 +9,11 @@ import partyAnimation from '../../assets/animations/party.json'
 import sound from '../../assets/sounds/sound.mp3'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { FacebookIcon, FacebookShareButton, OKIcon, OKShareButton, OKShareCount, TwitterIcon, TwitterShareButton } from 'react-share'
 
 const PostListItem = ({ post, seeDetails }) => {
   const navigate = useNavigate()
+  const currenturl = window.location.href
 
   const openDetail = () => {
     if (seeDetails) navigate(`/post/${post.id}`)
@@ -97,6 +99,27 @@ const PostListItem = ({ post, seeDetails }) => {
             {/* date format */}
             {format(new Date(post.attributes?.createdAt), 'dd/MM/yyyy')}
           </p>
+          <TwitterShareButton
+            url={currenturl + post.id}
+            hashtags={['MBA1', 'MyDigitalSchool', 'ReactJS']}
+            title='Check this post, it is awesome !'
+          >
+            <TwitterIcon size={32} round />
+          </TwitterShareButton>
+          <FacebookShareButton
+            url={`https://localhost:3000/post/${post.id}`}
+            hashtag='#MBA1 #MyDigitalSchool #ReactJS'
+            quote='Check this post, it is awesome !'
+          >
+            <FacebookIcon size={32} round />
+          </FacebookShareButton>
+          <OKShareButton
+            url={`https://localhost:3000/post/${post.id}`}
+            title='Check this post, it is awesome !'
+            image={`${process.env.REACT_APP_IMAGES_URL}${post.attributes?.medias?.data?.[0]?.attributes?.url}`}
+          >
+            <OKIcon size={32} round />
+          </OKShareButton>
         </div>
       </div>
     </div>
