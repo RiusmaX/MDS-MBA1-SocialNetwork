@@ -1,6 +1,7 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 import './App.css'
 import Router from './navigation/Router'
+import PinChat from './pages/PinChat'
 import { AuthProvider } from './contexts/AuthContext'
 
 export const client = new ApolloClient({
@@ -24,6 +25,7 @@ function App () {
       <div className='App'>
         <AuthProvider>
           <Router />
+          <PinChat />
         </AuthProvider>
       </div>
     </ApolloProvider>
