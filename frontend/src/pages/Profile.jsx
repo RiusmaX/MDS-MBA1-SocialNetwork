@@ -21,7 +21,6 @@ const Profile = () => {
   // uses the useEffect hook to update the local posts state whenever the data in the getPosts request changes
   useEffect(() => {
     if (getPosts) {
-      console.log(getPosts)
       setPosts(getPosts.posts?.data)
     }
   }, [getPosts])
