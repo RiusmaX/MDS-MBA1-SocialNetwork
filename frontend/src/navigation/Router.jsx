@@ -1,26 +1,32 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import ResponsiveAppBar from '../components/Layout/AppBar'
 import Auth from '../pages/Auth'
+import Chats from '../pages/Chats'
+import Chat from '../pages/Chat'
 import Home from '../pages/Home'
 import Profile from '../pages/Profile'
 import Users from '../pages/Users'
-import { AuthContext, AuthProvider } from '../contexts/AuthContext'
+import { AuthContext, useAuth } from '../contexts/AuthContext'
 import { useContext } from 'react'
+import Post from '../pages/Post'
 
 const Router = () => {
-  const authContext = useContext(AuthContext)
-  console.log(authContext)
-  if (authContext.isLoggedIn()) {
+  const { state: { isLoggedIn } } = useAuth()
+  if (isLoggedIn) {
     return (
       <BrowserRouter>
         <ResponsiveAppBar />
         <Routes>
           <Route path='/' index element={<Home />} />
+
           <Route path='/auth' element={<Auth />} />
+          <Route path='/chats' element={<Chats />} />
+          <Route path='/chats/:id' element={<Chat />} />
           <Route path='users'>
             <Route index element={<Users />} />
             <Route path=':id' element={<Profile />} />
           </Route>
+          <Route path='/post/:id' element={<Post />} />
         </Routes>
       </BrowserRouter>
     )
@@ -28,7 +34,7 @@ const Router = () => {
     return (
       <BrowserRouter>
         <Routes>
-          <Route path='/auth' index element={<Auth />} />
+          <Route path='*' element={<Auth />} />
         </Routes>
       </BrowserRouter>
     )

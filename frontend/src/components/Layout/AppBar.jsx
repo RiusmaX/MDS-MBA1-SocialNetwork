@@ -2,8 +2,6 @@ import * as React from 'react'
 import MenuIcon from '@mui/icons-material/Menu'
 import SearchIcon from '@mui/icons-material/Search'
 import { styled, alpha } from '@mui/material/styles'
-import { AuthContext } from '../../contexts/AuthContext'
-import { useContext } from 'react'
 import {
   MenuItem,
   InputBase,
@@ -20,11 +18,14 @@ import {
 } from '@mui/material'
 import { ReactComponent as Logo } from '../../assets/images/logo.svg'
 import { Link, useNavigate } from 'react-router-dom'
-import jwt_decode from 'jwt-decode'
+import { useAuth } from '../../contexts/AuthContext'
 
 const pages = [{
   name: 'Users',
   link: '/users'
+}, {
+  name: 'Conversations',
+  link: '/chats'
 }]
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
 
@@ -70,11 +71,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   }
 }))
 
-function ResponsiveAppBar() {
+function ResponsiveAppBar () {
   const navigate = useNavigate()
-  const authContext = useContext(AuthContext)
   const [anchorElNav, setAnchorElNav] = React.useState(null)
   const [anchorElUser, setAnchorElUser] = React.useState(null)
+  const { logout } = useAuth()
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget)
@@ -89,7 +90,7 @@ function ResponsiveAppBar() {
   }
 
   const handleLogout = () => {
-    authContext.logout()
+    logout()
   }
 
   const handleCloseUserMenu = (setting) => {
