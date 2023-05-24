@@ -52,7 +52,6 @@ const Chats = () => {
   })
 
   const toggleChatId = (id) => {
-    console.log(id)
     setData({
       ...data,
       idChat: id

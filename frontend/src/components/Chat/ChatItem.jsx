@@ -22,7 +22,6 @@ const ChatItem = ({ id }) => {
 
   useEffect(() => {
     if (getChat.data) {
-      console.log(getChat.data)
       setChat(getChat.data.chat.data.attributes)
       setMessages(getChat.data.chat.data.attributes.messages.data)
     }
