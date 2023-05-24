@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import '../../styles/Avatar.scss'
 
 const Avatar = ({ avatar }) => {
@@ -27,11 +27,12 @@ const Avatar = ({ avatar }) => {
     }
   }, [counter])
 
-  return (
+  return avatar && (
     <img
       className={`avatar ${classname}`}
       src={`${process.env.REACT_APP_IMAGES_URL}${avatar.url}`}
       onClick={handleClick}
+      alt=''
     />
   )
 }
