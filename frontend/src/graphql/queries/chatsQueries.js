@@ -43,6 +43,60 @@ query {
 }
 `
 
+const GET_CHAT = (id) => gql`
+query{
+  chat(id: ${id}) {
+    data {
+      id
+      attributes {
+        name
+        image {
+          data {
+            id
+            attributes {
+              name
+              url
+            }
+          }
+        }
+        messages {
+          data {
+            id
+            attributes {
+              messageText
+              sendDate
+              media {
+                data {
+                  id
+                  attributes {
+                    url
+                  }
+                }
+              }
+              users_permissions_user {
+                data {
+                  id
+                  attributes {
+                    username
+                    avatar {
+                      data {
+                        attributes {
+                          url
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+`
+
 const GET_CHAT_MESSAGE = (id) => gql`
 query{
   messages(pagination: { limit: 100 }, filters: {chat: {id: {eq: ${id}}}}){
@@ -114,5 +168,6 @@ export {
   GET_CHATS,
   GET_CHATS_WITH_USER,
   GET_CHAT_MESSAGE,
-  GET_LAST_CHAT_MESSAGE
+  GET_LAST_CHAT_MESSAGE,
+  GET_CHAT
 }
