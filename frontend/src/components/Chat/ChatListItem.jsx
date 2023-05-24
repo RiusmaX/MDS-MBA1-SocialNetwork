@@ -1,9 +1,9 @@
 import { Avatar, Card, CardHeader } from '@mui/material'
 import { blueGrey } from '@mui/material/colors'
-import Moment from 'moment'
 import { useQuery } from '@apollo/client'
 import { GET_LAST_CHAT_MESSAGE } from '../../graphql/queries/chatsQueries'
-import 'moment/locale/fr'
+import { formatDistance } from 'date-fns'
+import { fr } from 'date-fns/locale'
 
 const ChatListItem = ({ chat, onClick, active }) => {
   const { loading, error, data } = useQuery(GET_LAST_CHAT_MESSAGE(chat.id))
@@ -19,12 +19,6 @@ const ChatListItem = ({ chat, onClick, active }) => {
         <pre>{JSON.stringify(error, null, 2)}</pre>
       </>
     )
-  }
-
-  // display the date properly
-  let dt = Moment(data.sendDate)
-  if (dt == null) {
-    dt = Moment(new Date())
   }
 
   return (
@@ -46,7 +40,7 @@ const ChatListItem = ({ chat, onClick, active }) => {
           />
         }
         title={chat.attributes.name}
-        subheader={dt.format('D MMMM YYYY HH[h]mm')}
+        subheader={formatDistance(new Date(data?.messages?.data?.[0]?.attributes?.sendDate), new Date(), { addSuffix: true, locale: fr })}
       />
     </Card>
   )
