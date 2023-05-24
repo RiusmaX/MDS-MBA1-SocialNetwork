@@ -6,11 +6,16 @@ import { ChatBubble } from '../components/Chat/ChatBubble'
 import { useEffect, useRef, useState } from 'react'
 import { subscribeToMessages } from '../services/socket'
 import { useAuth } from '../contexts/AuthContext'
+import { Button } from '@mui/material'
 
 const Chat = () => {
   const { id } = useParams()
   const getMessages = useQuery(GET_CHAT_MESSAGE(id))
   const [messages, setMessages] = useState([])
+  const [togglePin, setTogglePin] = useState([])
+
+  // setTogglePin(false)
+  // this.state = {isToggleOn: false};
 
   const { state: { user } } = useAuth()
 
@@ -29,8 +34,16 @@ const Chat = () => {
     lastMessage.current.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
+  const handleClickPin = () => {
+    setTogglePin(!togglePin)
+  }
+
   return (
     <>
+      <br />
+      <Button onClick={handleClickPin} variant='outlined'>
+        {togglePin ? 'Pin chat 📌' : 'Pinned chat 📍'}
+      </Button>
       <h1>Chat</h1>
       {messages.map((message) => (
         <ChatBubble
