@@ -37,7 +37,7 @@ services:
     # image: strapi/strapi
     build:
       context: ./backend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     container_name: socialNetwork-backend
     environment:
       DATABASE_CLIENT: mysql
