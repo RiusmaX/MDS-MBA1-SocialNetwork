@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+import { subscribeToMessages } from '../../services/socket'
 // import Chat from '../../pages/Chat'
 import '../../styles/PinnedChat.scss'
 import { Card, CardHeader, IconButton } from '@mui/material'
@@ -9,6 +11,13 @@ const PinnedChat = (chatId) => {
   const selectChat = () => {
     console.log('chat selected')
   }
+
+  const [messages, setMessages] = useState([])
+
+  useEffect(() => {
+    subscribeToMessages(setMessages)
+  }, [])
+
   return (
     <div id='pinnedchat'>
       {/* <Chat /> */}
@@ -20,24 +29,23 @@ const PinnedChat = (chatId) => {
               <IconButton aria-label='unpin'>
                 📍
               </IconButton>
-          }
+        }
             title='La bande'
             subheader='▬Nouveau message▬'
           />
         </Card>
-        <Card sx={{ maxWidth: 345 }} onClick={selectChat}>
+        <Card sx={{ maxWidth: 345 }} onClick={selectChat} style={{ cursor: 'pointer' }}>
           <CardHeader
             action={
               <IconButton aria-label='unpin'>
                 📍
               </IconButton>
-          }
+        }
             title='Projet X'
             subheader='▬Nouveau message▬'
           />
         </Card>
       </Card>
-
     </div>
   )
 }
