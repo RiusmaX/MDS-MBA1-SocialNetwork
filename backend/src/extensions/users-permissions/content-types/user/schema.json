@@ -83,16 +83,28 @@
         "audios"
       ]
     },
-    "postsLiked": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::post.post",
-      "mappedBy": "likers"
-    },
     "posts": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::post.post",
+      "mappedBy": "user"
+    },
+    "chats": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::chat.chat",
+      "mappedBy": "users_permissions_users"
+    },
+    "messages": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::message.message",
+      "mappedBy": "users_permissions_user"
+    },
+    "likers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::liker.liker",
       "mappedBy": "user"
     },
     "followers": {

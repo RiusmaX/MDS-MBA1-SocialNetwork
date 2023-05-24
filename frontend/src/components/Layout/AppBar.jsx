@@ -23,6 +23,9 @@ import { useAuth } from '../../contexts/AuthContext'
 const pages = [{
   name: 'Users',
   link: '/users'
+}, {
+  name: 'Conversations',
+  link: '/chats'
 }]
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
 

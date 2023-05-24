@@ -45,4 +45,42 @@ export const subscribeToPosts = (setPosts) => {
   };
 };
 
+export const subscribeToMessages = (setMessages) => {
+  // Listening to socket events for new messages
+  socket.on("connect", () => {
+    console.log("Socket connected");
+  });
+
+  socket.on("disconnect", () => {
+    console.log("Socket disconnected");
+  });
+
+  socket.on("message:create", (data) => {
+    console.log("New message received", data);
+    data = data.data
+    setMessages((prevMessages) => {
+      const find = prevMessages.findIndex((_data) => parseInt(_data.id) === parseInt(data.id))
+      if(find === -1){
+        return [
+          ...prevMessages,
+          {
+            id: String(data.id),
+            attributes: data.attributes
+          },
+        ]
+      }
+      return [
+        ...prevMessages,
+      ]
+    });
+  });
+
+  return () => {
+    socket.off("connect");
+    socket.off("disconnect");
+    socket.off("message");
+    socket.off("message:create");
+  };
+};
+
 export default socket;

@@ -18,6 +18,16 @@ const getProfile = async (id) => {
   }
 }
 
+const createMessage = async (body) => {
+  try {
+    const response = await api.post(`/messages`, {...body})
+    return response.data
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 export {
-  getProfile
+  getProfile,
+  createMessage
 }
