@@ -11,7 +11,9 @@ function Home () {
   // uses the useEffect hook to update the local posts state whenever the data in the getPosts request changes
   useEffect(() => {
     if (getPosts.data) {
-      setPosts(getPosts.data.posts.data)
+      if (getPosts.data.posts) {
+        setPosts(getPosts.data.posts.data)
+      }
     }
   }, [getPosts])
 

@@ -1,14 +1,14 @@
 {
-  "key": "plugin_content_manager_configuration_content_types::api::post.post",
+  "key": "plugin_content_manager_configuration_content_types::api::chat.chat",
   "value": {
-    "uid": "api::post.post",
+    "uid": "api::chat.chat",
     "settings": {
       "bulkable": true,
       "filterable": true,
       "searchable": true,
       "pageSize": 10,
-      "mainField": "title",
-      "defaultSortBy": "title",
+      "mainField": "name",
+      "defaultSortBy": "name",
       "defaultSortOrder": "ASC"
     },
     "metadatas": {
@@ -20,51 +20,37 @@
           "sortable": true
         }
       },
-      "title": {
+      "name": {
         "edit": {
-          "label": "title",
+          "label": "name",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "title",
+          "label": "name",
           "searchable": true,
           "sortable": true
         }
       },
-      "content": {
+      "image": {
         "edit": {
-          "label": "content",
+          "label": "image",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "content",
+          "label": "image",
           "searchable": false,
           "sortable": false
         }
       },
-      "medias": {
+      "users_permissions_users": {
         "edit": {
-          "label": "medias",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "medias",
-          "searchable": false,
-          "sortable": false
-        }
-      },
-      "user": {
-        "edit": {
-          "label": "user",
+          "label": "users_permissions_users",
           "description": "",
           "placeholder": "",
           "visible": true,
@@ -72,14 +58,14 @@
           "mainField": "username"
         },
         "list": {
-          "label": "user",
-          "searchable": true,
-          "sortable": true
+          "label": "users_permissions_users",
+          "searchable": false,
+          "sortable": false
         }
       },
-      "likers": {
+      "messages": {
         "edit": {
-          "label": "likers",
+          "label": "messages",
           "description": "",
           "placeholder": "",
           "visible": true,
@@ -87,24 +73,9 @@
           "mainField": "id"
         },
         "list": {
-          "label": "likers",
+          "label": "messages",
           "searchable": false,
           "sortable": false
-        }
-      },
-      "relativeTo": {
-        "edit": {
-          "label": "relativeTo",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true,
-          "mainField": "title"
-        },
-        "list": {
-          "label": "relativeTo",
-          "searchable": true,
-          "sortable": true
         }
       },
       "createdAt": {
@@ -139,40 +110,28 @@
     "layouts": {
       "list": [
         "id",
-        "title",
-        "likers",
-        "medias"
+        "name",
+        "image",
+        "users_permissions_users"
       ],
       "edit": [
         [
           {
-            "name": "title",
-            "size": 6
-          }
-        ],
-        [
-          {
-            "name": "content",
-            "size": 12
-          }
-        ],
-        [
-          {
-            "name": "likers",
+            "name": "name",
             "size": 6
           },
           {
-            "name": "medias",
+            "name": "image",
             "size": 6
           }
         ],
         [
           {
-            "name": "user",
+            "name": "users_permissions_users",
             "size": 6
           },
           {
-            "name": "relativeTo",
+            "name": "messages",
             "size": 6
           }
         ]

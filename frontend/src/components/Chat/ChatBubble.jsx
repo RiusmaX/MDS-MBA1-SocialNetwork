@@ -23,6 +23,7 @@ export const ChatBubble = ({
   content,
   date
 }) => {
+  const url = author?.avatar?.data?.attributes?.url || author?.avatar?.url || ''
   return (
     <Box display='flex' flexDirection='column' gap={2} padding={2}>
       <Box display='flex' style={{ flexDirection: reverse ? 'row-reverse' : '' }}>
@@ -31,7 +32,7 @@ export const ChatBubble = ({
         </Typography>
       </Box>
       <Box display='flex' gap={2} style={{ flexDirection: reverse ? 'row-reverse' : '' }}>
-        <Avatar alt={author?.username} src={`${process.env.REACT_APP_IMAGES_URL}${author?.avatar?.data?.attributes?.url}`} />
+        <Avatar alt={author?.username} src={`${process.env.REACT_APP_IMAGES_URL}${url}`} />
         {isMySelf
           ? (
             <MyBubble>

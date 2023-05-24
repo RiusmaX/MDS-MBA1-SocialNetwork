@@ -12,7 +12,7 @@ const InputField = ({ type, handleChange, icon, placeholder, name }) => {
      * @returns {JSX.Element} - The input
      */
     <div className='input-container'>
-      {icon && <Icon className='icon' color='white' />}
+      {icon && <Icon className='icon' />}
       <Field type={type} placeholder={placeholder} className='input' name={name} />
       <ErrorMessage name={name} />
     </div>

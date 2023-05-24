@@ -1,14 +1,14 @@
 {
-  "key": "plugin_content_manager_configuration_content_types::api::post.post",
+  "key": "plugin_content_manager_configuration_content_types::api::message.message",
   "value": {
-    "uid": "api::post.post",
+    "uid": "api::message.message",
     "settings": {
       "bulkable": true,
       "filterable": true,
       "searchable": true,
       "pageSize": 10,
-      "mainField": "title",
-      "defaultSortBy": "title",
+      "mainField": "id",
+      "defaultSortBy": "id",
       "defaultSortOrder": "ASC"
     },
     "metadatas": {
@@ -20,51 +20,51 @@
           "sortable": true
         }
       },
-      "title": {
+      "messageText": {
         "edit": {
-          "label": "title",
+          "label": "messageText",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "title",
+          "label": "messageText",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "sendDate": {
+        "edit": {
+          "label": "sendDate",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "sendDate",
           "searchable": true,
           "sortable": true
         }
       },
-      "content": {
+      "media": {
         "edit": {
-          "label": "content",
+          "label": "media",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "content",
+          "label": "media",
           "searchable": false,
           "sortable": false
         }
       },
-      "medias": {
+      "users_permissions_user": {
         "edit": {
-          "label": "medias",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "medias",
-          "searchable": false,
-          "sortable": false
-        }
-      },
-      "user": {
-        "edit": {
-          "label": "user",
+          "label": "users_permissions_user",
           "description": "",
           "placeholder": "",
           "visible": true,
@@ -72,37 +72,22 @@
           "mainField": "username"
         },
         "list": {
-          "label": "user",
+          "label": "users_permissions_user",
           "searchable": true,
           "sortable": true
         }
       },
-      "likers": {
+      "chat": {
         "edit": {
-          "label": "likers",
+          "label": "chat",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true,
-          "mainField": "id"
+          "mainField": "name"
         },
         "list": {
-          "label": "likers",
-          "searchable": false,
-          "sortable": false
-        }
-      },
-      "relativeTo": {
-        "edit": {
-          "label": "relativeTo",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true,
-          "mainField": "title"
-        },
-        "list": {
-          "label": "relativeTo",
+          "label": "chat",
           "searchable": true,
           "sortable": true
         }
@@ -139,40 +124,34 @@
     "layouts": {
       "list": [
         "id",
-        "title",
-        "likers",
-        "medias"
+        "sendDate",
+        "media",
+        "users_permissions_user"
       ],
       "edit": [
         [
           {
-            "name": "title",
-            "size": 6
-          }
-        ],
-        [
-          {
-            "name": "content",
+            "name": "messageText",
             "size": 12
           }
         ],
         [
           {
-            "name": "likers",
+            "name": "sendDate",
             "size": 6
           },
           {
-            "name": "medias",
+            "name": "media",
             "size": 6
           }
         ],
         [
           {
-            "name": "user",
+            "name": "users_permissions_user",
             "size": 6
           },
           {
-            "name": "relativeTo",
+            "name": "chat",
             "size": 6
           }
         ]

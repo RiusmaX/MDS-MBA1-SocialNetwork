@@ -21,7 +21,7 @@ const Users = () => {
 
   return (
     <Container maxWidth='md'>
-      <UserList users={data.usersPermissionsUsers.data} />
+      <UserList users={data.usersPermissionsUsers ? data.usersPermissionsUsers.data : []} />
     </Container>
   )
 }
