@@ -103,7 +103,7 @@ const Chats = () => {
           }
         </MyList>
         <MyMessageSection>
-          <ChatItem id={data.idChat} />
+          <ChatItem key={data.idChat} id={data.idChat} />
         </MyMessageSection>
       </GlobalSection>
     </Container>
