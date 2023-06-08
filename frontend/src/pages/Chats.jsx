@@ -43,12 +43,19 @@ const MyList = styled(Box)(({ theme }) => ({
 }))
 
 const Chats = () => {
-  const { state: { user } } = useAuth()
-  const getChats = useQuery(GET_CHATS_WITH_USER(user.id))
+  const { state: { user, token } } = useAuth()
+  const getChats = useQuery(GET_CHATS_WITH_USER(user.id), {
+    context: {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  })
   const [data, setData] = useState({
     chats: null,
     error: null,
-    idChat: 0
+    idChat: 0,
+    isLoading: true
   })
 
   const toggleChatId = (id) => {
@@ -62,27 +69,37 @@ const Chats = () => {
     if (getChats.data) {
       setData({
         ...data,
-        chats: getChats?.data?.chats?.data,
-        idChat: getChats?.data?.chats?.data?.[0]?.id
+        chats: getChats.data.chats?.data ?? null,
+        idChat: getChats.data.chats?.data[0]?.id ?? 0,
+        isLoading: false
       })
     }
     if (getChats.error) {
       setData({
         ...data,
-        error: getChats.error
+        error: getChats.error,
+        isLoading: false
       })
     }
   }, [getChats])
-
-  if (!data.chats) {
-    return <h2>Chargement...</h2>
-  }
 
   if (data.error) {
     return (
       <>
         <h1>ERROR</h1>
         <pre>{JSON.stringify(data.error, null, 2)}</pre>
+      </>
+    )
+  }
+
+  if (data.isLoading) {
+    return <h2>Chargement...</h2>
+  }
+
+  if (!data.isLoading && !data.chats) {
+    return (
+      <>
+        <h3>Aucune discussions trouvées</h3>
       </>
     )
   }

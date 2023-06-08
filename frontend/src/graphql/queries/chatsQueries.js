@@ -60,7 +60,7 @@ query{
             }
           }
         }
-        messages {
+        messages(pagination: {pageSize: 100})  {
           data {
             id
             attributes {

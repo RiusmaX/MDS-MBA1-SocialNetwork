@@ -4,9 +4,17 @@ import { useQuery } from '@apollo/client'
 import { GET_LAST_CHAT_MESSAGE } from '../../graphql/queries/chatsQueries'
 import { formatDistance } from 'date-fns'
 import { fr } from 'date-fns/locale'
+import { useAuth } from '../../contexts/AuthContext'
 
 const ChatListItem = ({ chat, onClick, active }) => {
-  const { loading, error, data } = useQuery(GET_LAST_CHAT_MESSAGE(chat.id))
+  const { state: { token } } = useAuth()
+  const { loading, error, data } = useQuery(GET_LAST_CHAT_MESSAGE(chat.id), {
+    context: {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  })
 
   if (loading) {
     return <h2>Chargement...</h2>

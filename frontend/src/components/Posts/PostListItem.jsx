@@ -150,14 +150,14 @@ const PostListItem = ({ post, seeDetails }) => {
             <TwitterIcon size={32} round />
           </TwitterShareButton>
           <FacebookShareButton
-            url={`https://localhost:3000/post/${post.id}`}
+            url={`${process.env.REACT_APP_URL}/post/${post.id}`}
             hashtag='#MBA1 #MyDigitalSchool #ReactJS'
             quote='Check this post, it is awesome !'
           >
             <FacebookIcon size={32} round />
           </FacebookShareButton>
           <OKShareButton
-            url={`https://localhost:3000/post/${post.id}`}
+            url={`${process.env.REACT_APP_URL}/post/${post.id}`}
             title='Check this post, it is awesome !'
             image={`${process.env.REACT_APP_IMAGES_URL}${post.attributes?.medias?.data?.[0]?.attributes?.url}`}
           >

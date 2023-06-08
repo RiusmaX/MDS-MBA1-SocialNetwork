@@ -1,10 +1,11 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: 'http://localhost:1337/api',
+  baseURL: `${process.env.REACT_APP_BACKEND}/api`,
   headers: {
     'Content-Type': 'application/json',
-    Accept: 'application/json'
+    Accept: 'application/json',
+    Authorization: JSON.parse(window.localStorage.getItem('AUTH'))?.token ? `Bearer ${JSON.parse(window.localStorage.getItem('AUTH'))?.token}` : null
   },
   timeout: 10000
 })
