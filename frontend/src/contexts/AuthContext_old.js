@@ -21,9 +21,6 @@ export function AuthProvider (props) {
 
   function useLoginMutation () {
     const [loginGQL] = useMutation(LOGIN_MUTATION, {
-      onError: (error) => {
-        console.log(error)
-      },
       onCompleted: (data) => {
         window.localStorage.setItem('token', data.login.jwt)
         setUser(data.login.user)
@@ -41,7 +38,6 @@ export function AuthProvider (props) {
 
   function login (values) {
     loginGQL({ variables: { identifier: values.email, password: values.password } })
-      .catch((error) => console.log(error))
   }
 
   function isLoggedIn () {

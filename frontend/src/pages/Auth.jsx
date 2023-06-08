@@ -20,7 +20,6 @@ const Auth = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    console.log(error)
     if (isLoggedIn) {
       navigate('/')
     }
