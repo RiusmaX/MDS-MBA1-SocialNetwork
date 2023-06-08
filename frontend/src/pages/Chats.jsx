@@ -96,6 +96,7 @@ const Chats = () => {
               <ChatListItem
                 active={parseInt(data.idChat) === parseInt(chat.id)}
                 key={chat.id}
+                chatId={chat.id}
                 chat={chat}
                 onClick={() => toggleChatId(chat.id)}
               />
