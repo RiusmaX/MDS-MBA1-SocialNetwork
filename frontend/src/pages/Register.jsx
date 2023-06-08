@@ -1,8 +1,7 @@
-import { useEffect } from 'react'
 import '../styles/Auth.scss'
 import '../styles/Global.scss'
 import InputField from '../components/Global/Input/InputField'
-import { FaUser, FaLock } from 'react-icons/fa'
+import { FaUser, FaLock, FaMailBulk } from 'react-icons/fa'
 import Julo from '../assets/images/Julo.png'
 import juloError from '../assets/images/Julo_error.png'
 import SubmitButton from '../components/Global/Buttons/SubmitButton'
@@ -11,34 +10,34 @@ import { Form, Formik } from 'formik'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 
-const Auth = () => {
+const Register = () => {
   const validationSchema = Yup.object().shape({
-    identifier: Yup.string().email('invalid email adress').required('email is required'),
-    password: Yup.string().min(5, 'password must contains 5 characters').required('password is required')
+    username: Yup.string().required('username is required'),
+    email: Yup.string().email('invalid email adress').required('email is required'),
+    password: Yup.string().min(5, 'password must contains 5 characters').required('password is required'),
+    confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'passwords must match').required('confirm password is required')
   })
-  const { login, state: { isLoggedIn, error } } = useAuth()
+  const { register, state: { error } } = useAuth()
   const navigate = useNavigate()
 
-  useEffect(() => {
-    console.log(error)
-    if (isLoggedIn) {
-      navigate('/')
-    }
-  }, [isLoggedIn])
-
   const handleSubmit = (values) => {
-    login(values)
+    register(values)
+    setTimeout(() => {
+      navigate('/')
+    }, 1000)
   }
 
   return (
     <>
       <div className='authForm'>
         <img src={error ? juloError : Julo} alt='julo' className='imgJulo' />
-        <h1>Login</h1>
+        <h1>Register</h1>
         <Formik
           initialValues={{
-            identifier: 'zizi@zizi.com',
-            password: 'zizizizi'
+            username: '',
+            email: '',
+            password: '',
+            confirmPassword: ''
           }}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
@@ -46,10 +45,16 @@ const Auth = () => {
           {props => (
             <Form onSubmit={props.handleSubmit}>
               <InputField
+                type='text'
+                placeholder='USERNAME'
+                name='username'
+                icon={FaUser}
+              />
+              <InputField
                 type='email'
                 placeholder='EMAIL'
-                name='identifier'
-                icon={FaUser}
+                name='email'
+                icon={FaMailBulk}
               />
               <InputField
                 type='password'
@@ -57,9 +62,15 @@ const Auth = () => {
                 name='password'
                 icon={FaLock}
               />
+              <InputField
+                type='password'
+                placeholder='CONFIRM PASSWORD'
+                name='confirmPassword'
+                icon={FaLock}
+              />
               {error && <p className='error'>{error.message}</p>}
-              <SubmitButton label='Connexion' />
-              <p onClick={() => navigate('/register')} className='cursor-pointer'>Je ne suis pas encore inscrit</p>
+              <SubmitButton label='Inscription' />
+              <p onClick={() => navigate('/auth')} className='cursor-pointer'>Je suis deja inscrit</p>
             </Form>
           )}
         </Formik>
@@ -68,4 +79,4 @@ const Auth = () => {
   )
 }
 
-export default Auth
+export default Register

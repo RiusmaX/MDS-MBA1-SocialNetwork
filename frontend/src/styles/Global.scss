@@ -85,8 +85,8 @@ p {
 }
 
 .input[type=submit]:active {
-  transform: translate(0px,5px);
-  -webkit-transform: translate(0px,5px);
+  transform: translate(0px, 5px);
+  -webkit-transform: translate(0px, 5px);
   border-bottom: 1px solid;
 }
 
@@ -96,10 +96,12 @@ p {
     border: 1px solid black;
     color: black;
   }
+
   .input[type=submit] {
     background-color: white;
     color: #2148C0;
   }
+
   .icon {
     color: black;
   }
@@ -111,10 +113,12 @@ p {
     border: 1px solid #fff;
     color: white;
   }
+
   .input[type=submit] {
     background-color: white;
     color: #2148C0;
   }
+
   .icon {
     color: white;
   }
@@ -135,3 +139,6 @@ p {
   position: relative;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
