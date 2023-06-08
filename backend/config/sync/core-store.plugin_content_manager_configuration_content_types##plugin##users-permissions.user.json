@@ -203,21 +203,6 @@
           "sortable": false
         }
       },
-      "postsLiked": {
-        "edit": {
-          "label": "postsLiked",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true,
-          "mainField": "title"
-        },
-        "list": {
-          "label": "postsLiked",
-          "searchable": false,
-          "sortable": false
-        }
-      },
       "posts": {
         "edit": {
           "label": "posts",
@@ -229,6 +214,81 @@
         },
         "list": {
           "label": "posts",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "chats": {
+        "edit": {
+          "label": "chats",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "name"
+        },
+        "list": {
+          "label": "chats",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "messages": {
+        "edit": {
+          "label": "messages",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "id"
+        },
+        "list": {
+          "label": "messages",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "likers": {
+        "edit": {
+          "label": "likers",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "id"
+        },
+        "list": {
+          "label": "likers",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "follows": {
+        "edit": {
+          "label": "follows",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "username"
+        },
+        "list": {
+          "label": "follows",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "followedBy": {
+        "edit": {
+          "label": "followedBy",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "username"
+        },
+        "list": {
+          "label": "followedBy",
           "searchable": false,
           "sortable": false
         }
@@ -322,11 +382,31 @@
         ],
         [
           {
-            "name": "postsLiked",
+            "name": "posts",
             "size": 6
           },
           {
-            "name": "posts",
+            "name": "chats",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "messages",
+            "size": 6
+          },
+          {
+            "name": "likers",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "follows",
+            "size": 6
+          },
+          {
+            "name": "followedBy",
             "size": 6
           }
         ]

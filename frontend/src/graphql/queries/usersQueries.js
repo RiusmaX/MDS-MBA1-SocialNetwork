@@ -24,8 +24,8 @@ query {
 }
 `
 
-// Requêtes qui retourne les informations de l'utilisateur connecter ainsi que ses publication
-const GET_ME_WITH_POSTS = (id) => gql`
+// Requêtes qui retourne les informations de l'utilisateur connecté ainsi que ses publication
+const GET_ME_PROFILE = (id) => gql`
 query {
   usersPermissionsUser (id: ${id}) {
     data {
@@ -36,24 +36,6 @@ query {
         firstName,
         lastName,
         phone,
-        posts {
-          data {
-            id,
-            attributes {
-              title,
-              content
-              medias {
-                data {
-                  id,
-                  attributes {
-                    name,
-                    url
-                  }
-                }
-              }
-            },
-          }
-        },
         avatar {
           data {
             attributes {
@@ -66,6 +48,48 @@ query {
   }
 }
 `
+
+// Requêtes qui retourne les informations de profil d'autre utilisateur
+// ainsi que ses publication
+const GET_USER_PROFILE = (id) => gql`
+query {
+  usersPermissionsUser (id: ${id}) {
+    data {
+      id,
+      attributes {
+        username,
+        avatar {
+          data {
+            attributes {
+              url
+            }
+          }
+        },
+        email,
+        firstName,
+        lastName,
+        phone,
+      }
+    }
+  }
+}
+`
+
+const GET_USER_BY_EMAIL = (email) => gql`
+query {
+  usersPermissionsUsers (filters: {email: {eq: "${email}" }}){
+    data {
+      id,
+      attributes {
+        username,
+        email,
+        firstName,
+        lastName,
+        phone,
+      }
+    }
+  }
+}`
 
 // Requêtes qui retourne les informations de profil d'autre utilisateur
 // ainsi que ses publication
@@ -111,17 +135,17 @@ query {
 }
 `
 
-const GET_USER_BY_EMAIL = (email) => gql`
-query {
-  usersPermissionsUsers (filters: {email: {eq: "${email}" }}){ 
+const GET_FOLLOWERS = (id) => gql`
+query getFollower{
+  usersPermissionsUser (id: ${id}){
     data {
-      id,
+      id
       attributes {
-        username,
-        email,
-        firstName,
-        lastName,
-        phone,
+        follows {
+          data {
+            id
+          }
+        }
       }
     }
   }
@@ -234,9 +258,11 @@ query {
 
 export {
   GET_USERS,
-  GET_ME_WITH_POSTS,
-  GET_USER_WITH_POSTS_BY_ID,
+  GET_ME_PROFILE,
+  GET_USER_PROFILE,
   GET_USER_BY_EMAIL,
+  GET_USER_WITH_POSTS_BY_ID,
   GET_FRIENDS,
-  GET_FRIENDS_REQUEST
+  GET_FRIENDS_REQUEST,
+  GET_FOLLOWERS
 }

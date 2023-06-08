@@ -1,26 +1,26 @@
-import { gql } from '@apollo/client'
+import { gql } from "@apollo/client";
 
 const GET_CHATS = gql`
-query {
-  chats {
-    data {
-      id,
-      attributes {
-        name, 
-        image {
-          data {
-            id,
-            attributes {
-              name,
-              url
+  query {
+    chats {
+      data {
+        id
+        attributes {
+          name
+          image {
+            data {
+              id
+              attributes {
+                name
+                url
+              }
             }
           }
         }
       }
     }
   }
-}
-`
+`;
 const GET_CHATS_WITH_USER = (id) => gql`
 query {
   chats(filters: {users_permissions_users: {id: {eq: ${id}}}}) {
@@ -41,7 +41,62 @@ query {
     }
   }
 }
-`
+`;
+
+const GET_CHAT = (id) => gql`
+query{
+  chat(id: ${id}) {
+    data {
+      id
+      attributes {
+        name
+       
+        image {
+          data {
+            id
+            attributes {
+              name
+              url
+            }
+          }
+        }
+        messages(pagination: {pageSize: 100})  {
+          data {
+            id
+            attributes {
+              messageText
+              sendDate
+              media {
+                data {
+                  id
+                  attributes {
+                    url
+                  }
+                }
+              }
+              users_permissions_user {
+                data {
+                  id
+                  attributes {
+                    username
+                    avatar {
+                      data {
+                        attributes {
+                          url
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+`;
 
 const GET_CHAT_MESSAGE = (id) => gql`
 query{
@@ -78,7 +133,7 @@ query{
     }
   }
 }
-`
+`;
 
 const GET_LAST_CHAT_MESSAGE = (id) => gql`
 query{
@@ -108,11 +163,12 @@ query{
     }
   }
 }
-`
+`;
 
 export {
   GET_CHATS,
   GET_CHATS_WITH_USER,
   GET_CHAT_MESSAGE,
-  GET_LAST_CHAT_MESSAGE
-}
+  GET_LAST_CHAT_MESSAGE,
+  GET_CHAT,
+};

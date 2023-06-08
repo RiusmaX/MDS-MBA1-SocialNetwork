@@ -1,16 +1,20 @@
 import { Avatar, Card, CardHeader } from '@mui/material'
 import { blueGrey } from '@mui/material/colors'
-import Moment from 'moment'
 import { useQuery } from '@apollo/client'
 import { GET_LAST_CHAT_MESSAGE } from '../../graphql/queries/chatsQueries'
-import 'moment/locale/fr';
+import { formatDistance } from 'date-fns'
+import { fr } from 'date-fns/locale'
+import { useAuth } from '../../contexts/AuthContext'
 
-const ChatListItem = ({ chat, onClick }) => {
-
-  const { loading, error, data } = useQuery(GET_LAST_CHAT_MESSAGE(chat.id))
-
-  //console.log(data)
-  //console.log(data.attributes.sendDate)
+const ChatListItem = ({ chat, onClick, active }) => {
+  const { state: { token } } = useAuth()
+  const { loading, error, data } = useQuery(GET_LAST_CHAT_MESSAGE(chat.id), {
+    context: {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  })
 
   if (loading) {
     return <h2>Chargement...</h2>
@@ -25,26 +29,26 @@ const ChatListItem = ({ chat, onClick }) => {
     )
   }
 
-  //display the date properly
-  var dt = Moment(data.sendDate)
-  console.log(dt)
-  if(dt == null){
-    dt = Moment(new Date())
-  }
-
   return (
-    <Card sx={{ maxWidth: 345 }} onClick={onClick}>
+    <Card
+      sx={{
+        minWidth: 250,
+        maxWidth: 345,
+        cursor: 'pointer',
+        backgroundColor: active ? '#C8C8C8' : ''
+      }}
+      onClick={onClick}
+    >
       <CardHeader
         avatar={
           <Avatar
             src={process.env.REACT_APP_IMAGES_URL + chat?.attributes?.image?.data?.attributes?.url}
             sx={{ bgcolor: blueGrey[500] }}
             aria-label='recipe'
-          >
-          </Avatar>
+          />
         }
         title={chat.attributes.name}
-        subheader={dt.format('D MMMM YYYY HH[h]mm')}
+        subheader={formatDistance(new Date(data?.messages?.data?.[0]?.attributes?.sendDate || null), new Date(), { addSuffix: true, locale: fr })}
       />
     </Card>
   )

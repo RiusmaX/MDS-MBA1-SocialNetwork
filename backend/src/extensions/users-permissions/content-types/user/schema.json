@@ -73,14 +73,15 @@
       "type": "string"
     },
     "avatar": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     },
     "posts": {
       "type": "relation",
@@ -111,6 +112,18 @@
       "relation": "oneToMany",
       "target": "api::friendship.friendship",
       "mappedBy": "user2"
+    },
+    "follows": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "followedBy"
+    },
+    "followedBy": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "follows"
     }
   }
 }
