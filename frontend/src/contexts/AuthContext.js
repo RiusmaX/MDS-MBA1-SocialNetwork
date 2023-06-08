@@ -51,7 +51,6 @@ const AuthContextFactory = (dispatch) => ({
         })
       }
     } catch (error) {
-      console.log(error)
       dispatch({
         type: actionTypes.LOGIN_FAILURE,
         data: { error }
