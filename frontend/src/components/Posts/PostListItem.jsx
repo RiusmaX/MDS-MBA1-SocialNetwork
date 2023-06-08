@@ -2,7 +2,7 @@ import Avatar from '../Profile/Avatar'
 import '../../styles/PostListItem.scss'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 import { BsCalendarDate } from 'react-icons/bs'
-import { BiPencil } from 'react-icons/bi'
+import { BiPencil, BiTrash } from 'react-icons/bi'
 import { FiSave } from 'react-icons/fi'
 import { format } from 'date-fns'
 import useLikePost from '../../services/Likers'
@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FacebookIcon, FacebookShareButton, OKIcon, OKShareButton, OKShareCount, TwitterIcon, TwitterShareButton } from 'react-share'
 import { useAuth } from '../../contexts/AuthContext'
-import { UPDATE_COMMENT } from '../../graphql/mutations/commentMutations'
+import { UPDATE_COMMENT, DELETE_COMMENT } from '../../graphql/mutations/commentMutations'
 import { useMutation } from '@apollo/client'
 
 const PostListItem = ({ post, seeDetails }) => {
@@ -24,7 +24,7 @@ const PostListItem = ({ post, seeDetails }) => {
     if (seeDetails) navigate(`/post/${post.id}`)
   }
 
-  const { state: { user } } = useAuth()
+  const { state: { user, token } } = useAuth()
 
   const [isEditing, setEditing] = useState(false)
 
@@ -33,12 +33,19 @@ const PostListItem = ({ post, seeDetails }) => {
 
   const [text, setText] = useState(post.attributes?.content)
   const [updatePost] = useMutation(UPDATE_COMMENT)
+  const [deletePost] = useMutation(DELETE_COMMENT, {
+    context: {
+      headers: {
+        authorization: `Bearer ${token}`
+      }
+    }
+  })
 
   const handleChange = (event) => {
     setText(event.target.value)
   }
 
-  const handleSubmit = (event) => {
+  const handleUpdate = (event) => {
     event.preventDefault()
     updatePost({
       variables: {
@@ -47,6 +54,16 @@ const PostListItem = ({ post, seeDetails }) => {
       }
     })
     setEditing(false)
+  }
+
+  const handleDelete = () => {
+    deletePost({
+      variables: {
+        postId: post.id
+      }
+    })
+
+    window.location.reload(false)
   }
 
   useEffect(() => {
@@ -108,7 +125,7 @@ const PostListItem = ({ post, seeDetails }) => {
               ? (
                 <div class='updatePost'>
                   <input type='text' class='updatePostInput' value={text} onChange={handleChange} />
-                  <button value='enregistrer' class='save' onClick={handleSubmit}>
+                  <button value='enregistrer' class='save' onClick={handleUpdate}>
                     <span className='react-icon'>
                       <FiSave />
                     </span>
@@ -141,6 +158,9 @@ const PostListItem = ({ post, seeDetails }) => {
           </p>
           {post.attributes?.user?.data?.id === user.id
             ? (<p><BiPencil onClick={() => setEditing(true)} /></p>)
+            : null}
+          {post.attributes?.user?.data?.id === user.id
+            ? (<p><BiTrash onClick={() => handleDelete()} /></p>)
             : null}
           <TwitterShareButton
             url={currenturl + post.id}
