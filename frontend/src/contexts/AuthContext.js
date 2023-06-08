@@ -1,12 +1,14 @@
 import { createContext, useContext, useEffect, useReducer } from 'react'
 import { client } from '../App'
-import { LOGIN_MUTATION } from '../graphql/mutations/authMutations'
+import { LOGIN_MUTATION, SIGNUP_MUTATION } from '../graphql/mutations/authMutations'
 
 const AuthContext = createContext()
 
 const actionTypes = {
   LOGIN_SUCCESS: 'LOGIN_SUCCESS',
   LOGIN_FAILURE: 'LOGIN_FAILURE',
+  SIGNUP_SUCCESS: 'SIGNUP_SUCCESS',
+  SIGNUP_FAILURE: 'SIGNUP_FAILURE',
   LOGOUT: 'LOGOUT',
   RESET: 'RESET'
 }
@@ -26,6 +28,14 @@ const AuthReducer = (state, action) => {
         ...initialState, isLoggedIn: true, user: action.data.user, token: action.data.token
       }
     case actionTypes.LOGIN_FAILURE:
+      return {
+        ...initialState, error: action.data.error
+      }
+    case actionTypes.SIGNUP_SUCCESS:
+      return {
+        ...initialState, isLoggedIn: true, user: action.data.user, token: action.data.token
+      }
+    case actionTypes.SIGNUP_FAILURE:
       return {
         ...initialState, error: action.data.error
       }
@@ -53,6 +63,26 @@ const AuthContextFactory = (dispatch) => ({
     } catch (error) {
       dispatch({
         type: actionTypes.LOGIN_FAILURE,
+        data: { error }
+      })
+    }
+  },
+  register: async (credentials) => {
+    try {
+      const result = await client.mutate({
+        mutation: SIGNUP_MUTATION,
+        variables: credentials
+      })
+      if (result && result.data && result.data.register) {
+        const { data: { register } } = result
+        dispatch({
+          type: actionTypes.SIGNUP_SUCCESS,
+          data: { user: register.user, token: register.jwt }
+        })
+      }
+    } catch (error) {
+      dispatch({
+        type: actionTypes.SIGNUP_FAILURE,
         data: { error }
       })
     }
