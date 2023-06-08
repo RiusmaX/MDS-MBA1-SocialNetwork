@@ -11,7 +11,7 @@ const UserListItem = ({ user, onClick }) => {
       <CardHeader
         avatar={
           <Avatar
-            src={process.env.REACT_APP_IMAGES_URL + user.attributes.avatar.data.attributes.url}
+            src={process.env.REACT_APP_BACKEND + user.attributes.avatar.data.attributes.url}
             sx={{ bgcolor: blueGrey[500] }}
             aria-label='recipe'
           >

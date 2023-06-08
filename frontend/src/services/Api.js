@@ -12,7 +12,7 @@ const api = axios.create({
 
 const getProfile = async (id) => {
   try {
-    const response = await api.get(process.env.REACT_APP_IMAGES_URL + `/api/users/${id}?populate=*`)
+    const response = await api.get(process.env.REACT_APP_BACKEND + `/api/users/${id}?populate=*`)
     return response.data
   } catch (error) {
     console.error(error)
@@ -21,7 +21,7 @@ const getProfile = async (id) => {
 
 const createMessage = async (body) => {
   try {
-    const response = await api.post(process.env.REACT_APP_IMAGES_URL + '/api/messages?populate=*', { ...body })
+    const response = await api.post(process.env.REACT_APP_BACKEND + '/api/messages?populate=*', { ...body })
     return response.data
   } catch (error) {
     console.error(error)
