@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from '@apollo/client'
 
 const GET_CHATS = gql`
   query {
@@ -19,7 +19,6 @@ const GET_CHATS = gql`
         }
       }
     }
-  }
 }
 `
 
@@ -216,4 +215,4 @@ export {
   GET_CHAT_MESSAGE,
   GET_LAST_CHAT_MESSAGE,
   GET_CHAT
-};
+}

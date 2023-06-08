@@ -73,7 +73,7 @@ const Chats = () => {
       setData({
         ...data,
         chats: getChats.data.chats?.data ?? null,
-        idChat: searchParams.get('id') || getChats?.data?.chats?.data[0]?.id || 0
+        idChat: searchParams.get('id') || getChats?.data?.chats?.data[0]?.id || 0,
         isLoading: false
       })
     }

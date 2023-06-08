@@ -31,7 +31,6 @@ const ChatItem = ({ id }) => {
 
   const { state, addPin, removePin } = usePin()
   const { pinnedIds } = state
-  const { state: { user } } = useAuth()
   const [data, setData] = useState({
     chat: null,
     isLoading: true,

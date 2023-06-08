@@ -28,6 +28,7 @@ function Home () {
 
   return (
     <div>
+      <PinnedChat />
       <PostList posts={posts} />
     </div>
   )
