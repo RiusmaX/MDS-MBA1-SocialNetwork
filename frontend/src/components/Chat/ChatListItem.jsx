@@ -6,9 +6,17 @@ import { formatDistance } from 'date-fns'
 import { fr } from 'date-fns/locale'
 import { usePin } from '../../contexts/PinMessagesContext'
 import { useEffect, useState } from 'react'
+import { useAuth } from '../../contexts/AuthContext'
 
 const ChatListItem = ({ chat, onClick, active, chatId }) => {
-  const { loading, error, data } = useQuery(GET_LAST_CHAT_MESSAGE(chat.id))
+  const { state: { token } } = useAuth()
+  const { loading, error, data } = useQuery(GET_LAST_CHAT_MESSAGE(chat.id), {
+    context: {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  })
   const { state } = usePin()
   const { pinnedIds } = state
   const [togglePin, setTogglePin] = useState([])
@@ -53,7 +61,7 @@ const ChatListItem = ({ chat, onClick, active, chatId }) => {
       <CardHeader
         avatar={
           <Avatar
-            src={process.env.REACT_APP_IMAGES_URL + chat?.attributes?.image?.data?.attributes?.url}
+            src={process.env.REACT_APP_BACKEND + chat?.attributes?.image?.data?.attributes?.url}
             sx={{ bgcolor: blueGrey[500] }}
             aria-label='recipe'
           />

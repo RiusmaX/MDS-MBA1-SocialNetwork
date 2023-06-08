@@ -3,7 +3,6 @@ import './App.css'
 import React, { useState, useEffect } from 'react'
 import Router from './navigation/Router'
 import { AuthProvider } from './contexts/AuthContext'
-import SwitchButtonTheme from './components/Global/Buttons/SwitchButtonTheme'
 import './styles/SwitchButtonTheme.scss'
 import { PinProvider } from './contexts/PinMessagesContext'
 
@@ -22,21 +21,7 @@ export const client = new ApolloClient({
   }
 })
 
-function App () {
-  const [theme, setTheme] = useState(
-    window.localStorage.getItem('theme') || 'light'
-  )
-  const toggleTheme = () => {
-    if (theme === 'light') {
-      setTheme('dark')
-    } else {
-      setTheme('light')
-    }
-  }
-  useEffect(() => {
-    window.localStorage.setItem('theme', theme)
-    document.body.className = theme
-  }, [theme])
+function App() {
   return (
     <ApolloProvider client={client}>
       <div className='App'>

@@ -3,11 +3,15 @@ import { subscribeToPosts } from '../services/socket'
 import { useQuery } from '@apollo/client'
 import PostList from '../components/Posts/PostList'
 import { GET_POSTS } from '../graphql/queries/postsQueries'
+import AddPost from '../components/Posts/AddPost'
+import { useAuth } from '../contexts/AuthContext'
 import PinnedChat from '../components/Chat/PinnedChat'
 
 function Home () {
   const [posts, setPosts] = useState([])
   const getPosts = useQuery(GET_POSTS)
+
+  const { state: { user } } = useAuth()
 
   // uses the useEffect hook to update the local posts state whenever the data in the getPosts request changes
   useEffect(() => {
@@ -24,7 +28,6 @@ function Home () {
 
   return (
     <div>
-      <PinnedChat />
       <PostList posts={posts} />
     </div>
   )
