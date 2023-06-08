@@ -62,8 +62,8 @@ const Chats = () => {
     if (getChats.data) {
       setData({
         ...data,
-        chats: getChats.data.chats.data,
-        idChat: getChats.data.chats.data[0].id
+        chats: getChats?.data?.chats?.data,
+        idChat: getChats?.data?.chats?.data?.[0]?.id
       })
     }
     if (getChats.error) {

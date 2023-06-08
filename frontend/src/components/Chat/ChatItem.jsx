@@ -57,6 +57,7 @@ const ChatItem = ({ id }) => {
             author={message?.attributes?.users_permissions_user?.data?.attributes}
             reverse={parseInt(message?.attributes?.users_permissions_user?.data?.id) === parseInt(user.id)}
             isMySelf={parseInt(message?.attributes?.users_permissions_user?.data?.id) === parseInt(user.id)}
+            medias={message?.attributes?.media?.data}
           />
         ))}
         <div ref={lastMessage} />

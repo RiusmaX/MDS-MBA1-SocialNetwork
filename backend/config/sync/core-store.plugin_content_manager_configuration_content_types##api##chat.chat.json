@@ -78,6 +78,20 @@
           "sortable": false
         }
       },
+      "audio": {
+        "edit": {
+          "label": "audio",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "audio",
+          "searchable": false,
+          "sortable": false
+        }
+      },
       "createdAt": {
         "edit": {
           "label": "createdAt",
@@ -132,6 +146,12 @@
           },
           {
             "name": "messages",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "audio",
             "size": 6
           }
         ]

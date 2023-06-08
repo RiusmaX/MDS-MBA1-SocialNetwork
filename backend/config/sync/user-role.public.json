@@ -4,10 +4,76 @@
   "type": "public",
   "permissions": [
     {
+      "action": "api::chat.chat.create"
+    },
+    {
+      "action": "api::chat.chat.delete"
+    },
+    {
+      "action": "api::chat.chat.find"
+    },
+    {
+      "action": "api::chat.chat.findOne"
+    },
+    {
+      "action": "api::chat.chat.update"
+    },
+    {
+      "action": "api::liker.liker.create"
+    },
+    {
+      "action": "api::liker.liker.delete"
+    },
+    {
+      "action": "api::liker.liker.find"
+    },
+    {
+      "action": "api::liker.liker.findOne"
+    },
+    {
+      "action": "api::liker.liker.update"
+    },
+    {
+      "action": "api::message.message.create"
+    },
+    {
+      "action": "api::message.message.delete"
+    },
+    {
+      "action": "api::message.message.find"
+    },
+    {
+      "action": "api::message.message.findOne"
+    },
+    {
+      "action": "api::message.message.update"
+    },
+    {
+      "action": "api::post.post.create"
+    },
+    {
+      "action": "api::post.post.delete"
+    },
+    {
       "action": "api::post.post.find"
     },
     {
       "action": "api::post.post.findOne"
+    },
+    {
+      "action": "api::post.post.update"
+    },
+    {
+      "action": "plugin::upload.content-api.destroy"
+    },
+    {
+      "action": "plugin::upload.content-api.find"
+    },
+    {
+      "action": "plugin::upload.content-api.findOne"
+    },
+    {
+      "action": "plugin::upload.content-api.upload"
     },
     {
       "action": "plugin::users-permissions.auth.callback"
