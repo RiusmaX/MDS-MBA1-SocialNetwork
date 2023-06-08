@@ -21,7 +21,13 @@ const Profile = () => {
   const { id } = useParams()
   const { loading, error, data } = useQuery(GET_ME_PROFILE(id))
   const { data: getPosts } = useQuery(GET_POSTS_BY_USER_ID(id))
-  const [createChat] = useMutation(CREATE_CHAT)
+  const [createChat] = useMutation(CREATE_CHAT, {
+    context: {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  })
   const [follow] = useMutation(ADD_FOLLOWER, {
     context: {
       headers: {
@@ -81,7 +87,7 @@ const Profile = () => {
       }
     )
     res.then((data) => {
-      navigate(`/chats/${data?.data?.createChat?.data?.id}`)
+      navigate('/chats')
     })
   }
 
