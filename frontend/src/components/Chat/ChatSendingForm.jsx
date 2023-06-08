@@ -1,7 +1,5 @@
 import '../../styles/ChatSendingForm.scss'
-import { ADD_CHAT_MESSAGE } from '../../graphql/mutations/chatsMutations'
 import { Formik, Form, Field } from 'formik'
-import { useMutation } from '@apollo/client'
 import { AiOutlineSend } from 'react-icons/ai'
 import React, { useState } from 'react'
 import * as Yup from 'yup'
@@ -10,7 +8,6 @@ import { Box } from '@mui/material'
 import { useAuth } from '../../contexts/AuthContext'
 
 const ChatSendingForm = (chatId) => {
-  const [{ error }] = useMutation(ADD_CHAT_MESSAGE)
   const [date, setDate] = useState(new Date())
 
   const { state: { user } } = useAuth()
@@ -20,15 +17,6 @@ const ChatSendingForm = (chatId) => {
       .min(1, 'Le message est trop court!')
       .required('Un message est requis!')
   })
-
-  if (error) {
-    return (
-      <>
-        <h1>ERROR</h1>
-        <pre>{JSON.stringify(error, null, 2)}</pre>
-      </>
-    )
-  }
 
   return (
     <Formik
