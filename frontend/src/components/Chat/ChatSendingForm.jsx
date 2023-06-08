@@ -80,7 +80,7 @@ const ChatSendingForm = ({ chatId }) => {
 
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_IMAGES_URL}${process.env.REACT_APP_STRAPI_UPLOAD_URL}`,
+        `${process.env.REACT_APP_BACKEND}${process.env.REACT_APP_STRAPI_UPLOAD_URL}`,
         {
           method: "POST",
           body: formData,
