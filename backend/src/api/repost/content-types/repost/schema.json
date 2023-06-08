@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "reposts",
+  "info": {
+    "singularName": "repost",
+    "pluralName": "reposts",
+    "displayName": "Repost"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "post": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::post.post",
+      "inversedBy": "reposts"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "reposts"
+    }
+  }
+}

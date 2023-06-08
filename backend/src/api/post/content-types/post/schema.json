@@ -45,6 +45,12 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::post.post"
+    },
+    "reposts": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::repost.repost",
+      "mappedBy": "post"
     }
   }
 }

@@ -211,4 +211,56 @@ query {
 }
 `
 
-export { GET_POSTS, GET_POST_BY_ID, GET_POST_COMMENTS, GET_POSTS_BY_USER_ID }
+const GET_REPOSTS = (id) => gql`
+query {
+  usersPermissionsUser(id: ${id}) {
+    data {
+      attributes {
+        reposts {
+          data {
+            attributes {
+              post {
+                data {
+                  attributes {
+                    title
+                    content
+                    medias {
+                      data {
+                        attributes {
+                          url
+                        }
+                      }
+                    }
+                    user {
+                      data {
+                        attributes {
+                          username
+                          avatar {
+                            data {
+                              attributes {
+                                url
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+`
+
+export {
+  GET_POSTS,
+  GET_POST_BY_ID,
+  GET_POST_COMMENTS,
+  GET_POSTS_BY_USER_ID,
+  GET_REPOSTS
+}

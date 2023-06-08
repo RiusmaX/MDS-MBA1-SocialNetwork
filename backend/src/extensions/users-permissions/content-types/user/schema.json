@@ -118,6 +118,12 @@
       "relation": "manyToMany",
       "target": "plugin::users-permissions.user",
       "inversedBy": "follows"
+    },
+    "reposts": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::repost.repost",
+      "mappedBy": "user"
     }
   }
 }
