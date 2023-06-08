@@ -31,6 +31,7 @@ query {
       id,
       attributes {
         username,
+        biography,
         email,
         firstName,
         lastName,
@@ -57,6 +58,7 @@ query {
       id,
       attributes {
         username,
+        biography,
         avatar {
           data {
             attributes {

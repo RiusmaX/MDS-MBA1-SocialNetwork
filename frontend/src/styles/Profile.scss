@@ -6,7 +6,7 @@
 
   .profil {
     min-width: fit-content;
-    width: calc(20% - 4em);
+    width: calc(40% - 6em);
     display: flex;
     flex-direction: column;
     gap: 1em;
@@ -32,6 +32,7 @@
     .userInfos {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       gap: 2em;
 
       .fullName {
@@ -46,6 +47,21 @@
         .pseudo {
           color: #B0B0B0;
         }
+      }
+    }
+
+    .userBio {
+      display: flex;
+      max-width: 14em; 
+      p {
+        font-size: 14px;
+        overflow-wrap: break-word;
+      }
+      textarea[name=biography] {
+        resize : none;
+      }
+      .saveBio {
+        margin-left: 5px;
       }
     }
   }
