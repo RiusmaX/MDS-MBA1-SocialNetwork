@@ -52,9 +52,6 @@
       "action": "api::post.post.create"
     },
     {
-      "action": "api::post.post.delete"
-    },
-    {
       "action": "api::post.post.find"
     },
     {
