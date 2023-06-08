@@ -21,6 +21,49 @@ query {
   }
 }
 `
+
+const GET_CHAT_BY_ID = (id) => gql`
+query {
+  chats(filters: {id: {eq: ${id}}}) {
+    data {
+      id,
+      attributes {
+        name, 
+        image {
+          data {
+            id,
+            attributes {
+              name,
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+}
+`
+const GET_CHATS_BY_IDS = (ids) => gql`
+query {
+  chats(filters: {id: {in: ${JSON.stringify(ids)}}}) {
+    data {
+      id,
+      attributes {
+        name, 
+        image {
+          data {
+            id,
+            attributes {
+              name,
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+}`
+
 const GET_CHATS_WITH_USER = (id) => gql`
 query {
   chats(filters: {users_permissions_users: {id: {eq: ${id}}}}) {
@@ -112,6 +155,8 @@ query{
 
 export {
   GET_CHATS,
+  GET_CHAT_BY_ID,
+  GET_CHATS_BY_IDS,
   GET_CHATS_WITH_USER,
   GET_CHAT_MESSAGE,
   GET_LAST_CHAT_MESSAGE

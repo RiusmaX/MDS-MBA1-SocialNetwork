@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/client'
 import PostList from '../components/Posts/PostList'
 import { GET_POSTS } from '../graphql/queries/postsQueries'
 import { CounterProvider, useCounter } from '../contexts/CounterContext'
+import PinnedChat from '../components/Chat/PinnedChat'
 
 function Home () {
   const [posts, setPosts] = useState([])
@@ -22,6 +23,7 @@ function Home () {
 
   return (
     <div>
+      <PinnedChat />
       <CounterProvider>
         <CounterView />
         <CounterActions />

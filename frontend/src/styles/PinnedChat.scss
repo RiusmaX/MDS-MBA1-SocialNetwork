@@ -1,11 +1,13 @@
 #pinnedchat{
-    position: fixed;
+    position: sticky;
     //width: min-content;
     //width: 50%;
     //height: 50%;
+    //right: 0;
     right: -0%;
+    //bottom: 0;
     //right: -204px;
-    top: 70%;
+    top: 60%;
     //transform: translateY(-50%);
     //transition: right 0.5s ease-out;
 }
