@@ -97,7 +97,18 @@ mutation UpdatePost($postId: ID!, $content: String!) {
 }
 `
 
+const DELETE_COMMENT = gql`
+  mutation DeletePost($postId: ID!) {
+    deletePost(id: $postId) {
+      data {
+        id
+      }
+    }
+  }
+`
+
 export {
   ADD_COMMENT,
-  UPDATE_COMMENT
+  UPDATE_COMMENT,
+  DELETE_COMMENT
 }
