@@ -1,50 +1,49 @@
-import { useQuery, useMutation } from "@apollo/client";
-import { useEffect, useState } from "react";
+import { useQuery, useMutation } from '@apollo/client'
+import { useEffect, useState } from 'react'
 import {
   GET_LIKER_ID,
   LIKE_POST,
-  UNLIKE_POST,
-} from "../graphql/queries/likersQueries";
+  UNLIKE_POST
+} from '../graphql/queries/likersQueries'
 
-function useLikePost(postId, userId) {
-  const [likerId, setLikerId] = useState(null);
+function useLikePost (postId, userId) {
+  const [likerId, setLikerId] = useState(null)
+  const [isLike, setIsLike] = useState(0)
 
   const getLikerId = useQuery(GET_LIKER_ID, {
-    variables: { postId, userId },
-  });
+    variables: { postId, userId, isLike }
+  })
 
   useEffect(() => {
     if (getLikerId.data?.likers?.data[0]?.id) {
-      setLikerId(getLikerId.data?.likers?.data[0]?.id);
-      setIsLike(true);
+      setLikerId(userId)
+      setIsLike(getLikerId.data?.likers?.data[0]?.reaction || 0)
     } else {
-      setLikerId(null);
+      setLikerId(userId)
     }
-  }, [getLikerId.data?.likers?.data?.[0], getLikerId.loading]);
+  }, [getLikerId.data?.likers?.data?.[0], getLikerId.loading])
 
   const [likePost] = useMutation(LIKE_POST, {
-    variables: { postId, userId },
-  });
+    variables: { postId, userId, isLike }
+  })
 
   const [unlikePost] = useMutation(UNLIKE_POST, {
-    variables: { likerId },
-  });
+    variables: { likerId }
+  })
 
-  const handleLikePost = async () => {
-    await getLikerId.refetch();
+  const handleLikePost = async (newReaction) => {
+    await getLikerId.refetch()
 
-    if (isLike) {
-      unlikePost();
-      setIsLike(false);
-    } else if (!isLike) {
-      likePost();
-      setIsLike(true);
+    if (isLike === newReaction) {
+      unlikePost()
+      setIsLike(0)
+    } else {
+      likePost()
+      setIsLike(newReaction)
     }
-  };
+  }
 
-  const [isLike, setIsLike] = useState(false);
-
-  return { handleLikePost, isLike, setIsLike };
+  return { handleLikePost, isLike, setIsLike }
 }
 
-export default useLikePost;
+export default useLikePost

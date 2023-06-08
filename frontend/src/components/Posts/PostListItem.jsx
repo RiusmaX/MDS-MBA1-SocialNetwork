@@ -28,7 +28,7 @@ const PostListItem = ({ post, seeDetails }) => {
 
   const [isEditing, setEditing] = useState(false)
 
-  const { isLike, setIsLike, handleLikePost } = useLikePost(Number(post.id), 1)
+  const { isLike, handleLikePost } = useLikePost(Number(post.id), Number(user.id))
   const [isAnimated, setIsAnimated] = useState(true)
 
   const [text, setText] = useState(post.attributes?.content)
@@ -121,14 +121,15 @@ const PostListItem = ({ post, seeDetails }) => {
           </div>
         </div>
         <div className='postItem-content_infos'>
+          {console.log(isLike)}
           {/* Display the number of likes and the date of creation */}
-          <p>
-            {isLike
+          <p className='pointerCursor'>
+            {isLike !== 0
               ? (
-                <AiFillHeart onClick={handleLikePost} />
+                <AiFillHeart onClick={() => handleLikePost(1)} />
                 )
               : (
-                <AiOutlineHeart onClick={handleLikePost} />
+                <AiOutlineHeart onClick={() => handleLikePost(0)} />
                 )}
 
             {/* calculate the number of likes */}

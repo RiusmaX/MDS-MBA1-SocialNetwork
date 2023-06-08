@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { subscribeToPosts } from '../services/socket';
-import { useQuery } from '@apollo/client';
-import PostList from '../components/Posts/PostList';
-import { GET_POSTS } from '../graphql/queries/postsQueries';
+import React, { useState, useEffect } from 'react'
+import { subscribeToPosts } from '../services/socket'
+import { useQuery } from '@apollo/client'
+import PostList from '../components/Posts/PostList'
+import { GET_POSTS } from '../graphql/queries/postsQueries'
 
 function Home () {
   const [posts, setPosts] = useState([])

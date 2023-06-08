@@ -1,14 +1,14 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client'
 
 const LIKE_POST = gql`
-  mutation LikePost($postId: ID!, $userId: ID!) {
-    createLiker(data: { post: $postId, user: $userId }) {
+  mutation LikePost($postId: ID!, $userId: ID!, $reaction: Int!) {
+    createLiker(data: { post: $postId, user: $userId, reaction: $reaction }) {
       data {
         id
       }
     }
   }
-`;
+`
 
 const UNLIKE_POST = gql`
   mutation UnlikePost($likerId: ID!) {
@@ -18,7 +18,7 @@ const UNLIKE_POST = gql`
       }
     }
   }
-`;
+`
 
 const GET_LIKER_ID = gql`
   query GetLikerId($postId: ID!, $userId: ID!) {
@@ -30,6 +30,6 @@ const GET_LIKER_ID = gql`
       }
     }
   }
-`;
+`
 
-export { LIKE_POST, UNLIKE_POST, GET_LIKER_ID };
+export { LIKE_POST, UNLIKE_POST, GET_LIKER_ID }
