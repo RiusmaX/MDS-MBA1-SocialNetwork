@@ -11,7 +11,8 @@
           "name",
           "image",
           "users_permissions_users",
-          "messages"
+          "messages",
+          "audio"
         ]
       },
       "conditions": []
@@ -36,7 +37,8 @@
           "name",
           "image",
           "users_permissions_users",
-          "messages"
+          "messages",
+          "audio"
         ]
       },
       "conditions": []
@@ -49,7 +51,8 @@
           "name",
           "image",
           "users_permissions_users",
-          "messages"
+          "messages",
+          "audio"
         ]
       },
       "conditions": []

@@ -93,18 +93,17 @@ const ChatItem = ({ id }) => {
         </Box>
       </MyToolbar>
       <Box flexGrow={1} sx={{ overflow: 'auto' }}>
-        {messages && messages.length > 0
-          ? messages.map((message) => (
-            <ChatBubble
-              key={message.id}
-              content={message?.attributes?.messageText}
-              date={message?.attributes?.sendDate}
-              author={message?.attributes?.users_permissions_user?.data?.attributes}
-              reverse={parseInt(message?.attributes?.users_permissions_user?.data?.id) === parseInt(user.id)}
-              isMySelf={parseInt(message?.attributes?.users_permissions_user?.data?.id) === parseInt(user.id)}
-            />
-          ))
-          : (<h3>Aucun message</h3>)}
+        {messages && messages.length > 0 ? messages.map((message) => (
+          <ChatBubble
+            key={message.id}
+            content={message?.attributes?.messageText}
+            date={message?.attributes?.sendDate}
+            author={message?.attributes?.users_permissions_user?.data?.attributes}
+            reverse={parseInt(message?.attributes?.users_permissions_user?.data?.id) === parseInt(user.id)}
+            isMySelf={parseInt(message?.attributes?.users_permissions_user?.data?.id) === parseInt(user.id)}
+            medias={message?.attributes?.media?.data}
+          />
+        )) : (<h3>Aucun message</h3>)}
         <div ref={lastMessage} />
       </Box>
       <ChatSendingForm chatId={id} />

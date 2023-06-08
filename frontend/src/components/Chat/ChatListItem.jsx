@@ -48,7 +48,7 @@ const ChatListItem = ({ chat, onClick, active }) => {
           />
         }
         title={chat.attributes.name}
-        subheader={formatDistance(new Date(data?.messages?.data?.[0]?.attributes?.sendDate), new Date(), { addSuffix: true, locale: fr })}
+        subheader={formatDistance(new Date(data?.messages?.data?.[0]?.attributes?.sendDate || null), new Date(), { addSuffix: true, locale: fr })}
       />
     </Card>
   )
