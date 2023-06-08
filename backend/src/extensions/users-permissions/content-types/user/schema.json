@@ -107,6 +107,12 @@
       "target": "api::liker.liker",
       "mappedBy": "user"
     },
+    "friendships": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::friendship.friendship",
+      "mappedBy": "user2"
+    },
     "follows": {
       "type": "relation",
       "relation": "manyToMany",

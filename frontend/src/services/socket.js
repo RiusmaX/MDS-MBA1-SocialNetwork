@@ -1,7 +1,7 @@
 import io from 'socket.io-client'
 import { getProfile } from './Api'
 
-const socket = io('http://localhost:1337')
+const socket = io(process.env.REACT_APP_BACKEND)
 
 export const subscribeToPosts = (setPosts) => {
   // Listening to socket events for new posts

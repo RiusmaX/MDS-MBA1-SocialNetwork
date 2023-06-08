@@ -99,10 +99,10 @@ const ChatItem = ({ id }) => {
               key={message.id}
               content={message?.attributes?.messageText}
               date={message?.attributes?.sendDate}
-              media={message?.attributes?.media}
               author={message?.attributes?.users_permissions_user?.data?.attributes}
               reverse={parseInt(message?.attributes?.users_permissions_user?.data?.id) === parseInt(user.id)}
               isMySelf={parseInt(message?.attributes?.users_permissions_user?.data?.id) === parseInt(user.id)}
+              medias={message?.attributes?.media}
             />
           ))
           : (<h3>Aucun message</h3>)}

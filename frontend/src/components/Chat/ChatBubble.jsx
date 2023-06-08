@@ -1,7 +1,7 @@
 import React from 'react'
 import { Avatar, Box, Typography } from '@mui/material'
 import { styled, alpha } from '@mui/material/styles'
-import { format, formatDistance } from 'date-fns'
+import { formatDistance } from 'date-fns'
 import { fr } from 'date-fns/locale'
 
 const Bubble = styled('div')(({ theme }) => ({
@@ -29,28 +29,41 @@ export const ChatBubble = ({
   author,
   content,
   date,
-  media
+  medias
 }) => {
-  const url = author?.avatar?.data?.attributes?.url || author?.avatar?.url || ''
+  const url =
+    author?.avatar?.data?.attributes?.url || author?.avatar?.url || ''
   return (
     <Box display='flex' flexDirection='column' gap={2} padding={2}>
-      <Box display='flex' style={{ flexDirection: reverse ? 'row-reverse' : '' }}>
+      <Box
+        display='flex'
+        style={{ flexDirection: reverse ? 'row-reverse' : '' }}
+      >
         <Typography variant='body2'>
-          {`${author?.username} - ${formatDistance(new Date(date), new Date(), { addSuffix: true, locale: fr })}`}
+          {`${author?.username} - ${formatDistance(new Date(date), new Date(), {
+            addSuffix: true,
+            locale: fr
+          })}`}
         </Typography>
       </Box>
       <Box display='flex' gap={2} style={{ flexDirection: reverse ? 'row-reverse' : '' }}>
-        <Avatar alt={author?.username} src={`${process.env.REACT_APP_IMAGES_URL}${url}`} />
+        <Avatar
+          alt={author?.username}
+          src={`${process.env.REACT_APP_BACKEND}${url}`}
+        />
         {isMySelf
           ? (
             <MyBubble>
               <Box>
                 {content}
               </Box>
-              {media?.data && media.data?.length > 0
+              {medias?.data[0]?.attributes?.url.includes('.wav') && (
+                <audio controls src={process.env.REACT_APP_BACKEND + medias?.[0]?.attributes?.url} />
+              )}
+              {medias?.data && medias.data?.length > 0
                 ? (
                   <Box display='flex'>
-                    {media.data.map((_media) => (
+                    {medias.data.map((_media) => (
                       <MyMedia key={_media?.id} alt={_media?.id} src={`${process.env.REACT_APP_IMAGES_URL}${_media?.attributes?.url}`} />
                     ))}
                   </Box>
@@ -63,10 +76,19 @@ export const ChatBubble = ({
               <Box>
                 {content}
               </Box>
-              {media?.data && media.data?.length > 0
+              {medias?.data[0]?.attributes?.url.includes('.wav') && (
+                <audio
+                  controls
+                  src={
+                    process.env.REACT_APP_BACKEND +
+                    medias?.[0]?.attributes?.url
+                  }
+                />
+              )}
+              {medias?.data && medias.data?.length > 0
                 ? (
                   <Box display='flex'>
-                    {media.data.map((_media) => (
+                    {medias.data.map((_media) => (
                       <MyMedia key={_media?.id} alt={_media?.id} src={`${process.env.REACT_APP_IMAGES_URL}${_media?.attributes?.url}`} />
                     ))}
                   </Box>

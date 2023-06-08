@@ -12,20 +12,21 @@
     gap: 1em;
     align-items: center;
 
-    .avatar{
+    .avatar {
       &.animation {
         animation: spinning 0.3s infinite linear;
       }
 
       @keyframes spinning {
         0% {
-          transform : rotate(0deg);
+          transform: rotate(0deg);
         }
+
         100% {
-          transform : rotate(360deg);
+          transform: rotate(360deg);
         }
       }
-      
+
     }
 
     .userInfos {
@@ -33,7 +34,7 @@
       justify-content: space-between;
       gap: 2em;
 
-      .fullName{
+      .fullName {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -54,10 +55,21 @@
     width: 60%;
   }
 
-  .profil, .postsList {
+  .profil,
+  .postsList {
     height: fit-content;
     box-shadow: 0 0 10px rgba(#B0B0B0, 0.50);
     border-radius: 1em;
     padding: 2em;
   }
+}
+
+.waitingFriendRequests {
+  display: flex;
+  justify-content: center;
+}
+
+.waitingFriendRequest {
+  display: flex;
+  align-items: center;
 }

@@ -34,10 +34,11 @@ const Auth = () => {
     <>
       <div className='authForm'>
         <img src={error ? juloError : Julo} alt='julo' className='imgJulo' />
+        <h1>Login</h1>
         <Formik
           initialValues={{
-            identifier: 'toto@tata.fr',
-            password: 'secret'
+            identifier: 'zizi@zizi.com',
+            password: 'zizizizi'
           }}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
@@ -58,6 +59,7 @@ const Auth = () => {
               />
               {error && <p className='error'>{error.message}</p>}
               <SubmitButton label='Connexion' />
+              <p onClick={() => navigate('/register')} className='cursor-pointer'>Je ne suis pas encore inscrit</p>
             </Form>
           )}
         </Formik>
