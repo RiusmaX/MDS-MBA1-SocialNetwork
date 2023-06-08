@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import PostList from '../components/Posts/PostList'
 import Avatar from '../components/Profile/Avatar'
 import FullName from '../components/Profile/FullName'
-import { GET_ME_WITH_POSTS } from '../graphql/queries/usersQueries'
+import { GET_FRIENDS, GET_ME_WITH_POSTS } from '../graphql/queries/usersQueries'
 import { subscribeToPosts } from '../services/socket'
 import { GET_POSTS } from '../graphql/queries/postsQueries'
 
@@ -20,8 +20,10 @@ const Profile = () => {
   const [createChat] = useMutation(CREATE_CHAT)
   const navigate = useNavigate()
   const [posts, setPosts] = useState([])
+  const [friends, setFriends] = useState([])
   const getPosts = useQuery(GET_POSTS)
   const { state: { user } } = useAuth()
+  const getFriends = useQuery(GET_FRIENDS(user.id))
 
   // uses the useEffect hook to update the local posts state whenever the data in the getPosts request changes
   useEffect(() => {
@@ -33,6 +35,14 @@ const Profile = () => {
   useEffect(() => {
     subscribeToPosts(setPosts)
   }, [])
+
+  useEffect(() => {
+    if (getFriends.data) {
+      setFriends(getFriends.data.friendships.data.map((friendship) => {
+        return friendship.attributes.user1.data.id === user.id ? friendship.attributes.user2 : friendship.attributes.user1
+      }))
+    }
+  }, [getFriends])
 
   if (loading) {
     return <h4>Chargement...</h4>
@@ -75,6 +85,7 @@ const Profile = () => {
               <FullName firstName={profile.firstName} lastName={profile.lastName} username={profile.username} />
               <Button value='Suivre' className='bold' />
             </div>
+            <Button value='ajouter un ami' className='bold'>Ajouter un ami</Button>
           </div>
           <PostList posts={posts} />
         </div>

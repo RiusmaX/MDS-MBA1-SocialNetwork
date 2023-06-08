@@ -23,6 +23,7 @@ query {
   }
 }
 `
+
 // Requêtes qui retourne les informations de l'utilisateur connecter ainsi que ses publication
 const GET_ME_WITH_POSTS = (id) => gql`
 query {
@@ -126,10 +127,44 @@ query {
   }
 }
 `
+const GET_FRIENDS = (userId) => gql`
+query {
+  friendships(filters: 
+    {
+      status: {eq: "friends"}
+      and: {
+        or: [
+          {        
+            user1: {
+              id: {
+            eq: ${userId}
+          }
+        }}
+          {
+            user2: {
+              id: {
+            eq: ${userId}
+          }
+        }}
+        ]
+      }
+    }
+  ) {
+    data {
+      attributes {
+        user1 { data {id}}
+        user2 {data {id}}
+      }
+    }
+  }
+}
+
+`
 
 export {
   GET_USERS,
   GET_ME_WITH_POSTS,
   GET_USER_WITH_POSTS_BY_ID,
-  GET_USER_BY_EMAIL
+  GET_USER_BY_EMAIL,
+  GET_FRIENDS
 }
