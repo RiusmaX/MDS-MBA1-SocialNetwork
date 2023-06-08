@@ -125,7 +125,7 @@ const Profile = () => {
   }
 
   const createNewFriendship = () => {
-    const res = createFriendship(
+    createFriendship(
       {
         variables: {
           user1: user.id,
@@ -137,7 +137,7 @@ const Profile = () => {
   }
 
   const acceptFriendship = (id) => {
-    const res = updateFriendship(
+    updateFriendship(
       {
         variables: {
           id,
@@ -148,7 +148,7 @@ const Profile = () => {
   }
 
   const cancelFriendship = (id) => {
-    const res = updateFriendship(
+    updateFriendship(
       {
         variables: {
           id,
