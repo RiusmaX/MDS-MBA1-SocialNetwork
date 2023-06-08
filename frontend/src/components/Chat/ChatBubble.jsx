@@ -57,14 +57,14 @@ export const ChatBubble = ({
               <Box>
                 {content}
               </Box>
-              {medias?.data[0]?.attributes?.url.includes('.wav') && (
-                <audio controls src={process.env.REACT_APP_BACKEND + medias?.[0]?.attributes?.url} />
+              {medias?.data && medias?.data[0]?.attributes?.url.includes('.wav') && (
+                <audio controls src={process.env.REACT_APP_BACKEND + medias?.data[0]?.attributes?.url} />
               )}
-              {medias?.data && medias.data?.length > 0
+              {medias?.data && medias.data?.length > 0 && !medias?.data[0]?.attributes?.url.includes('.wav')
                 ? (
                   <Box display='flex'>
                     {medias.data.map((_media) => (
-                      <MyMedia key={_media?.id} alt={_media?.id} src={`${process.env.REACT_APP_IMAGES_URL}${_media?.attributes?.url}`} />
+                      <MyMedia key={_media?.id} alt={_media?.id} src={`${process.env.REACT_APP_BACKEND}${_media?.attributes?.url}`} />
                     ))}
                   </Box>
                   )
@@ -76,20 +76,20 @@ export const ChatBubble = ({
               <Box>
                 {content}
               </Box>
-              {medias?.data[0]?.attributes?.url.includes('.wav') && (
+              {medias?.data && medias?.data[0]?.attributes?.url.includes('.wav') && (
                 <audio
                   controls
                   src={
                     process.env.REACT_APP_BACKEND +
-                    medias?.[0]?.attributes?.url
+                    medias?.data[0]?.attributes?.url
                   }
                 />
               )}
-              {medias?.data && medias.data?.length > 0
+              {medias?.data && medias.data?.length > 0 && !medias?.data[0]?.attributes?.url.includes('.wav')
                 ? (
                   <Box display='flex'>
                     {medias.data.map((_media) => (
-                      <MyMedia key={_media?.id} alt={_media?.id} src={`${process.env.REACT_APP_IMAGES_URL}${_media?.attributes?.url}`} />
+                      <MyMedia key={_media?.id} alt={_media?.id} src={`${process.env.REACT_APP_BACKEND}${_media?.attributes?.url}`} />
                     ))}
                   </Box>
                   )
