@@ -1,18 +1,9 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from 'react'
 import { subscribeToPosts } from '../services/socket'
 import { useQuery } from '@apollo/client'
 import PostList from '../components/Posts/PostList'
 import { GET_POSTS } from '../graphql/queries/postsQueries'
-import { CounterProvider, useCounter } from '../contexts/CounterContext'
 import PinnedChat from '../components/Chat/PinnedChat'
-=======
-import React, { useState, useEffect } from 'react';
-import { subscribeToPosts } from '../services/socket';
-import { useQuery } from '@apollo/client';
-import PostList from '../components/Posts/PostList';
-import { GET_POSTS } from '../graphql/queries/postsQueries';
->>>>>>> 2564f05deaad5a748d5900f3515ef5f645e3f1a1
 
 function Home () {
   const [posts, setPosts] = useState([])
