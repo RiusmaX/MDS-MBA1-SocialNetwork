@@ -1055,6 +1055,350 @@
       "plugin": "admin",
       "globalId": "AdminTransferTokenPermission"
     },
+    "api::chat.chat": {
+      "kind": "collectionType",
+      "collectionName": "chats",
+      "info": {
+        "singularName": "chat",
+        "pluralName": "chats",
+        "displayName": "Chat",
+        "description": ""
+      },
+      "options": {
+        "draftAndPublish": true
+      },
+      "pluginOptions": {},
+      "attributes": {
+        "name": {
+          "type": "string"
+        },
+        "image": {
+          "type": "media",
+          "multiple": false,
+          "required": false,
+          "allowedTypes": [
+            "images",
+            "files",
+            "videos",
+            "audios"
+          ]
+        },
+        "users_permissions_users": {
+          "type": "relation",
+          "relation": "manyToMany",
+          "target": "plugin::users-permissions.user",
+          "inversedBy": "chats"
+        },
+        "messages": {
+          "type": "relation",
+          "relation": "oneToMany",
+          "target": "api::message.message",
+          "mappedBy": "chat"
+        },
+        "createdAt": {
+          "type": "datetime"
+        },
+        "updatedAt": {
+          "type": "datetime"
+        },
+        "publishedAt": {
+          "type": "datetime",
+          "configurable": false,
+          "writable": true,
+          "visible": false
+        },
+        "createdBy": {
+          "type": "relation",
+          "relation": "oneToOne",
+          "target": "admin::user",
+          "configurable": false,
+          "writable": false,
+          "visible": false,
+          "useJoinTable": false,
+          "private": true
+        },
+        "updatedBy": {
+          "type": "relation",
+          "relation": "oneToOne",
+          "target": "admin::user",
+          "configurable": false,
+          "writable": false,
+          "visible": false,
+          "useJoinTable": false,
+          "private": true
+        }
+      },
+      "__schema__": {
+        "collectionName": "chats",
+        "info": {
+          "singularName": "chat",
+          "pluralName": "chats",
+          "displayName": "Chat",
+          "description": ""
+        },
+        "options": {
+          "draftAndPublish": true
+        },
+        "pluginOptions": {},
+        "attributes": {
+          "name": {
+            "type": "string"
+          },
+          "image": {
+            "type": "media",
+            "multiple": false,
+            "required": false,
+            "allowedTypes": [
+              "images",
+              "files",
+              "videos",
+              "audios"
+            ]
+          },
+          "users_permissions_users": {
+            "type": "relation",
+            "relation": "manyToMany",
+            "target": "plugin::users-permissions.user",
+            "inversedBy": "chats"
+          },
+          "messages": {
+            "type": "relation",
+            "relation": "oneToMany",
+            "target": "api::message.message",
+            "mappedBy": "chat"
+          }
+        },
+        "kind": "collectionType"
+      },
+      "modelType": "contentType",
+      "modelName": "chat",
+      "connection": "default",
+      "uid": "api::chat.chat",
+      "apiName": "chat",
+      "globalId": "Chat",
+      "actions": {},
+      "lifecycles": {}
+    },
+    "api::liker.liker": {
+      "kind": "collectionType",
+      "collectionName": "likers",
+      "info": {
+        "singularName": "liker",
+        "pluralName": "likers",
+        "displayName": "Liker",
+        "description": ""
+      },
+      "options": {
+        "draftAndPublish": false
+      },
+      "pluginOptions": {},
+      "attributes": {
+        "post": {
+          "type": "relation",
+          "relation": "manyToOne",
+          "target": "api::post.post",
+          "inversedBy": "likers"
+        },
+        "user": {
+          "type": "relation",
+          "relation": "manyToOne",
+          "target": "plugin::users-permissions.user",
+          "inversedBy": "likers"
+        },
+        "createdAt": {
+          "type": "datetime"
+        },
+        "updatedAt": {
+          "type": "datetime"
+        },
+        "createdBy": {
+          "type": "relation",
+          "relation": "oneToOne",
+          "target": "admin::user",
+          "configurable": false,
+          "writable": false,
+          "visible": false,
+          "useJoinTable": false,
+          "private": true
+        },
+        "updatedBy": {
+          "type": "relation",
+          "relation": "oneToOne",
+          "target": "admin::user",
+          "configurable": false,
+          "writable": false,
+          "visible": false,
+          "useJoinTable": false,
+          "private": true
+        }
+      },
+      "__schema__": {
+        "collectionName": "likers",
+        "info": {
+          "singularName": "liker",
+          "pluralName": "likers",
+          "displayName": "Liker",
+          "description": ""
+        },
+        "options": {
+          "draftAndPublish": false
+        },
+        "pluginOptions": {},
+        "attributes": {
+          "post": {
+            "type": "relation",
+            "relation": "manyToOne",
+            "target": "api::post.post",
+            "inversedBy": "likers"
+          },
+          "user": {
+            "type": "relation",
+            "relation": "manyToOne",
+            "target": "plugin::users-permissions.user",
+            "inversedBy": "likers"
+          }
+        },
+        "kind": "collectionType"
+      },
+      "modelType": "contentType",
+      "modelName": "liker",
+      "connection": "default",
+      "uid": "api::liker.liker",
+      "apiName": "liker",
+      "globalId": "Liker",
+      "actions": {},
+      "lifecycles": {}
+    },
+    "api::message.message": {
+      "kind": "collectionType",
+      "collectionName": "messages",
+      "info": {
+        "singularName": "message",
+        "pluralName": "messages",
+        "displayName": "Message",
+        "description": ""
+      },
+      "options": {
+        "draftAndPublish": true
+      },
+      "pluginOptions": {},
+      "attributes": {
+        "messageText": {
+          "type": "richtext"
+        },
+        "sendDate": {
+          "type": "datetime"
+        },
+        "media": {
+          "type": "media",
+          "multiple": true,
+          "required": false,
+          "allowedTypes": [
+            "images",
+            "files",
+            "videos",
+            "audios"
+          ]
+        },
+        "users_permissions_user": {
+          "type": "relation",
+          "relation": "manyToOne",
+          "target": "plugin::users-permissions.user",
+          "inversedBy": "messages"
+        },
+        "chat": {
+          "type": "relation",
+          "relation": "manyToOne",
+          "target": "api::chat.chat",
+          "inversedBy": "messages"
+        },
+        "createdAt": {
+          "type": "datetime"
+        },
+        "updatedAt": {
+          "type": "datetime"
+        },
+        "publishedAt": {
+          "type": "datetime",
+          "configurable": false,
+          "writable": true,
+          "visible": false
+        },
+        "createdBy": {
+          "type": "relation",
+          "relation": "oneToOne",
+          "target": "admin::user",
+          "configurable": false,
+          "writable": false,
+          "visible": false,
+          "useJoinTable": false,
+          "private": true
+        },
+        "updatedBy": {
+          "type": "relation",
+          "relation": "oneToOne",
+          "target": "admin::user",
+          "configurable": false,
+          "writable": false,
+          "visible": false,
+          "useJoinTable": false,
+          "private": true
+        }
+      },
+      "__schema__": {
+        "collectionName": "messages",
+        "info": {
+          "singularName": "message",
+          "pluralName": "messages",
+          "displayName": "Message",
+          "description": ""
+        },
+        "options": {
+          "draftAndPublish": true
+        },
+        "pluginOptions": {},
+        "attributes": {
+          "messageText": {
+            "type": "richtext"
+          },
+          "sendDate": {
+            "type": "datetime"
+          },
+          "media": {
+            "type": "media",
+            "multiple": true,
+            "required": false,
+            "allowedTypes": [
+              "images",
+              "files",
+              "videos",
+              "audios"
+            ]
+          },
+          "users_permissions_user": {
+            "type": "relation",
+            "relation": "manyToOne",
+            "target": "plugin::users-permissions.user",
+            "inversedBy": "messages"
+          },
+          "chat": {
+            "type": "relation",
+            "relation": "manyToOne",
+            "target": "api::chat.chat",
+            "inversedBy": "messages"
+          }
+        },
+        "kind": "collectionType"
+      },
+      "modelType": "contentType",
+      "modelName": "message",
+      "connection": "default",
+      "uid": "api::message.message",
+      "apiName": "message",
+      "globalId": "Message",
+      "actions": {},
+      "lifecycles": {}
+    },
     "api::post.post": {
       "kind": "collectionType",
       "collectionName": "posts",
@@ -1075,12 +1419,6 @@
         "content": {
           "type": "richtext"
         },
-        "likers": {
-          "type": "relation",
-          "relation": "manyToMany",
-          "target": "plugin::users-permissions.user",
-          "inversedBy": "postsLiked"
-        },
         "medias": {
           "type": "media",
           "multiple": true,
@@ -1097,6 +1435,17 @@
           "relation": "manyToOne",
           "target": "plugin::users-permissions.user",
           "inversedBy": "posts"
+        },
+        "likers": {
+          "type": "relation",
+          "relation": "oneToMany",
+          "target": "api::liker.liker",
+          "mappedBy": "post"
+        },
+        "relativeTo": {
+          "type": "relation",
+          "relation": "oneToOne",
+          "target": "api::post.post"
         },
         "createdAt": {
           "type": "datetime"
@@ -1144,12 +1493,6 @@
           "content": {
             "type": "richtext"
           },
-          "likers": {
-            "type": "relation",
-            "relation": "manyToMany",
-            "target": "plugin::users-permissions.user",
-            "inversedBy": "postsLiked"
-          },
           "medias": {
             "type": "media",
             "multiple": true,
@@ -1166,6 +1509,17 @@
             "relation": "manyToOne",
             "target": "plugin::users-permissions.user",
             "inversedBy": "posts"
+          },
+          "likers": {
+            "type": "relation",
+            "relation": "oneToMany",
+            "target": "api::liker.liker",
+            "mappedBy": "post"
+          },
+          "relativeTo": {
+            "type": "relation",
+            "relation": "oneToOne",
+            "target": "api::post.post"
           }
         },
         "kind": "collectionType"
@@ -2018,26 +2372,51 @@
           "type": "string"
         },
         "avatar": {
+          "type": "media",
+          "multiple": false,
+          "required": false,
           "allowedTypes": [
             "images",
             "files",
             "videos",
             "audios"
-          ],
-          "type": "media",
-          "multiple": false
-        },
-        "postsLiked": {
-          "type": "relation",
-          "relation": "manyToMany",
-          "target": "api::post.post",
-          "mappedBy": "likers"
+          ]
         },
         "posts": {
           "type": "relation",
           "relation": "oneToMany",
           "target": "api::post.post",
           "mappedBy": "user"
+        },
+        "chats": {
+          "type": "relation",
+          "relation": "manyToMany",
+          "target": "api::chat.chat",
+          "mappedBy": "users_permissions_users"
+        },
+        "messages": {
+          "type": "relation",
+          "relation": "oneToMany",
+          "target": "api::message.message",
+          "mappedBy": "users_permissions_user"
+        },
+        "likers": {
+          "type": "relation",
+          "relation": "oneToMany",
+          "target": "api::liker.liker",
+          "mappedBy": "user"
+        },
+        "follows": {
+          "type": "relation",
+          "relation": "manyToMany",
+          "target": "plugin::users-permissions.user",
+          "inversedBy": "followedBy"
+        },
+        "followedBy": {
+          "type": "relation",
+          "relation": "manyToMany",
+          "target": "plugin::users-permissions.user",
+          "inversedBy": "follows"
         },
         "createdAt": {
           "type": "datetime"
@@ -2155,26 +2534,51 @@
             "type": "string"
           },
           "avatar": {
+            "type": "media",
+            "multiple": false,
+            "required": false,
             "allowedTypes": [
               "images",
               "files",
               "videos",
               "audios"
-            ],
-            "type": "media",
-            "multiple": false
-          },
-          "postsLiked": {
-            "type": "relation",
-            "relation": "manyToMany",
-            "target": "api::post.post",
-            "mappedBy": "likers"
+            ]
           },
           "posts": {
             "type": "relation",
             "relation": "oneToMany",
             "target": "api::post.post",
             "mappedBy": "user"
+          },
+          "chats": {
+            "type": "relation",
+            "relation": "manyToMany",
+            "target": "api::chat.chat",
+            "mappedBy": "users_permissions_users"
+          },
+          "messages": {
+            "type": "relation",
+            "relation": "oneToMany",
+            "target": "api::message.message",
+            "mappedBy": "users_permissions_user"
+          },
+          "likers": {
+            "type": "relation",
+            "relation": "oneToMany",
+            "target": "api::liker.liker",
+            "mappedBy": "user"
+          },
+          "follows": {
+            "type": "relation",
+            "relation": "manyToMany",
+            "target": "plugin::users-permissions.user",
+            "inversedBy": "followedBy"
+          },
+          "followedBy": {
+            "type": "relation",
+            "relation": "manyToMany",
+            "target": "plugin::users-permissions.user",
+            "inversedBy": "follows"
           }
         },
         "kind": "collectionType"
