@@ -20,7 +20,7 @@ const getProfile = async (id) => {
 
 const createMessage = async (body) => {
   try {
-    const response = await api.post(`/messages`, {...body})
+    const response = await api.post('/messages?populate=*', { ...body })
     return response.data
   } catch (error) {
     console.error(error)

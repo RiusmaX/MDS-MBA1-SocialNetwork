@@ -136,6 +136,53 @@ query GetPostById($id: ID!) {
 }
 `
 
+const GET_POSTS_BY_USER_ID = (id) => gql`
+query {
+  posts (filters: {user: {id: {eq: ${id} }}}){
+    data {
+      id,
+      attributes {
+        title, 
+        content,
+        likers {
+          data {
+            id
+          }
+        },
+        createdAt, 
+        medias {
+          data {
+            id,
+            attributes {
+              name,
+              url
+            }
+          }
+        },
+        user {
+          data {
+            id,
+            attributes{
+              username,
+              firstName,
+              avatar {
+                data {
+                  id,
+                  attributes {
+                    name,
+                    url
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+`
+
 const GET_POST_COMMENTS = (id) => gql`
 query {
   posts {
@@ -164,4 +211,4 @@ query {
 }
 `
 
-export { GET_POSTS, GET_POST_BY_ID, GET_POST_COMMENTS }
+export { GET_POSTS, GET_POST_BY_ID, GET_POST_COMMENTS, GET_POSTS_BY_USER_ID }
