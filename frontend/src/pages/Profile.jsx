@@ -81,7 +81,7 @@ const Profile = () => {
       }
     )
     res.then((data) => {
-      navigate(`/chats/${data?.data?.createChat?.data?.id}`)
+      navigate('/chats')
     })
   }
 
