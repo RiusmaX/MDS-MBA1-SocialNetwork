@@ -4,15 +4,16 @@ import { useNavigate, useParams } from 'react-router-dom'
 import PostList from '../components/Posts/PostList'
 import Avatar from '../components/Profile/Avatar'
 import FullName from '../components/Profile/FullName'
-import { GET_ME_PROFILE, GET_FOLLOWERS } from '../graphql/queries/usersQueries'
+import { GET_FRIENDS, GET_FRIENDS_REQUEST, GET_ME_WITH_POSTS, GET_ME_PROFILE, GET_FOLLOWERS } from '../graphql/queries/usersQueries'
+import { subscribeToPosts } from '../services/socket'
 import { ADD_FOLLOWER } from '../graphql/mutations/usersMutations'
 import Button from '../components/Layout/Button'
-import { subscribeToPosts } from '../services/socket'
 
 import '../styles/Profile.scss'
 import { CREATE_CHAT } from '../graphql/mutations/chatsMutations'
 import { useEffect, useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
+import { CHANGE_FRIENDSHIP_STATUS, REQUEST_FRIEND } from '../graphql/mutations/friendshipsMutations'
 import { GET_POSTS_BY_USER_ID } from '../graphql/queries/postsQueries'
 
 const Profile = () => {
@@ -39,6 +40,12 @@ const Profile = () => {
   const getFollow = useQuery(GET_FOLLOWERS(user.id))
   const navigate = useNavigate()
   const [posts, setPosts] = useState([])
+  const [friend, setFriends] = useState(false)
+  const getFriends = useQuery(GET_FRIENDS(user.id))
+  const [createFriendship] = useMutation(REQUEST_FRIEND)
+  const [friendsRequest, setFriendsRequest] = useState([])
+  const pendingFriendsRequest = useQuery(GET_FRIENDS_REQUEST(user.id))
+  const [updateFriendship] = useMutation(CHANGE_FRIENDSHIP_STATUS)
 
   // uses the useEffect hook to update the local posts state whenever the data in the getPosts request changes
   useEffect(() => {
@@ -60,6 +67,22 @@ const Profile = () => {
   useEffect(() => {
     subscribeToPosts(setPosts)
   }, [])
+
+  useEffect(() => {
+    if (getFriends.data) {
+      getFriends.data.friendships.data.forEach((friendship) => {
+        if (friendship.attributes.user1.data.id === id || friendship.attributes.user2.data.id === id) {
+          setFriends(true)
+        }
+      })
+    }
+  }, [getFriends])
+
+  useEffect(() => {
+    if (user.id === id && pendingFriendsRequest.data) {
+      setFriendsRequest(pendingFriendsRequest.data.friendships.data)
+    }
+  }, [pendingFriendsRequest])
 
   if (loading) {
     return <h4>Chargement...</h4>
@@ -102,6 +125,40 @@ const Profile = () => {
     follow({ variables: { id: user.id, arrayOfFollow: newFollow } })
   }
 
+  const createNewFriendship = () => {
+    createFriendship(
+      {
+        variables: {
+          user1: user.id,
+          user2: id,
+          status: 'sent'
+        }
+      }
+    )
+  }
+
+  const acceptFriendship = (id) => {
+    updateFriendship(
+      {
+        variables: {
+          id,
+          status: 'friends'
+        }
+      }
+    )
+  }
+
+  const cancelFriendship = (id) => {
+    updateFriendship(
+      {
+        variables: {
+          id,
+          status: 'canceled'
+        }
+      }
+    )
+  }
+
   if (data) {
     return (
       <>
@@ -113,9 +170,22 @@ const Profile = () => {
               <FullName firstName={profile.firstName} lastName={profile.lastName} username={profile.username} />
               {user.id !== id && <Button value={follows.includes(id) ? 'Ne plus suivre' : 'Suivre'} className='bold' onClick={() => handleFollow(id)} />}
             </div>
+            {user.id !== id && !friend && <Button value='ajouter un ami' className='bold' onClick={createNewFriendship}>Ajouter un ami</Button>}
           </div>
           <PostList posts={posts} />
         </div>
+        {user.id === id && (
+          <div className='waitingFriendRequests'>
+            {friendsRequest.map((friend) => (
+              <div key={friend.attributes.user1.data.id} className='waitingFriendRequest'>
+                {friend.attributes.user1.data.attributes.avatar.data.attributes && <Avatar avatar={friend.attributes.user1.data.attributes.avatar.data.attributes} />}
+                <div>{friend.attributes.user1.data.attributes.firstName}  {friend.attributes.user1.data.attributes.lastName}</div>
+                <Button variant='text' value='Accept' onClick={() => acceptFriendship(friend.id)}>Accept</Button>
+                <Button variant='text' value='Cancel' onClick={() => cancelFriendship(friend.id)}>Cancel</Button>
+              </div>
+            ))}
+          </div>
+        )}
       </>
     )
   }
