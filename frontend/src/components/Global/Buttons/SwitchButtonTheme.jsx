@@ -5,7 +5,7 @@ const SwitchButtonTheme = (props) => {
      * @returns {JSX.Element} - The button
      */
   return (
-    <div className='container'>
+    <div className='containerTheme'>
       <div className='switch'>
         <input type='checkbox' name='toggle' onClick={props.handleOnClick} />
         <label for='toggle'>

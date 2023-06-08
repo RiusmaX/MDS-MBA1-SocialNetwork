@@ -26,11 +26,16 @@ const AddPost = ({ userData }) => {
         formData.append('files', file)
 
         // Upload le média sur Strapi
-        const response = await fetch(`${process.env.REACT_APP_API_UPLOAD_URL}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND}${process.env.REACT_APP_STRAPI_UPLOAD_URL}`, {
           method: 'POST',
           body: formData,
           headers: {
-            Authorization: `Bearer ${process.env.REACT_APP_API_TOKEN}`
+            Authorization: JSON.parse(window.localStorage.getItem("AUTH"))
+              ?.token
+              ? `Bearer ${
+                  JSON.parse(window.localStorage.getItem("AUTH"))?.token
+                }`
+              : null,
           }
         })
 

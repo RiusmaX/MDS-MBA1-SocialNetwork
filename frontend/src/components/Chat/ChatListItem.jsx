@@ -42,7 +42,7 @@ const ChatListItem = ({ chat, onClick, active }) => {
       <CardHeader
         avatar={
           <Avatar
-            src={process.env.REACT_APP_IMAGES_URL + chat?.attributes?.image?.data?.attributes?.url}
+            src={process.env.REACT_APP_BACKEND + chat?.attributes?.image?.data?.attributes?.url}
             sx={{ bgcolor: blueGrey[500] }}
             aria-label='recipe'
           />
