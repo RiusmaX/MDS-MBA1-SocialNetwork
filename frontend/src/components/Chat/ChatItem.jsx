@@ -14,16 +14,39 @@ const MyToolbar = styled(Toolbar)(({ theme }) => ({
 }))
 
 const ChatItem = ({ id }) => {
-  const getChat = useQuery(GET_CHAT(id))
-  const [messages, setMessages] = useState([])
-  const [chat, setChat] = useState()
+  const { state: { user, token } } = useAuth()
 
-  const { state: { user } } = useAuth()
+  const getChat = useQuery(GET_CHAT(id), {
+    context: {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  })
+
+  const [messages, setMessages] = useState([])
+
+  const [data, setData] = useState({
+    chat: null,
+    isLoading: true,
+    error: null
+  })
 
   useEffect(() => {
     if (getChat.data) {
-      setChat(getChat.data.chat.data.attributes)
-      setMessages(getChat.data.chat.data.attributes.messages.data)
+      setData({
+        ...data,
+        chat: getChat.data.chat?.data?.attributes ?? null,
+        isLoading: false
+      })
+      setMessages(getChat.data.chat?.data?.attributes?.messages?.data ?? [])
+    }
+    if (getChat.error) {
+      setData({
+        ...data,
+        error: getChat.error,
+        isLoading: false
+      })
     }
   }, [getChat])
 
@@ -33,8 +56,29 @@ const ChatItem = ({ id }) => {
 
   const lastMessage = useRef(null)
   useEffect(() => {
-    lastMessage.current.scrollIntoView({ behavior: 'smooth' })
+    lastMessage?.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
+
+  if (data.error) {
+    return (
+      <>
+        <h1>ERROR</h1>
+        <pre>{JSON.stringify(data.error, null, 2)}</pre>
+      </>
+    )
+  }
+
+  if (data.isLoading) {
+    return <h2>Chargement...</h2>
+  }
+
+  if (!data.isLoading && !data.chat) {
+    return (
+      <>
+        <h3>Discussion non trouvée</h3>
+      </>
+    )
+  }
 
   return (
     <Box width='100%' height='100%' display='flex' flexDirection='column'>
@@ -44,12 +88,12 @@ const ChatItem = ({ id }) => {
             variant='subtitle'
             component='div'
           >
-            {chat?.name}
+            {data.chat?.name}
           </Typography>
         </Box>
       </MyToolbar>
       <Box flexGrow={1} sx={{ overflow: 'auto' }}>
-        {messages.map((message) => (
+        {messages && messages.length > 0 ? messages.map((message) => (
           <ChatBubble
             key={message.id}
             content={message?.attributes?.messageText}
@@ -57,8 +101,9 @@ const ChatItem = ({ id }) => {
             author={message?.attributes?.users_permissions_user?.data?.attributes}
             reverse={parseInt(message?.attributes?.users_permissions_user?.data?.id) === parseInt(user.id)}
             isMySelf={parseInt(message?.attributes?.users_permissions_user?.data?.id) === parseInt(user.id)}
+            medias={message?.attributes?.media?.data}
           />
-        ))}
+        )) : (<h3>Aucun message</h3>)}
         <div ref={lastMessage} />
       </Box>
       <ChatSendingForm chatId={id} />

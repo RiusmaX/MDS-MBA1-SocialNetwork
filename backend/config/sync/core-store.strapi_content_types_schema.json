@@ -1078,9 +1078,7 @@
           "required": false,
           "allowedTypes": [
             "images",
-            "files",
-            "videos",
-            "audios"
+            "videos"
           ]
         },
         "users_permissions_users": {
@@ -1094,6 +1092,14 @@
           "relation": "oneToMany",
           "target": "api::message.message",
           "mappedBy": "chat"
+        },
+        "audio": {
+          "type": "media",
+          "multiple": false,
+          "required": false,
+          "allowedTypes": [
+            "audios"
+          ]
         },
         "createdAt": {
           "type": "datetime"
@@ -1150,9 +1156,7 @@
             "required": false,
             "allowedTypes": [
               "images",
-              "files",
-              "videos",
-              "audios"
+              "videos"
             ]
           },
           "users_permissions_users": {
@@ -1166,6 +1170,14 @@
             "relation": "oneToMany",
             "target": "api::message.message",
             "mappedBy": "chat"
+          },
+          "audio": {
+            "type": "media",
+            "multiple": false,
+            "required": false,
+            "allowedTypes": [
+              "audios"
+            ]
           }
         },
         "kind": "collectionType"

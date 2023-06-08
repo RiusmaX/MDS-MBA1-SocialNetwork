@@ -2,6 +2,7 @@ import * as React from 'react'
 import MenuIcon from '@mui/icons-material/Menu'
 import SearchIcon from '@mui/icons-material/Search'
 import { styled, alpha } from '@mui/material/styles'
+import SwitchButtonTheme from './../../components/Global/Buttons/SwitchButtonTheme'
 import {
   MenuItem,
   InputBase,
@@ -20,6 +21,7 @@ import { ReactComponent as Logo } from '../../assets/images/logo.svg'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import jwt_decode from 'jwt-decode'
+import { useState, useEffect } from 'react'
 
 const pages = [{
   name: 'Users',
@@ -72,11 +74,26 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   }
 }))
 
-function ResponsiveAppBar () {
+function ResponsiveAppBar() {
+  const { state: { user } } = useAuth()
   const navigate = useNavigate()
   const [anchorElNav, setAnchorElNav] = React.useState(null)
   const [anchorElUser, setAnchorElUser] = React.useState(null)
   const { logout } = useAuth()
+  const [theme, setTheme] = useState(
+    window.localStorage.getItem('theme') || 'light'
+  )
+  const toggleTheme = () => {
+    if (theme === 'light') {
+      setTheme('dark')
+    } else {
+      setTheme('light')
+    }
+  }
+  useEffect(() => {
+    window.localStorage.setItem('theme', theme)
+    document.body.className = theme
+  }, [theme])
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget)
@@ -97,12 +114,9 @@ function ResponsiveAppBar () {
   const handleCloseUserMenu = (setting) => {
     // Lors du clique sur le paramètre Profile
     if (setting === 'Profile') {
-      const token = window.localStorage.getItem('token')
-      const decodedToken = jwt_decode(token)
-      const userId = decodedToken.id
       // Redirection sur la page profile de l'utilisateur connecter
       // Modifier lorsque la connexion sera fonctionelle
-      navigate('/users/' + userId)
+      navigate('/users/' + user.id)
     } else if (setting === 'Logout') {
       handleLogout()
     }
@@ -207,6 +221,7 @@ function ResponsiveAppBar () {
               ))}
             </Menu>
           </Box>
+          <SwitchButtonTheme handleOnClick={toggleTheme} />
         </Toolbar>
       </Container>
     </AppBar>
