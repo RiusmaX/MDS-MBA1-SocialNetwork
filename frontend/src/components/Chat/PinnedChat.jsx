@@ -6,9 +6,12 @@ import { PinProvider, usePin } from '../../contexts/PinMessagesContext'
 import { GET_CHATS_BY_IDS } from '../../graphql/queries/chatsQueries'
 import { useQuery } from '@apollo/client'
 import ChatListItemPinned from './ChatListItemPinned'
+import { useNavigate } from 'react-router-dom'
 
 const PinnedChat = (chatId) => {
   const { state, addPin, removePin } = usePin()
+  const navigate = useNavigate()
+
   let { pinnedIds } = state
   // const { loading, error, data } = useQuery(GET_CHAT_BY_ID(pinnedIds[0]))
   if (pinnedIds.length <= 0) {
@@ -56,7 +59,7 @@ const PinnedChat = (chatId) => {
 
             <ChatListItemPinned
               chat={chat}
-              onClick={() => null}
+              onClick={() => navigate(`/chats?id=${chat.id}`)}
               onClickPin={() => removePin(chat.id)}
             />
           </Grid>
