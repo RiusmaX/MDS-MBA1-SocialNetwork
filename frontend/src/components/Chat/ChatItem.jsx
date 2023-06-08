@@ -24,7 +24,7 @@ const ChatItem = ({ id }) => {
     }
   })
 
-  const [messages, setMessage] = useState([])
+  const [messages, setMessages] = useState([])
 
   const [data, setData] = useState({
     chat: null,
@@ -39,7 +39,7 @@ const ChatItem = ({ id }) => {
         chat: getChat.data.chat?.data?.attributes ?? null,
         isLoading: false
       })
-      setMessage(getChat.data.chat?.data?.attributes?.messages?.data ?? [])
+      setMessages(getChat.data.chat?.data?.attributes?.messages?.data ?? [])
     }
     if (getChat.error) {
       setData({
@@ -51,7 +51,7 @@ const ChatItem = ({ id }) => {
   }, [getChat])
 
   useEffect(() => {
-    subscribeToMessages(id, setMessage)
+    subscribeToMessages(id, setMessages)
   }, [id])
 
   const lastMessage = useRef(null)
