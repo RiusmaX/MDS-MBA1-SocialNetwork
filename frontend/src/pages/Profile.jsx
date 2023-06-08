@@ -4,16 +4,17 @@ import { useNavigate, useParams } from 'react-router-dom'
 import PostList from '../components/Posts/PostList'
 import Avatar from '../components/Profile/Avatar'
 import FullName from '../components/Profile/FullName'
-import { GET_FRIENDS, GET_FRIENDS_REQUEST, GET_ME_PROFILE, GET_FOLLOWERS } from '../graphql/queries/usersQueries'
+import { GET_FRIENDS, GET_FRIENDS_REQUEST, GET_ME_WITH_POSTS, GET_ME_PROFILE, GET_FOLLOWERS } from '../graphql/queries/usersQueries'
+import { subscribeToPosts } from '../services/socket'
 import { ADD_FOLLOWER } from '../graphql/mutations/usersMutations'
 import Button from '../components/Layout/Button'
-import { subscribeToPosts } from '../services/socket'
+
 import '../styles/Profile.scss'
 import { CREATE_CHAT } from '../graphql/mutations/chatsMutations'
 import { useEffect, useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
-import { GET_POSTS_BY_USER_ID } from '../graphql/queries/postsQueries'
 import { CHANGE_FRIENDSHIP_STATUS, REQUEST_FRIEND } from '../graphql/mutations/friendshipsMutations'
+import { GET_POSTS_BY_USER_ID } from '../graphql/queries/postsQueries'
 
 const Profile = () => {
   // On prépare l'état local qui stockera les données

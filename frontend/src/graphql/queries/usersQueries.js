@@ -23,7 +23,6 @@ query {
   }
 }
 `
-
 // Requêtes qui retourne les informations de l'utilisateur connecté ainsi que ses publication
 const GET_ME_PROFILE = (id) => gql`
 query {
