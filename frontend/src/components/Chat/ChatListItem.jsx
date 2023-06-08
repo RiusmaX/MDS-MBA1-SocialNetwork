@@ -4,9 +4,22 @@ import { useQuery } from '@apollo/client'
 import { GET_LAST_CHAT_MESSAGE } from '../../graphql/queries/chatsQueries'
 import { formatDistance } from 'date-fns'
 import { fr } from 'date-fns/locale'
+import { usePin } from '../../contexts/PinMessagesContext'
+import { useEffect, useState } from 'react'
 
-const ChatListItem = ({ chat, onClick, active }) => {
+const ChatListItem = ({ chat, onClick, active, chatId }) => {
   const { loading, error, data } = useQuery(GET_LAST_CHAT_MESSAGE(chat.id))
+  const { state } = usePin()
+  const { pinnedIds } = state
+  const [togglePin, setTogglePin] = useState([])
+
+  useEffect(() => {
+    if (pinnedIds.length > 0 && pinnedIds.includes(chatId)) {
+      setTogglePin(true)
+    } else {
+      setTogglePin(false)
+    }
+  }, [chatId, pinnedIds])
 
   if (loading) {
     return <h2>Chargement...</h2>
@@ -21,6 +34,7 @@ const ChatListItem = ({ chat, onClick, active }) => {
     )
   }
 
+  console.log(data)
   const sendDate = data?.messages?.data?.[0]?.attributes?.sendDate
   const formattedDistance = sendDate
     ? formatDistance(new Date(sendDate), new Date(), { addSuffix: true, locale: fr })
@@ -44,7 +58,7 @@ const ChatListItem = ({ chat, onClick, active }) => {
             aria-label='recipe'
           />
         }
-        title={chat.attributes.name}
+        title={<span>{togglePin ? '📍' : ''} {chat.attributes.name}</span>}
         subheader={formattedDistance}
       />
     </Card>

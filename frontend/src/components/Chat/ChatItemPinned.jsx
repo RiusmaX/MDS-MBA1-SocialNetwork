@@ -13,7 +13,7 @@ const MyToolbar = styled(Toolbar)(({ theme }) => ({
   border: `2px solid ${alpha(theme.palette.common.black, 0.60)}`
 }))
 
-const ChatItemPinned = ({ id, onClickPinned }) => {
+const ChatItemPinned = ({ id, onClickPinned, onClickNav }) => {
   const getChat = useQuery(GET_CHAT(id))
   const [messages, setMessages] = useState([])
   const [chat, setChat] = useState()
@@ -41,6 +41,9 @@ const ChatItemPinned = ({ id, onClickPinned }) => {
         <Box display='flex' justifyContent='space-between'>
           <Button onClick={onClickPinned} variant='outlined'>
             ↩️
+          </Button>
+          <Button onClick={onClickNav} variant='outlined'>
+            Se rendre sur la conversation
           </Button>
           <Typography
             variant='subtitle'

@@ -8,11 +8,15 @@ import { useQuery } from '@apollo/client'
 import ChatListItemPinned from './ChatListItemPinned'
 import { styled } from '@mui/material/styles'
 import ChatItemPinned from './ChatItemPinned'
+import { useNavigate } from 'react-router-dom'
 
 const PinnedChat = (chatId) => {
   const { state, removePin } = usePin()
+  const navigate = useNavigate()
   const [chatSelected, setChatSelected] = useState(0)
+
   let { pinnedIds } = state
+  // const { loading, error, data } = useQuery(GET_CHAT_BY_ID(pinnedIds[0]))
   if (pinnedIds.length <= 0) {
     pinnedIds = [0]
   }
@@ -82,6 +86,7 @@ const PinnedChat = (chatId) => {
             <ChatListItemPinned
               chat={chat}
               onClick={() => { selectChat(chat.id) }}
+              onClickNav={() => { navigate(`/chats?id=${chat.id}`) }}
               onClickPin={() => removePin(chat.id)}
             />
           </Grid>
