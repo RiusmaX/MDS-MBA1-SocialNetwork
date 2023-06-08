@@ -79,12 +79,12 @@ const ChatSendingForm = ({ chatId }) => {
     formData.append("files", file, "audio.wav");
 
     try {
-      const response = await fetch("http://localhost:1337/api/upload/", {
+      const response = await fetch(process.env.REACT_APP_IMAGES_URL + process.env.REACT_APP_STRAPI_UPLOAD_URL, {
         method: "POST",
         body: formData,
         headers: {
           Authorization:
-            "bearer b96cc717a6ff0e2791334d6e4c28c9df153b5686c9a244e14db4830f4e5bf575b4660a1896b6d2530a4d22394a502ed1c35125cc9860700b1757ac491ac6af7c450f8389ccce87b1a3545b6ac4ab269db2cb8644686709aec4189837380333353b0581c745896df4d393b54ba680a5164e054cf50ebe5b3725156675cf58bf9a", // Ajoutez l'en-tête d'autorisation si nécessaire
+            process.env.REACT_APP_STRAPI_TOKEN
         },
       });
 
