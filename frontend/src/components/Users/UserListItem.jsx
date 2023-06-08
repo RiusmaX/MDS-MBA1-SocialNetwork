@@ -4,7 +4,6 @@ import { blueGrey } from '@mui/material/colors'
 import FullName from '../Profile/FullName'
 
 const UserListItem = ({ user, onClick }) => {
-  console.log(user.attributes.avatar.data.attributes.url)
 
   return (
     <Card sx={{ maxWidth: 345 }}>

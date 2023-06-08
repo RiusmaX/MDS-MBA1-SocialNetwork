@@ -5,16 +5,8 @@ const socket = io('http://localhost:1337')
 
 export const subscribeToPosts = (setPosts) => {
   // Listening to socket events for new posts
-  socket.on('connect', () => {
-    console.log('Socket connected')
-  })
-
-  socket.on('disconnect', () => {
-    console.log('Socket disconnected')
-  })
 
   socket.on('post:create', (data) => {
-    console.log('New post received', data)
     setPosts((prevPosts) => [
       ...prevPosts,
       { id: String(data.id), attributes: data }
@@ -23,7 +15,6 @@ export const subscribeToPosts = (setPosts) => {
 
   // receive new posts sent by the server
   socket.on('post:update', (data) => {
-    console.log('Post updated', data)
     setPosts((prevPosts) => {
       const index = prevPosts.findIndex(
         (post) => Number(post.id) === Number(data.id)
@@ -48,16 +39,8 @@ export const subscribeToPosts = (setPosts) => {
 
 export const subscribeToMessages = (idConv, setMessages) => {
   // Listening to socket events for new messages
-  socket.on('connect', () => {
-    console.log('Socket connected')
-  })
-
-  socket.on('disconnect', () => {
-    console.log('Socket disconnected')
-  })
 
   socket.on('message:create', async (data) => {
-    console.log('New message received', data)
     data = data.data
     if (parseInt(idConv) === parseInt(data.attributes.chat.data.id)) {
       const user = await getProfile(data.attributes.users_permissions_user.data.id)
