@@ -6,6 +6,7 @@ import { useAuth } from '../contexts/AuthContext'
 import ChatItem from '../components/Chat/ChatItem'
 import { styled } from '@mui/material/styles'
 import ChatListItem from '../components/Chat/ChatListItem'
+import { useSearchParams } from 'react-router-dom'
 
 const GlobalSection = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -51,6 +52,8 @@ const Chats = () => {
     idChat: 0
   })
 
+  const [searchParams] = useSearchParams()
+
   const toggleChatId = (id) => {
     setData({
       ...data,
@@ -63,7 +66,7 @@ const Chats = () => {
       setData({
         ...data,
         chats: getChats.data.chats.data,
-        idChat: getChats?.data?.chats?.data[0]?.id || 0
+        idChat: searchParams.get('id') || getChats?.data?.chats?.data[0]?.id || 0
       })
     }
     if (getChats.error) {
