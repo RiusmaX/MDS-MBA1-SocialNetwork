@@ -75,6 +75,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }))
 
 function ResponsiveAppBar() {
+  const { state: { user } } = useAuth()
   const navigate = useNavigate()
   const [anchorElNav, setAnchorElNav] = React.useState(null)
   const [anchorElUser, setAnchorElUser] = React.useState(null)
@@ -113,12 +114,9 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = (setting) => {
     // Lors du clique sur le paramètre Profile
     if (setting === 'Profile') {
-      const token = window.localStorage.getItem('token')
-      const decodedToken = jwt_decode(token)
-      const userId = decodedToken.id
       // Redirection sur la page profile de l'utilisateur connecter
       // Modifier lorsque la connexion sera fonctionelle
-      navigate('/users/' + userId)
+      navigate('/users/' + user.id)
     } else if (setting === 'Logout') {
       handleLogout()
     }

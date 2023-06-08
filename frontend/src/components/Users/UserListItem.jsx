@@ -4,6 +4,7 @@ import { blueGrey } from '@mui/material/colors'
 import FullName from '../Profile/FullName'
 
 const UserListItem = ({ user, onClick }) => {
+
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader

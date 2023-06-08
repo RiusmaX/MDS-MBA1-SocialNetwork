@@ -6,7 +6,8 @@ import Avatar from '../components/Profile/Avatar'
 import FullName from '../components/Profile/FullName'
 import { GET_FRIENDS, GET_FRIENDS_REQUEST, GET_ME_WITH_POSTS, GET_ME_PROFILE, GET_FOLLOWERS } from '../graphql/queries/usersQueries'
 import { subscribeToPosts } from '../services/socket'
-import { ADD_FOLLOWER } from '../graphql/mutations/usersMutations'
+import { ADD_FOLLOWER, ADD_BIOGRAPHY } from '../graphql/mutations/usersMutations'
+import { BiPencil } from 'react-icons/bi'
 import Button from '../components/Layout/Button'
 
 import '../styles/Profile.scss'
@@ -36,6 +37,13 @@ const Profile = () => {
       }
     }
   })
+  const [addBiography] = useMutation(ADD_BIOGRAPHY, {
+    context: {
+      headers: {
+        authorization: `Bearer ${token}`
+      }
+    }
+  })
   const [follows, setFollows] = useState([])
   const getFollow = useQuery(GET_FOLLOWERS(user.id))
   const navigate = useNavigate()
@@ -46,6 +54,8 @@ const Profile = () => {
   const [friendsRequest, setFriendsRequest] = useState([])
   const pendingFriendsRequest = useQuery(GET_FRIENDS_REQUEST(user.id))
   const [updateFriendship] = useMutation(CHANGE_FRIENDSHIP_STATUS)
+  const [isBio, setIsBio] = useState(false)
+  const [bio, setBio] = useState()
 
   // uses the useEffect hook to update the local posts state whenever the data in the getPosts request changes
   useEffect(() => {
@@ -55,12 +65,17 @@ const Profile = () => {
   }, [getPosts])
 
   useEffect(() => {
-    if (getFollow.data) {
-      const newFollows = []
-      getFollow.data.usersPermissionsUser.data.attributes.follows.data.forEach(element => {
-        newFollows.push(element.id)
-      })
-      setFollows(newFollows)
+    if (getFollow.data && getFollow.data.usersPermissionsUser) {
+      if (getFollow.data.usersPermissionsUser.data) {
+        if (getFollow.data.usersPermissionsUser.data.attributes.follows.data) {
+          const newFollows = []
+          getFollow.data.usersPermissionsUser.data.attributes.follows.data.forEach(element => {
+            newFollows.push(element.id)
+          })
+          setFollows(newFollows)
+          setBio(data.usersPermissionsUser.data.attributes.biography)
+        }
+      }
     }
   }, [getFollow])
 
@@ -111,6 +126,20 @@ const Profile = () => {
     )
     res.then((data) => {
       navigate('/chats')
+    })
+  }
+
+  const handleChangeBio = (event) => {
+    setBio(event.target.value)
+  }
+
+  function handleSaveBio () {
+    setIsBio(false)
+    addBiography({
+      variables: {
+        userId: user.id,
+        biography: bio
+      }
     })
   }
 
@@ -168,9 +197,17 @@ const Profile = () => {
             {profile?.avatar?.data && <Avatar avatar={profile.avatar.data.attributes} />}
             <div className='userInfos'>
               <FullName firstName={profile.firstName} lastName={profile.lastName} username={profile.username} />
-              {user.id !== id && <Button value={follows.includes(id) ? 'Ne plus suivre' : 'Suivre'} className='bold' onClick={() => handleFollow(id)} />}
+              {user.id !== id
+                ? <Button value={follows.includes(id) ? 'Ne plus suivre' : 'Suivre'} className='bold' onClick={() => handleFollow(id)} />
+                : <BiPencil onClick={() => setIsBio(true)} />}
             </div>
             {user.id !== id && !friend && <Button value='ajouter un ami' className='bold' onClick={createNewFriendship}>Ajouter un ami</Button>}
+            {isBio
+              ? <div className='userBio'>
+                <textarea name='biography' value={bio} maxLength='160' onChange={handleChangeBio} />
+                <Button className='saveBio' value='Save' onClick={handleSaveBio} />
+              </div>
+              : <div className='userBio'><p>{bio}</p></div>}
           </div>
           <PostList posts={posts} />
         </div>
