@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/client'
 import { GET_LAST_CHAT_MESSAGE } from '../../graphql/queries/chatsQueries'
 import { format } from 'date-fns'
 import frLocale from 'date-fns/locale/fr'
+import '../../styles/PinnedChat.scss'
 
 const ChatListItemPinned = ({ chat, onClick, onClickPin }) => {
   const { loading, error, data } = useQuery(GET_LAST_CHAT_MESSAGE(chat.id))
@@ -28,7 +29,15 @@ const ChatListItemPinned = ({ chat, onClick, onClickPin }) => {
   }
 
   return (
-    <Card sx={{ maxWidth: 345 }} onClick={onClick}>
+    <Card
+      sx={{
+        minWidth: 250,
+        maxWidth: 345,
+        cursor: 'pointer'
+      }}
+      onClick={onClick}
+      id='chatlistPinnedCard'
+    >
       <CardHeader
         avatar={
           <Avatar

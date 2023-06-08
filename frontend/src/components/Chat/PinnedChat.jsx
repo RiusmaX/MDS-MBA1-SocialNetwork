@@ -1,26 +1,27 @@
 import { useEffect, useState } from 'react'
 import { subscribeToMessages } from '../../services/socket'
 import '../../styles/PinnedChat.scss'
-import { Grid } from '@mui/material'
+import { Grid, Container, Button, Box } from '@mui/material'
 import { PinProvider, usePin } from '../../contexts/PinMessagesContext'
 import { GET_CHATS_BY_IDS } from '../../graphql/queries/chatsQueries'
 import { useQuery } from '@apollo/client'
 import ChatListItemPinned from './ChatListItemPinned'
+import { styled } from '@mui/material/styles'
+import ChatItemPinned from './ChatItemPinned'
 
 const PinnedChat = (chatId) => {
-  const { state, addPin, removePin } = usePin()
+  const { state, removePin } = usePin()
+  const [chatSelected, setChatSelected] = useState(0)
   let { pinnedIds } = state
-  // const { loading, error, data } = useQuery(GET_CHAT_BY_ID(pinnedIds[0]))
-  console.log(pinnedIds.length)
   if (pinnedIds.length <= 0) {
     pinnedIds = [0]
   }
   const { loading, error, data } = useQuery(GET_CHATS_BY_IDS(pinnedIds))
 
   // switch to the selected chat view
-  const selectChat = () => {
-    console.log('chat selected')
-    // then view page in little
+  const selectChat = (idChat) => {
+    // view page in little
+    setChatSelected(idChat)
   }
 
   const [messages, setMessages] = useState([])
@@ -46,7 +47,29 @@ const PinnedChat = (chatId) => {
     return <></>
   }
 
-  const PinnedView2 = () => {
+  const MyMessageSection = styled(Box)(({ theme }) => ({
+    height: 'calc(50vh - 54px);',
+    overflow: 'scroll',
+    width: '50%',
+    [theme.breakpoints.down('sm')]: {
+      height: 'calc(50vh - 95px);'
+    }
+  }))
+
+  // toggle view for little chat conversation
+  const PinnedChatView = (idChat) => {
+    return (
+      <>
+        <ChatItemPinned
+          key={idChat}
+          id={idChat}
+          onClickPinned={() => selectChat(-1)}
+        />
+      </>
+    )
+  }
+
+  const PinnedView = () => {
     return (
       data.chats.data.map(chat => {
         return (
@@ -58,7 +81,7 @@ const PinnedChat = (chatId) => {
 
             <ChatListItemPinned
               chat={chat}
-              onClick={() => null}
+              onClick={() => { selectChat(chat.id) }}
               onClickPin={() => removePin(chat.id)}
             />
           </Grid>
@@ -68,11 +91,14 @@ const PinnedChat = (chatId) => {
   }
 
   return (
-    <div id='pinnedchat'>
-      <PinProvider>
-        <PinnedView2 />
-      </PinProvider>
-    </div>
+    <Container id='pinnedchat'>
+      <MyMessageSection>
+        {chatSelected > 0 ? <PinnedChatView idChat={chatSelected} /> : null}
+        <PinProvider>
+          {chatSelected <= 0 ? <PinnedView /> : null}
+        </PinProvider>
+      </MyMessageSection>
+    </Container>
   )
 }
 

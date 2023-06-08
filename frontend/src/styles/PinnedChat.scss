@@ -1,5 +1,7 @@
 #pinnedchat{
     position: sticky;
+    margin: 0%;
+    padding: 0%;
     //width: min-content;
     //width: 50%;
     //height: 50%;
@@ -10,4 +12,18 @@
     top: 60%;
     //transform: translateY(-50%);
     //transition: right 0.5s ease-out;
+}
+
+// #chatlistPinnedCard {
+//     background-color: '#ffffff';
+// }
+
+// #chatlistPinnedCard:hover {
+//     background-color: '#C8C8C8';
+// }
+
+#chatlistPinnedCard {
+    &:hover {
+        color:#C8C8C8;
+    }
 }
