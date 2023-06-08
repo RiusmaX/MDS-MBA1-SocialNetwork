@@ -16,12 +16,20 @@ const MyBubble = styled('div')(({ theme }) => ({
   borderRadius: theme.spacing(1)
 }))
 
+const MyMedia = styled('img')(({ theme }) => ({
+  height: 60,
+  width: 60,
+  objectFit: 'cover',
+  margin: 4
+}))
+
 export const ChatBubble = ({
   reverse,
   isMySelf,
   author,
   content,
-  date
+  date,
+  media
 }) => {
   const url = author?.avatar?.data?.attributes?.url || author?.avatar?.url || ''
   return (
@@ -36,11 +44,35 @@ export const ChatBubble = ({
         {isMySelf
           ? (
             <MyBubble>
-              {content}
+              <Box>
+                {content}
+              </Box>
+              {media?.data && media.data?.length > 0
+                ? (
+                  <Box display='flex'>
+                    {media.data.map((_media) => (
+                      <MyMedia key={_media?.id} alt={_media?.id} src={`${process.env.REACT_APP_IMAGES_URL}${_media?.attributes?.url}`} />
+                    ))}
+                  </Box>
+                  )
+                : null}
             </MyBubble>
             )
           : (
-            <Bubble padding={4}>{content}</Bubble>
+            <Bubble padding={4}>
+              <Box>
+                {content}
+              </Box>
+              {media?.data && media.data?.length > 0
+                ? (
+                  <Box display='flex'>
+                    {media.data.map((_media) => (
+                      <MyMedia key={_media?.id} alt={_media?.id} src={`${process.env.REACT_APP_IMAGES_URL}${_media?.attributes?.url}`} />
+                    ))}
+                  </Box>
+                  )
+                : null}
+            </Bubble>
             )}
       </Box>
     </Box>
