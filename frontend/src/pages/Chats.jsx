@@ -63,7 +63,7 @@ const Chats = () => {
       setData({
         ...data,
         chats: getChats.data.chats.data,
-        idChat: getChats.data.chats.data[0].id
+        idChat: getChats?.data?.chats?.data[0]?.id || 0
       })
     }
     if (getChats.error) {
@@ -90,22 +90,28 @@ const Chats = () => {
   return (
     <Container>
       <GlobalSection>
-        <MyList>
-          {
-            data.chats.map(chat => (
-              <ChatListItem
-                active={parseInt(data.idChat) === parseInt(chat.id)}
-                key={chat.id}
-                chatId={chat.id}
-                chat={chat}
-                onClick={() => toggleChatId(chat.id)}
-              />
-            ))
-          }
-        </MyList>
-        <MyMessageSection>
-          <ChatItem key={data.idChat} id={data.idChat} />
-        </MyMessageSection>
+        {data.idChat === 0
+          ? (
+            <div>no data</div>
+            )
+          : (
+            <>
+              <MyList>
+                {data.chats.map(chat => (
+                  <ChatListItem
+                    active={parseInt(data.idChat) === parseInt(chat.id)}
+                    key={chat.id}
+                    chatId={chat.id}
+                    chat={chat}
+                    onClick={() => toggleChatId(chat.id)}
+                  />
+                ))}
+              </MyList>
+              <MyMessageSection>
+                <ChatItem key={data.idChat} id={data.idChat} />
+              </MyMessageSection>
+            </>
+            )}
       </GlobalSection>
     </Container>
   )
