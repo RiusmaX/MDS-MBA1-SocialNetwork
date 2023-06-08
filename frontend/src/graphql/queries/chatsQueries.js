@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 const GET_CHATS = gql`
   query {
@@ -20,7 +20,7 @@ const GET_CHATS = gql`
       }
     }
   }
-`;
+`
 const GET_CHATS_WITH_USER = (id) => gql`
 query {
   chats(filters: {users_permissions_users: {id: {eq: ${id}}}}) {
@@ -41,7 +41,7 @@ query {
     }
   }
 }
-`;
+`
 
 const GET_CHAT = (id) => gql`
 query{
@@ -50,7 +50,6 @@ query{
       id
       attributes {
         name
-       
         image {
           data {
             id
@@ -96,7 +95,7 @@ query{
     }
   }
 }
-`;
+`
 
 const GET_CHAT_MESSAGE = (id) => gql`
 query{
@@ -133,7 +132,7 @@ query{
     }
   }
 }
-`;
+`
 
 const GET_LAST_CHAT_MESSAGE = (id) => gql`
 query{
@@ -163,12 +162,12 @@ query{
     }
   }
 }
-`;
+`
 
 export {
   GET_CHATS,
   GET_CHATS_WITH_USER,
   GET_CHAT_MESSAGE,
   GET_LAST_CHAT_MESSAGE,
-  GET_CHAT,
+  GET_CHAT
 };
