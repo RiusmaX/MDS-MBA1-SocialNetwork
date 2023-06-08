@@ -114,7 +114,7 @@ const PostListItem = ({ post, seeDetails }) => {
             <div className='postItem-content_image'>
               {/* Display the image */}
               <img
-                src={`${process.env.REACT_APP_IMAGES_URL}${post.attributes?.medias?.data?.[0]?.attributes?.url}`}
+                src={`${process.env.REACT_APP_BACKEND}${post.attributes?.medias?.data?.[0]?.attributes?.url}`}
                 alt={post.attributes?.image?.data?.attributes?.name}
               />
             </div>
@@ -179,7 +179,7 @@ const PostListItem = ({ post, seeDetails }) => {
           <OKShareButton
             url={`${process.env.REACT_APP_URL}/post/${post.id}`}
             title='Check this post, it is awesome !'
-            image={`${process.env.REACT_APP_IMAGES_URL}${post.attributes?.medias?.data?.[0]?.attributes?.url}`}
+            image={`${process.env.REACT_APP_BACKEND}${post.attributes?.medias?.data?.[0]?.attributes?.url}`}
           >
             <OKIcon size={32} round />
           </OKShareButton>

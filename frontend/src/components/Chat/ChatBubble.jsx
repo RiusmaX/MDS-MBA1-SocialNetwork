@@ -46,12 +46,12 @@ export const ChatBubble = ({
       >
         <Avatar
           alt={author?.username}
-          src={`${process.env.REACT_APP_IMAGES_URL}${url}`}
+          src={`${process.env.REACT_APP_BACKEND}${url}`}
         />
         {isMySelf ? (
           <MyBubble>
             {medias?.[0]?.attributes?.url.includes(".wav") && (
-              <audio controls src={ process.env.REACT_APP_IMAGES_URL + medias?.[0]?.attributes?.url} />
+              <audio controls src={ process.env.REACT_APP_BACKEND + medias?.[0]?.attributes?.url} />
             )}
             {content}
           </MyBubble>
@@ -61,7 +61,7 @@ export const ChatBubble = ({
               <audio
                 controls
                 src={
-                  process.env.REACT_APP_IMAGES_URL +
+                  process.env.REACT_APP_BACKEND +
                   medias?.[0]?.attributes?.url
                 }
               />
