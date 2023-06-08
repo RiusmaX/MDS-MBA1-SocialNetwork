@@ -129,9 +129,21 @@ query {
 `
 const GET_FRIENDS = (userId) => gql`
 query {
-  friendships(filters: 
+  friendships(filters:
     {
-      status: {eq: "friends"}
+        or: [
+          {
+          status: {
+            eq: "friends"
+          }
+          },
+          {
+            status: {
+              eq: "sent"
+            }
+          }
+
+      ]
       and: {
         or: [
           {        
@@ -152,13 +164,72 @@ query {
   ) {
     data {
       attributes {
-        user1 { data {id}}
-        user2 {data {id}}
+        user1 { 
+          data {
+            id
+            attributes 
+            {
+              firstName 
+              lastName
+            }
+          }
+        }
+        user2 { 
+          data {
+            id
+            attributes 
+            {
+              firstName 
+              lastName
+            }
+          }
+        }
       }
     }
   }
 }
+`
 
+const GET_FRIENDS_REQUEST = (userId) => gql`
+query {
+  friendships(filters:
+    {
+      status: {eq: "sent"}
+      and: {
+            user2: {
+              id: {
+            eq: ${userId}
+          }
+            }
+          }
+      
+    }
+  ) {
+    data {
+      id
+      attributes {
+        user1 { 
+          data {
+            id
+            attributes 
+            {
+              firstName 
+              lastName
+              avatar {
+          data {
+            attributes {
+              url
+            }
+          }
+        }
+            }
+
+          }
+        }
+      }
+    }
+  }
+}
 `
 
 export {
@@ -166,5 +237,6 @@ export {
   GET_ME_WITH_POSTS,
   GET_USER_WITH_POSTS_BY_ID,
   GET_USER_BY_EMAIL,
-  GET_FRIENDS
+  GET_FRIENDS,
+  GET_FRIENDS_REQUEST
 }
