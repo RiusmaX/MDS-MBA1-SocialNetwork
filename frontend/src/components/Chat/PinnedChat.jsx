@@ -11,7 +11,6 @@ const PinnedChat = (chatId) => {
   const { state, addPin, removePin } = usePin()
   let { pinnedIds } = state
   // const { loading, error, data } = useQuery(GET_CHAT_BY_ID(pinnedIds[0]))
-  console.log(pinnedIds.length)
   if (pinnedIds.length <= 0) {
     pinnedIds = [0]
   }
@@ -19,7 +18,6 @@ const PinnedChat = (chatId) => {
 
   // switch to the selected chat view
   const selectChat = () => {
-    console.log('chat selected')
     // then view page in little
   }
 

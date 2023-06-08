@@ -36,7 +36,6 @@ const ChatItem = ({ id }) => {
   }, [id])
 
   useEffect(() => {
-    console.log(pinnedIds)
     if (pinnedIds.length > 0 && pinnedIds.includes(id)) {
       setTogglePin(false)
     }

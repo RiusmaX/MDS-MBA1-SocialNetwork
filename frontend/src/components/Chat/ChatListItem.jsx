@@ -14,14 +14,10 @@ const ChatListItem = ({ chat, onClick, active, chatId }) => {
   const [togglePin, setTogglePin] = useState([])
 
   useEffect(() => {
-    console.log(pinnedIds)
-    console.log(chatId)
     if (pinnedIds.length > 0 && pinnedIds.includes(chatId)) {
       setTogglePin(true)
-      console.log(true)
     } else {
       setTogglePin(false)
-      console.log(false)
     }
   }, [chatId, pinnedIds])
 
