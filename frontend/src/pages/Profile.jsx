@@ -4,22 +4,23 @@ import { useNavigate, useParams } from 'react-router-dom'
 import PostList from '../components/Posts/PostList'
 import Avatar from '../components/Profile/Avatar'
 import FullName from '../components/Profile/FullName'
-import { GET_ME_WITH_POSTS, GET_FOLLOWERS } from '../graphql/queries/usersQueries'
+import { GET_ME_PROFILE, GET_FOLLOWERS } from '../graphql/queries/usersQueries'
 import { ADD_FOLLOWER } from '../graphql/mutations/usersMutations'
-import { subscribeToPosts } from '../services/socket'
-import { GET_POSTS } from '../graphql/queries/postsQueries'
 import Button from '../components/Layout/Button'
+import { subscribeToPosts } from '../services/socket'
 
 import '../styles/Profile.scss'
 import { CREATE_CHAT } from '../graphql/mutations/chatsMutations'
 import { useEffect, useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
+import { GET_POSTS_BY_USER_ID } from '../graphql/queries/postsQueries'
 
 const Profile = () => {
   // On prépare l'état local qui stockera les données
   const { state: { user, token } } = useAuth()
   const { id } = useParams()
-  const { loading, error, data } = useQuery(GET_ME_WITH_POSTS(id))
+  const { loading, error, data } = useQuery(GET_ME_PROFILE(id))
+  const { data: getPosts } = useQuery(GET_POSTS_BY_USER_ID(id))
   const [createChat] = useMutation(CREATE_CHAT)
   const [follow] = useMutation(ADD_FOLLOWER, {
     context: {
@@ -32,12 +33,11 @@ const Profile = () => {
   const getFollow = useQuery(GET_FOLLOWERS(user.id))
   const navigate = useNavigate()
   const [posts, setPosts] = useState([])
-  const getPosts = useQuery(GET_POSTS)
 
   // uses the useEffect hook to update the local posts state whenever the data in the getPosts request changes
   useEffect(() => {
-    if (getPosts.data) {
-      setPosts(getPosts.data.posts.data)
+    if (getPosts) {
+      setPosts(getPosts.posts?.data)
     }
   }, [getPosts])
 
