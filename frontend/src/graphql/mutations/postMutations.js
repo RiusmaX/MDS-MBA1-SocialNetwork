@@ -1,9 +1,10 @@
 import { gql } from '@apollo/client'
 
-const ADD_POST = gql`mutation CreatePost($content: String!, $userId: ID!) {
+const ADD_POST = gql`mutation CreatePost($content: String!, $userId: ID!, $media: [ID!]) {
   createPost(data: {
     content: $content
     user: $userId
+    medias: $media
   }) {data {
       id,
       attributes {
