@@ -6,6 +6,7 @@ import { useAuth } from '../contexts/AuthContext'
 import ChatItem from '../components/Chat/ChatItem'
 import { styled } from '@mui/material/styles'
 import ChatListItem from '../components/Chat/ChatListItem'
+import { useSearchParams } from 'react-router-dom'
 
 const GlobalSection = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -58,6 +59,8 @@ const Chats = () => {
     isLoading: true
   })
 
+  const [searchParams] = useSearchParams()
+
   const toggleChatId = (id) => {
     setData({
       ...data,
@@ -70,7 +73,7 @@ const Chats = () => {
       setData({
         ...data,
         chats: getChats.data.chats?.data ?? null,
-        idChat: getChats.data.chats?.data[0]?.id ?? 0,
+        idChat: searchParams.get('id') || getChats?.data?.chats?.data[0]?.id || 0,
         isLoading: false
       })
     }
@@ -107,21 +110,28 @@ const Chats = () => {
   return (
     <Container>
       <GlobalSection>
-        <MyList>
-          {
-            data.chats.map(chat => (
-              <ChatListItem
-                active={parseInt(data.idChat) === parseInt(chat.id)}
-                key={chat.id}
-                chat={chat}
-                onClick={() => toggleChatId(chat.id)}
-              />
-            ))
-          }
-        </MyList>
-        <MyMessageSection>
-          <ChatItem key={data.idChat} id={data.idChat} />
-        </MyMessageSection>
+        {data.idChat === 0
+          ? (
+            <div>no data</div>
+            )
+          : (
+            <>
+              <MyList>
+                {data.chats.map(chat => (
+                  <ChatListItem
+                    active={parseInt(data.idChat) === parseInt(chat.id)}
+                    key={chat.id}
+                    chatId={chat.id}
+                    chat={chat}
+                    onClick={() => toggleChatId(chat.id)}
+                  />
+                ))}
+              </MyList>
+              <MyMessageSection>
+                <ChatItem key={data.idChat} id={data.idChat} />
+              </MyMessageSection>
+            </>
+            )}
       </GlobalSection>
     </Container>
   )

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import Router from './navigation/Router'
 import { AuthProvider } from './contexts/AuthContext'
 import './styles/SwitchButtonTheme.scss'
+import { PinProvider } from './contexts/PinMessagesContext'
 
 export const client = new ApolloClient({
   uri: process.env.REACT_APP_GRAPHQL_URL,
@@ -22,16 +23,15 @@ export const client = new ApolloClient({
 
 function App() {
   return (
-    <>
-
-      <ApolloProvider client={client}>
-        <div className='App'>
-          <AuthProvider>
+    <ApolloProvider client={client}>
+      <div className='App'>
+        <AuthProvider>
+          <PinProvider>
             <Router />
-          </AuthProvider>
-        </div>
-      </ApolloProvider>
-    </>
+          </PinProvider>
+        </AuthProvider>
+      </div>
+    </ApolloProvider>
   )
 }
 

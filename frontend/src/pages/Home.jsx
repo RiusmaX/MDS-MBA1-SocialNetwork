@@ -5,6 +5,7 @@ import PostList from '../components/Posts/PostList'
 import { GET_POSTS } from '../graphql/queries/postsQueries'
 import AddPost from '../components/Posts/AddPost'
 import { useAuth } from '../contexts/AuthContext'
+import PinnedChat from '../components/Chat/PinnedChat'
 
 function Home () {
   const [posts, setPosts] = useState([])
@@ -26,8 +27,8 @@ function Home () {
   }, [])
 
   return (
-    <div className='container'>
-      <AddPost userData={user} />
+    <div>
+      <PinnedChat />
       <PostList posts={posts} />
     </div>
   )
