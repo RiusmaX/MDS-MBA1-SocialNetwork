@@ -2,6 +2,8 @@ import Avatar from '../Profile/Avatar'
 import '../../styles/PostListItem.scss'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 import { BsCalendarDate } from 'react-icons/bs'
+import { BiPencil } from 'react-icons/bi'
+import { FiSave } from 'react-icons/fi'
 import { format } from 'date-fns'
 import useLikePost from '../../services/Likers'
 import Lottie from 'lottie-react'
@@ -10,6 +12,9 @@ import sound from '../../assets/sounds/sound.mp3'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FacebookIcon, FacebookShareButton, OKIcon, OKShareButton, OKShareCount, TwitterIcon, TwitterShareButton } from 'react-share'
+import { useAuth } from '../../contexts/AuthContext'
+import { UPDATE_COMMENT } from '../../graphql/mutations/commentMutations'
+import { useMutation } from '@apollo/client'
 
 const PostListItem = ({ post, seeDetails }) => {
   const navigate = useNavigate()
@@ -19,8 +24,30 @@ const PostListItem = ({ post, seeDetails }) => {
     if (seeDetails) navigate(`/post/${post.id}`)
   }
 
+  const { state: { user } } = useAuth()
+
+  const [isEditing, setEditing] = useState(false)
+
   const { isLike, setIsLike, handleLikePost } = useLikePost(Number(post.id), 1)
   const [isAnimated, setIsAnimated] = useState(true)
+
+  const [text, setText] = useState(post.attributes?.content)
+  const [updatePost] = useMutation(UPDATE_COMMENT)
+
+  const handleChange = (event) => {
+    setText(event.target.value)
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    updatePost({
+      variables: {
+        postId: post.id,
+        content: text
+      }
+    })
+    setEditing(false)
+  }
 
   useEffect(() => {
     if (isLike) {
@@ -77,7 +104,20 @@ const PostListItem = ({ post, seeDetails }) => {
           )}
           <div className='postItem-content_text'>
             {/* Display the content */}
-            <p>{post.attributes?.content}</p>
+            {isEditing
+              ? (
+                <div class='updatePost'>
+                  <input type='text' class='updatePostInput' value={text} onChange={handleChange} />
+                  <button value='enregistrer' class='save' onClick={handleSubmit}>
+                    <span className='react-icon'>
+                      <FiSave />
+                    </span>
+                  </button>
+                </div>
+                )
+              : (
+                <p>{text}</p>
+                )}
           </div>
         </div>
         <div className='postItem-content_infos'>
@@ -99,6 +139,9 @@ const PostListItem = ({ post, seeDetails }) => {
             {/* date format */}
             {format(new Date(post.attributes?.createdAt), 'dd/MM/yyyy')}
           </p>
+          {post.attributes?.user?.data?.id === user.id
+            ? (<p><BiPencil onClick={() => setEditing(true)} /></p>)
+            : null}
           <TwitterShareButton
             url={currenturl + post.id}
             hashtags={['MBA1', 'MyDigitalSchool', 'ReactJS']}

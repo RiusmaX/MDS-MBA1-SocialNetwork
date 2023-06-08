@@ -2,10 +2,10 @@ import { Avatar, Card, CardHeader } from '@mui/material'
 import { blueGrey } from '@mui/material/colors'
 import { useQuery } from '@apollo/client'
 import { GET_LAST_CHAT_MESSAGE } from '../../graphql/queries/chatsQueries'
-import { format } from 'date-fns'
-import frLocale from 'date-fns/locale/fr'
+import { formatDistance } from 'date-fns'
+import { fr } from 'date-fns/locale'
 
-const ChatListItem = ({ chat, onClick }) => {
+const ChatListItem = ({ chat, onClick, active }) => {
   const { loading, error, data } = useQuery(GET_LAST_CHAT_MESSAGE(chat.id))
 
   if (loading) {
@@ -21,14 +21,21 @@ const ChatListItem = ({ chat, onClick }) => {
     )
   }
 
-  let dt = format(new Date(), 'eeee d MMMM yyyy hh:mm', { locale: frLocale })
-
-  if (data?.messages?.data[0]?.attributes?.sendDate) {
-    dt = format(new Date(data?.messages?.data[0]?.attributes?.sendDate), 'eeee d MMMM yyyy HH:mm', { locale: frLocale })
-  }
+  const sendDate = data?.messages?.data?.[0]?.attributes?.sendDate
+  const formattedDistance = sendDate
+    ? formatDistance(new Date(sendDate), new Date(), { addSuffix: true, locale: fr })
+    : ''
 
   return (
-    <Card sx={{ maxWidth: 345 }} onClick={onClick}>
+    <Card
+      sx={{
+        minWidth: 250,
+        maxWidth: 345,
+        cursor: 'pointer',
+        backgroundColor: active ? '#C8C8C8' : ''
+      }}
+      onClick={onClick}
+    >
       <CardHeader
         avatar={
           <Avatar
@@ -38,7 +45,7 @@ const ChatListItem = ({ chat, onClick }) => {
           />
         }
         title={chat.attributes.name}
-        subheader={dt}
+        subheader={formattedDistance}
       />
     </Card>
   )

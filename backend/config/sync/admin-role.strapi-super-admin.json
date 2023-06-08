@@ -5,14 +5,159 @@
   "permissions": [
     {
       "action": "plugin::content-manager.explorer.create",
+      "subject": "api::chat.chat",
+      "properties": {
+        "fields": [
+          "name",
+          "image",
+          "users_permissions_users",
+          "messages"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "subject": "api::chat.chat",
+      "properties": {},
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.publish",
+      "subject": "api::chat.chat",
+      "properties": {},
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.read",
+      "subject": "api::chat.chat",
+      "properties": {
+        "fields": [
+          "name",
+          "image",
+          "users_permissions_users",
+          "messages"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.update",
+      "subject": "api::chat.chat",
+      "properties": {
+        "fields": [
+          "name",
+          "image",
+          "users_permissions_users",
+          "messages"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.create",
+      "subject": "api::liker.liker",
+      "properties": {
+        "fields": [
+          "post",
+          "user"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "subject": "api::liker.liker",
+      "properties": {},
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.read",
+      "subject": "api::liker.liker",
+      "properties": {
+        "fields": [
+          "post",
+          "user"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.update",
+      "subject": "api::liker.liker",
+      "properties": {
+        "fields": [
+          "post",
+          "user"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.create",
+      "subject": "api::message.message",
+      "properties": {
+        "fields": [
+          "messageText",
+          "sendDate",
+          "media",
+          "users_permissions_user",
+          "chat"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "subject": "api::message.message",
+      "properties": {},
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.publish",
+      "subject": "api::message.message",
+      "properties": {},
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.read",
+      "subject": "api::message.message",
+      "properties": {
+        "fields": [
+          "messageText",
+          "sendDate",
+          "media",
+          "users_permissions_user",
+          "chat"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.update",
+      "subject": "api::message.message",
+      "properties": {
+        "fields": [
+          "messageText",
+          "sendDate",
+          "media",
+          "users_permissions_user",
+          "chat"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.create",
       "subject": "api::post.post",
       "properties": {
         "fields": [
           "title",
           "content",
-          "likers",
           "medias",
-          "user"
+          "user",
+          "likers",
+          "relativeTo"
         ]
       },
       "conditions": []
@@ -30,9 +175,10 @@
         "fields": [
           "title",
           "content",
-          "likers",
           "medias",
-          "user"
+          "user",
+          "likers",
+          "relativeTo"
         ]
       },
       "conditions": []
@@ -44,9 +190,10 @@
         "fields": [
           "title",
           "content",
-          "likers",
           "medias",
-          "user"
+          "user",
+          "likers",
+          "relativeTo"
         ]
       },
       "conditions": []
@@ -255,8 +402,12 @@
           "firstName",
           "lastName",
           "avatar",
-          "postsLiked",
-          "posts"
+          "posts",
+          "chats",
+          "messages",
+          "likers",
+          "follows",
+          "followedBy"
         ]
       },
       "conditions": []
@@ -285,8 +436,12 @@
           "firstName",
           "lastName",
           "avatar",
-          "postsLiked",
-          "posts"
+          "posts",
+          "chats",
+          "messages",
+          "likers",
+          "follows",
+          "followedBy"
         ]
       },
       "conditions": []
@@ -309,8 +464,12 @@
           "firstName",
           "lastName",
           "avatar",
-          "postsLiked",
-          "posts"
+          "posts",
+          "chats",
+          "messages",
+          "likers",
+          "follows",
+          "followedBy"
         ]
       },
       "conditions": []

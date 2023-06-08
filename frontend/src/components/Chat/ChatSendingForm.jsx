@@ -50,7 +50,7 @@ const ChatSendingForm = (chatId) => {
       }}
     >
       {({ errors, touched }) => (
-        <Form className='ChatSendingForm'>
+        <Form>
           {errors.messageText && touched.messageText
             ? (
               <div style={{ color: 'red' }}>{errors.messageText}</div>
