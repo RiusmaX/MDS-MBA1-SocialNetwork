@@ -123,9 +123,9 @@ const PostListItem = ({ post, seeDetails }) => {
             {/* Display the content */}
             {isEditing
               ? (
-                <div class='updatePost'>
+                <div className='updatePost'>
                   <input type='text' class='updatePostInput' value={text} onChange={handleChange} />
-                  <button value='enregistrer' class='save' onClick={handleUpdate}>
+                  <button value='enregistrer' className='save' onClick={handleUpdate}>
                     <span className='react-icon'>
                       <FiSave />
                     </span>

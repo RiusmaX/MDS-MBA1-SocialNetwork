@@ -20,6 +20,23 @@ mutation addFollower ($id: ID!, $arrayOfFollow: [ID]){
   }
 }`
 
+const ADD_BIOGRAPHY = gql`
+mutation AddBiography($userId: ID!, $biography: String!) {
+  updateUsersPermissionsUser(    
+    id: $userId,
+    data: {
+    biography: $biography
+  })
+  {
+    data {
+      attributes {
+        biography
+      }
+    }
+  }
+}`
+
 export {
-  ADD_FOLLOWER
+  ADD_FOLLOWER,
+  ADD_BIOGRAPHY
 }

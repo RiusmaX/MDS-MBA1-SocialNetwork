@@ -124,6 +124,9 @@
       "relation": "manyToMany",
       "target": "plugin::users-permissions.user",
       "inversedBy": "follows"
+    },
+    "biography": {
+      "type": "text"
     }
   }
 }
