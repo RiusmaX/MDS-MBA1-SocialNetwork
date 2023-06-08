@@ -4,14 +4,12 @@ import { blueGrey } from '@mui/material/colors'
 import FullName from '../Profile/FullName'
 
 const UserListItem = ({ user, onClick }) => {
-  console.log(user.attributes.avatar.data.attributes.url)
-
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader
         avatar={
           <Avatar
-            src={process.env.REACT_APP_IMAGES_URL + user.attributes.avatar.data.attributes.url}
+            src={process.env.REACT_APP_IMAGES_URL + user?.attributes?.avatar?.data?.attributes?.url}
             sx={{ bgcolor: blueGrey[500] }}
             aria-label='recipe'
           >
