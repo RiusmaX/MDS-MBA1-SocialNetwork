@@ -1,4 +1,4 @@
-import { Box, Toolbar, Typography } from '@mui/material'
+import { Box, Toolbar, Typography, Button } from '@mui/material'
 import { useQuery } from '@apollo/client'
 import ChatSendingForm from './ChatSendingForm'
 import { GET_CHAT } from '../../graphql/queries/chatsQueries'
@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react'
 import { subscribeToMessages } from '../../services/socket'
 import { useAuth } from '../../contexts/AuthContext'
 import { styled, alpha } from '@mui/material/styles'
+import { usePin } from '../../contexts/PinMessagesContext'
 
 const MyToolbar = styled(Toolbar)(({ theme }) => ({
   backgroundColor: alpha(theme.palette.common.black, 0.20),
@@ -17,7 +18,10 @@ const ChatItem = ({ id }) => {
   const getChat = useQuery(GET_CHAT(id))
   const [messages, setMessages] = useState([])
   const [chat, setChat] = useState()
+  const [togglePin, setTogglePin] = useState([])
 
+  const { state, addPin, removePin } = usePin()
+  const { pinnedIds } = state
   const { state: { user } } = useAuth()
 
   useEffect(() => {
@@ -31,15 +35,34 @@ const ChatItem = ({ id }) => {
     subscribeToMessages(id, setMessages)
   }, [id])
 
+  useEffect(() => {
+    console.log(pinnedIds)
+    if (pinnedIds.length > 0 && pinnedIds.includes(id)) {
+      setTogglePin(false)
+    }
+  }, [id, pinnedIds])
+
   const lastMessage = useRef(null)
   useEffect(() => {
     lastMessage.current.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
+  const handleClickPin = () => {
+    setTogglePin(!togglePin)
+    if (togglePin) {
+      addPin(id)
+    } else {
+      removePin(id)
+    }
+  }
+
   return (
     <Box width='100%' height='100%' display='flex' flexDirection='column'>
       <MyToolbar>
         <Box display='flex' justifyContent='space-between'>
+          <Button onClick={handleClickPin} variant='outlined'>
+            {togglePin ? 'Pin chat 📌' : 'Pinned chat 📍'}
+          </Button>
           <Typography
             variant='subtitle'
             component='div'
